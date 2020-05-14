@@ -1,2 +1,3 @@
 rootProject.name='EasyKotlin'
 include ':app'
+include ':base_component'

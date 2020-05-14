@@ -1,0 +1,82 @@
+apply plugin: 'com.android.library'
+apply plugin: 'kotlin-android'
+apply plugin: 'kotlin-android-extensions'
+
+def androidConfig = rootProject.ext.android
+def dependency = rootProject.ext.dependencies
+
+android {
+    compileSdkVersion androidConfig.compileSdkVersion
+    buildToolsVersion androidConfig.buildToolsVersion
+
+    defaultConfig {
+        minSdkVersion androidConfig.minSdkVersion
+        targetSdkVersion androidConfig.targetSdkVersion
+        versionCode 1
+        versionName "1.0"
+
+        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+        consumerProguardFiles 'consumer-rules.pro'
+    }
+
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+        }
+    }
+
+}
+
+dependencies {
+    implementation fileTree(dir: 'libs', include: ['*.jar'])
+
+    testImplementation dependency["junit"]
+    androidTestImplementation dependency["androidx-junit"]
+    androidTestImplementation dependency["androidx-espresso"]
+
+    debugApi dependency["leakcanary"]
+
+    api dependency["androidx-core"]
+    api dependency["androidx-multidex"]
+    api dependency["androidx-cardview"]
+    api dependency["androidx-appcompat"]
+    api dependency["androidx-annotation"]
+    api dependency["androidx-recyclerview"]
+    api dependency["androidx-constraintlayout"]
+    api dependency["androidx-emoji"]
+    api dependency["androidx-emoji-appcompat"]
+    api dependency["androidx-emoji-bundled"]
+    api dependency["android-material"]
+    api dependency["pnikosis-materialish-progress"]
+    api dependency["glide"]
+    api dependency["glide-transformations"]
+    api dependency["yanzhenjie-album"]
+    api dependency["yanzhenjie-durban"]
+    api(dependency["yanzhenjie-permission"]) {
+        exclude group: 'com.android.support'
+    }
+    api dependency["yoyo-easing"]
+    api dependency["yoyo-animation"]
+    api dependency["commons-codec"]
+    api dependency["switch-button"]
+    api dependency["rxjava2"]
+    api dependency["rxandroid2"]
+    api dependency["retrofit2"]
+    api dependency["retrofit2-converter-gson"]
+    api dependency["retrofit2-adapter-rxjava2"]
+    api dependency["okhttp3"]
+    api dependency["rxbinding"]
+    api dependency["keyboardvisibilityevent"]
+    api dependency["zxing"]
+    api dependency["barcodescanner-core"]
+    api dependency["barcodescanner-zxing"]
+    api dependency["pickerview"]
+    api dependency["pageindicatorview"]
+    api dependency["wechat-sdk"]
+    api dependency["SmartRefreshLayout"]
+    api dependency["androidx-core-ktx"]
+    api dependency["kotlin-stdlib"]
+    api dependency["debugToolsLib"]
+
+}
