@@ -1,5 +1,8 @@
 package com.william.base_component.mvp.base
 
+import androidx.lifecycle.LifecycleObserver
+import androidx.lifecycle.LifecycleOwner
+import com.orhanobut.logger.Logger
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.disposables.Disposable
 import java.lang.reflect.ParameterizedType
@@ -7,19 +10,23 @@ import java.lang.reflect.ParameterizedType
 /**
  * @author William
  * @date 2020/5/2 11:28
- * Class Comment：
+ * Class Comment：BasePresenter
  */
-open class BasePresenter<V : IBaseView?, M : IBaseModel> : IBasePresenter {
+open class BasePresenter<V : IBaseView, M : IBaseModel> : IBasePresenter {
 
     protected var view: V? = null
 
     protected var model: M? = null
 
-    private var disposable: CompositeDisposable? = null
+    private var mCompositeDisposable: CompositeDisposable? = null
+
+    override fun getBaseView(): IBaseView? = view
+
+    override fun getBaseModel(): IBaseModel? = model
 
     @Suppress("UNCHECKED_CAST")
-    override fun attachView(view: Any) {
-        this.view = view as V
+    override fun attachView(iView: IBaseView?) {
+        this.view = iView as? V
         try {
             val params =
                 (this.javaClass.genericSuperclass as ParameterizedType?)!!.actualTypeArguments
@@ -27,26 +34,46 @@ open class BasePresenter<V : IBaseView?, M : IBaseModel> : IBasePresenter {
         } catch (e: Exception) {
             e.printStackTrace()
         }
+        if (view is LifecycleOwner) {
+            val viewOwner = view as LifecycleOwner
+            viewOwner.lifecycle.addObserver(this)
+            Logger.d("BasePresenter addObserver")
+            if (model is LifecycleObserver) {
+                viewOwner.lifecycle.addObserver(model as LifecycleObserver)
+                Logger.d("BaseModel addObserver")
+            }
+        }
     }
 
     override fun detachView() {
+        model?.onDetach()
         view = null
         model = null
+        Logger.d("BasePresenter detachView")
     }
 
     override fun addDisposable(disposable: Disposable?) {
-        if (this.disposable == null) {
-            this.disposable = CompositeDisposable()
+        if (this.mCompositeDisposable == null) {
+            this.mCompositeDisposable = CompositeDisposable()
         }
-        this.disposable!!.add(disposable!!)
+        disposable?.let {
+            mCompositeDisposable?.add(it)
+            Logger.d("BasePresenter addDisposable")
+        }
     }
 
     override fun removeDisposable(disposable: Disposable?) {
-        this.disposable?.remove(disposable!!)
+        disposable?.let { this.mCompositeDisposable?.remove(it) }
     }
 
     override fun removeAllDisposable() {
-        disposable?.clear()
+        mCompositeDisposable?.clear()
+        mCompositeDisposable = null
+    }
+
+    override fun onDestroy(owner: LifecycleOwner) {
+        owner.lifecycle.removeObserver(this)
+        Logger.d("BasePresenter解除OnLifecycleEvent监听$owner")
     }
 
 }

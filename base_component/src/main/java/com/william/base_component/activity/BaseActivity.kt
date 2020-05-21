@@ -9,15 +9,12 @@ import android.view.View
 import android.view.ViewStub
 import android.widget.ImageView
 import android.widget.TextView
-import android.widget.Toast
 import androidx.annotation.LayoutRes
 import androidx.annotation.StringRes
 import androidx.appcompat.app.AppCompatActivity
 import androidx.constraintlayout.widget.ConstraintLayout
 import com.william.base_component.R
-import com.william.base_component.fragment.LoadingDialog
 import com.william.base_component.manager.StatusBarManager
-import com.william.base_component.mvp.base.IBaseView
 
 
 /**
@@ -25,7 +22,7 @@ import com.william.base_component.mvp.base.IBaseView
  * @date 2020/4/16 16:09
  * Class Comment：base activity
  */
-abstract class BaseActivity : AppCompatActivity(), IBaseView {
+abstract class BaseActivity : AppCompatActivity() {
 
     private lateinit var mContext: Context
     protected lateinit var mActivity: Activity
@@ -37,7 +34,6 @@ abstract class BaseActivity : AppCompatActivity(), IBaseView {
     private lateinit var mIvBaseTitleRight: ImageView
     private lateinit var mTvBaseTitleRight: TextView
     private lateinit var mViewBaseLine: View
-    private var mLoadingDialog: LoadingDialog? = null
 
     @get:LayoutRes
     protected abstract val layoutId: Int
@@ -139,52 +135,10 @@ abstract class BaseActivity : AppCompatActivity(), IBaseView {
         mTvBaseTitleText.text = resources.getText(stringId)
     }
 
-    override fun onDestroy() {
-        cancelLoading()
-        super.onDestroy()
-    }
-
     companion object {
 
         const val REQUEST_CODE_SETTING = 1
 
     }
 
-    override fun getCurrentActivity(): Activity = mActivity
-
-    override fun showToast(msg: String) {
-        Toast.makeText(mActivity, msg, Toast.LENGTH_SHORT).show()
-    }
-
-    override fun startLoading(isCanNotCancel: Boolean) {
-        if (mLoadingDialog == null) {
-            mLoadingDialog = LoadingDialog()
-        } else {
-            mLoadingDialog?.dismissAllowingStateLoss()
-        }
-        mLoadingDialog!!.canNotCancel = isCanNotCancel
-        if (mLoadingDialog!!.isAdded) {
-            mLoadingDialog!!.show(
-                supportFragmentManager,
-                LoadingDialog::class.java.simpleName
-            )
-        }
-    }
-
-    override fun cancelLoading() {
-        mLoadingDialog?.dismissAllowingStateLoss()
-    }
-
-    override fun onFailed(action: Int, errorCode: Int, message: String) {
-    }
-
-}
-
-fun main() {
-    val str: String? = "Hello"
-    val length = str?.let {
-        println("let() called on $it")
-//        processNonNullString(it)      // 编译通过：'it' 在 '?.let { }' 中必不为空
-        it.length
-    }
 }

@@ -1,8 +1,9 @@
 package com.william.easykt
 
 import android.os.Bundle
-import android.widget.TextView
+import android.widget.Button
 import androidx.appcompat.app.AppCompatActivity
+import com.william.easykt.test.TestActivity
 
 class MainActivity : AppCompatActivity() {
 
@@ -10,7 +11,7 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        findViewById<TextView>(R.id.tv_hello).setOnClickListener {
+        findViewById<Button>(R.id.tv_hello).setOnClickListener {
             TestActivity.startTarget(this)
         }
 

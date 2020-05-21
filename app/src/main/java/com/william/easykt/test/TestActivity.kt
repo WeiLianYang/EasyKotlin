@@ -1,8 +1,12 @@
-package com.william.easykt
+package com.william.easykt.test
 
 import android.content.Context
 import android.content.Intent
 import com.william.base_component.mvp.BaseMvpActivity
+import com.william.easykt.R
+import com.william.easykt.data.Banner
+import com.william.easykt.data.HttpResponse
+import kotlinx.android.synthetic.main.activity_test.*
 
 
 /**
@@ -10,7 +14,7 @@ import com.william.base_component.mvp.BaseMvpActivity
  * @date 2020/5/3 15:49
  * Class Comment：
  */
-class TestActivity : BaseMvpActivity<TestPresenter>() {
+class TestActivity : BaseMvpActivity<TestPresenter>(), TestContract.IView {
 
     override fun initView() {
     }
@@ -21,12 +25,16 @@ class TestActivity : BaseMvpActivity<TestPresenter>() {
     override fun initData() {
         setTitleText(R.string.album_title)
 
-        val strList = listOf("a", "b", "c")
-
+        mPresenter?.getBanners()
     }
 
     override val layoutId: Int
         get() = R.layout.activity_test
+
+    override fun setupData(response: HttpResponse<List<Banner>>?) {
+        tv_text.text = response?.toString()
+
+    }
 
     companion object {
 

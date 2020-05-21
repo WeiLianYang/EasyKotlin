@@ -12,11 +12,13 @@ interface IBaseView {
 
     fun getCurrentActivity(): Activity
 
-    fun showToast(msg: String)
+    fun logBackIn()
 
-    fun startLoading(isCanNotCancel: Boolean = false)
+    fun showToast(msg: String?)
 
-    fun cancelLoading()
+    fun startLoadingView(isCanNotCancel: Boolean = false)
+
+    fun hideLoadingView()
 
     fun onFailed(action: Int, errorCode: Int, message: String)
 
