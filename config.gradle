@@ -94,7 +94,8 @@ ext {
             "countdownview"                     : 'com.github.iwgang:countdownview:2.1.6',
             "pageTransformerHelp"               : "com.github.OCNYang:PageTransformerHelp:v1.0.1",
             "debugToolsLib"                     : "com.williamyang.debugtools:debugtoolslib:1.0.0",
-            "leakcanary"                        : "com.squareup.leakcanary:leakcanary-android:2.2"
+            "leakcanary"                        : "com.squareup.leakcanary:leakcanary-android:2.2",
+            "statusbarutil"                     : "com.jaeger.statusbarutil:library:1.5.1"
     ]
 
 }

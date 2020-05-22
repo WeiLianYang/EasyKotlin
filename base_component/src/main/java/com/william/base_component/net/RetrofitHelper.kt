@@ -18,23 +18,16 @@ import java.util.concurrent.TimeUnit
 object RetrofitHelper {
 
     private const val TIMEOUT: Long = 15
-    private var retrofit: Retrofit? = null
 
-    private fun getRetrofit(): Retrofit? {
-        if (retrofit == null) {
-            retrofit = Retrofit.Builder()
-                .client(getOkHttpClient())
-                .baseUrl(ReleaseControl.baseUrl)
-                .addConverterFactory(GsonConverterFactory.create())
-                .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
-                .build()
-        }
-        return retrofit
+    private val retrofit: Retrofit by lazy {
+        Retrofit.Builder()
+            .client(getOkHttpClient())
+            .baseUrl(ReleaseControl.baseUrl)
+            .addConverterFactory(GsonConverterFactory.create())
+            .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
+            .build()
     }
 
-    /**
-     * 获取 OkHttpClient
-     */
     private fun getOkHttpClient(): OkHttpClient {
         val builder = OkHttpClient().newBuilder()
         val httpLoggingInterceptor = HttpLoggingInterceptor()
@@ -43,7 +36,7 @@ object RetrofitHelper {
         } else {
             httpLoggingInterceptor.level = HttpLoggingInterceptor.Level.NONE
         }
-        // TODO: William 2020/5/19 12:20 需要加上缓存和cookie设置
+        // TODO: William 2020/5/19 12:20 需要加上缓存、cookie、SSL证书设置
         builder.run {
             addInterceptor(httpLoggingInterceptor)
             addInterceptor(HeaderConfigInterceptor())
@@ -56,7 +49,7 @@ object RetrofitHelper {
     }
 
     fun <T> create(clazz: Class<T>): T {
-        return getRetrofit()!!.create(clazz)
+        return retrofit.create(clazz)
     }
 
 }

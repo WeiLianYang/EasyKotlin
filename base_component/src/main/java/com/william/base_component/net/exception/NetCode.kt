@@ -1,7 +1,9 @@
 package com.william.base_component.net.exception
 
 /**
- * Created by chenxz on 2018/4/21.
+ * @author William
+ * @date 2020/5/22 12:04
+ * Class Comment：
  */
 object NetCode {
     /**
