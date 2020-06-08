@@ -7,8 +7,7 @@ import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.FragmentManager
 import com.william.base_component.BaseApp
 import com.william.base_component.R
-import com.william.base_component.utils.getIntPixel
-
+import com.william.base_component.extension.dp
 
 /**
  * @author William
@@ -28,8 +27,8 @@ class LoadingDialog : DialogFragment() {
             window.setDimAmount(0f)
             val params = window.attributes
             params.apply {
-                width = getIntPixel(100)
-                height = getIntPixel(100)
+                width = 80.dp
+                height = 80.dp
                 gravity = Gravity.CENTER
             }
             window.attributes = params

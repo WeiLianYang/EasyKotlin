@@ -5,10 +5,12 @@ import android.app.Application
 import android.content.Context
 import android.os.Bundle
 import androidx.multidex.MultiDex
+import com.jeremyliao.liveeventbus.LiveEventBus
 import com.orhanobut.logger.AndroidLogAdapter
 import com.orhanobut.logger.Logger
 import com.orhanobut.logger.PrettyFormatStrategy
 import com.william.base_component.manager.ActivityStackManager
+import kotlin.properties.Delegates
 
 
 /**
@@ -18,29 +20,32 @@ import com.william.base_component.manager.ActivityStackManager
  */
 class BaseApp : Application() {
 
-    lateinit var mContext: Context
-    private var mActivityCount = 0
-
-    override fun onCreate() {
-        super.onCreate()
-        mContext = this
-
-        initConfig()
-        registerLifecycleCallbacks()
-    }
-
-    private object InstanceHelper {
-        val instance = BaseApp()
-    }
-
     companion object {
 
         const val TAG = "BaseApp"
 
         @JvmStatic
-        val instance: BaseApp
-            get() = InstanceHelper.instance
+        var instance: Context by Delegates.notNull()
+            private set
+    }
 
+    private var mActivityCount = 0
+
+    override fun onCreate() {
+        super.onCreate()
+        instance = applicationContext
+
+        initLoggerConfig()
+        initLiveEventConfig()
+        registerLifecycleCallbacks()
+    }
+
+    private fun initLiveEventConfig() {
+        // 配置LifecycleObserver（如Activity）接收消息的模式（默认值true）：
+        // true：整个生命周期（从onCreate到onDestroy）都可以实时收到消息
+        // false：激活状态（Started）可以实时收到消息，非激活状态（Stoped）无法实时收到消息，需等到Activity重新变成激活状态，方可收到消息
+        // 更多配置参照 https://github.com/JeremyLiao/LiveEventBus/blob/master/docs/config.md
+        LiveEventBus.config().lifecycleObserverAlwaysActive(false)
     }
 
     private fun registerLifecycleCallbacks() {
@@ -79,7 +84,7 @@ class BaseApp : Application() {
     /**
      * 初始化配置
      */
-    private fun initConfig() {
+    private fun initLoggerConfig() {
         val formatStrategy = PrettyFormatStrategy.newBuilder()
             .showThreadInfo(false)  // 隐藏线程信息 默认：显示
             .methodCount(1)         // 决定打印多少行（每一行代表一个方法）默认：2

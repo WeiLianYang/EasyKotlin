@@ -16,7 +16,7 @@ interface IBaseView {
 
     fun showToast(msg: String?)
 
-    fun startLoadingView(isCanNotCancel: Boolean = false)
+    fun showLoadingView(isCanNotCancel: Boolean = false)
 
     fun hideLoadingView()
 

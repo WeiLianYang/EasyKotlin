@@ -2,7 +2,8 @@ package com.william.base_component.net.interceptor
 
 import com.android.debugtools.bean.ApiLogBean
 import com.android.debugtools.helper.ApiLogHelper
-import com.william.base_component.utils.ReleaseControl
+import com.william.base_component.Constants
+import com.william.base_component.utils.IS_RELEASE
 import okhttp3.Interceptor
 import okhttp3.Request
 import okhttp3.Response
@@ -25,8 +26,9 @@ class HeaderConfigInterceptor : Interceptor {
         val request = chain.request()
         val builder = request.newBuilder()
 
-//        builder.addHeader("Authorization", );
-//        builder.addHeader("Accept-Language", );
+        builder.addHeader("Authorization", Constants.token ?: "")
+        builder.addHeader("os", "android")
+        builder.addHeader("version", Constants.version)
 
         val response = chain.proceed(builder.build())
         collectApiLogData(request, response)
@@ -43,17 +45,17 @@ class HeaderConfigInterceptor : Interceptor {
         request: Request,
         response: Response
     ) {
-        if (!ReleaseControl.IS_RELEASE) {
-            val UTF8 = StandardCharsets.UTF_8
+        if (!IS_RELEASE) {
+            val utf8 = StandardCharsets.UTF_8
             val requestBody = request.body
             var body: String? = null
             if (requestBody != null) {
                 val buffer = Buffer()
                 requestBody.writeTo(buffer)
-                var charset = UTF8
+                var charset = utf8
                 val contentType = requestBody.contentType()
                 if (contentType != null) {
-                    charset = contentType.charset(UTF8)
+                    charset = contentType.charset(utf8)
                 }
                 if (charset != null) {
                     body = buffer.readString(charset)
@@ -68,7 +70,7 @@ class HeaderConfigInterceptor : Interceptor {
                 val source = responseBody.source()
                 source.request(Long.MAX_VALUE)
                 val buffer = source.buffer
-                val rBody = buffer.clone().readString(UTF8)
+                val rBody = buffer.clone().readString(utf8)
                 val headers = request.headers
                 val headerJson = JSONObject()
                 val iterator =

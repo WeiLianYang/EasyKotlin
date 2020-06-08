@@ -1,6 +1,6 @@
 package com.william.easykt.service
 
-import com.william.base_component.net.RetrofitHelper
+import com.william.base_component.net.createService
 
 
 /**
@@ -10,6 +10,6 @@ import com.william.base_component.net.RetrofitHelper
  */
 object Api {
 
-    val service = RetrofitHelper.create(ApiService::class.java)
+    val service: ApiService = createService(ApiService::class.java)
 
 }

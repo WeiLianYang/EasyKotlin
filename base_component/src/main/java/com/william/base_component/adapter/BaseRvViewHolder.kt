@@ -1,4 +1,4 @@
-package com.android.debugtools.base
+package com.william.base_component.adapter
 
 import android.app.Activity
 import android.graphics.Typeface
@@ -17,7 +17,7 @@ import androidx.recyclerview.widget.RecyclerView
 /**
  * @author William
  * @date 2019-06-28 11:28
- * Class Comment：ViewHolder基类
+ * Class Comment：ViewHolder base class
  */
 open class BaseRvViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
     private val mViews: SparseArray<View?> = SparseArray()
@@ -59,6 +59,12 @@ open class BaseRvViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) 
     fun setVisibility(@IdRes viewId: Int, visibility: Int): BaseRvViewHolder {
         val view = getView<View>(viewId)
         view?.visibility = visibility
+        return this
+    }
+
+    fun setVisibility(@IdRes viewId: Int, visible: Boolean): BaseRvViewHolder {
+        val view = getView<View>(viewId)
+        view?.visibility = if (visible) View.VISIBLE else View.GONE
         return this
     }
 

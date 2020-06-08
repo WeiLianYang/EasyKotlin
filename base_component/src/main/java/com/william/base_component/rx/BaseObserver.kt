@@ -1,13 +1,16 @@
 package com.william.base_component.rx
 
 import com.orhanobut.logger.Logger
+import com.william.base_component.alias.FailCallback
+import com.william.base_component.alias.SuccessCallback
 import com.william.base_component.mvp.base.IBaseModel
 import com.william.base_component.mvp.base.IBasePresenter
 import com.william.base_component.mvp.base.IBaseView
-import com.william.base_component.net.exception.ExceptionHandle
-import com.william.base_component.net.exception.NetCode
+import com.william.base_component.net.data.BaseResponse
 import com.william.base_component.net.exception.ApiException
-import com.william.base_component.net.response.BaseEntity
+import com.william.base_component.net.exception.SUCCESS
+import com.william.base_component.net.exception.TOKEN_EXPIRED
+import com.william.base_component.net.exception.handleException
 import io.reactivex.observers.DisposableObserver
 
 
@@ -16,10 +19,12 @@ import io.reactivex.observers.DisposableObserver
  * @date 2020/5/19 13:57
  * Class Comment：
  */
-abstract class BaseObserver<T : BaseEntity?> constructor(
+class BaseObserver<T> constructor(
     private var basePresenter: IBasePresenter? = null,
-    var showLoadingView: Boolean = true
-) : DisposableObserver<T>() {
+    private var showLoading: Boolean = true,
+    private var onSuccess: SuccessCallback<T>? = null,
+    private var onFail: FailCallback? = null
+) : DisposableObserver<BaseResponse<T>>() {
 
     private var baseView: IBaseView? = null
     private var baseModel: IBaseModel? = null
@@ -33,35 +38,33 @@ abstract class BaseObserver<T : BaseEntity?> constructor(
         super.onStart()
         basePresenter?.addDisposable(this)
         baseModel?.addDisposable(this)
-        if (showLoadingView) baseView?.startLoadingView()
+        if (showLoading) baseView?.showLoadingView()
     }
 
     override fun onComplete() {
         basePresenter?.removeDisposable(this)
     }
 
-    override fun onNext(t: T) {
+    override fun onNext(response: BaseResponse<T>) {
         baseView?.hideLoadingView()
-        if (t == null) {
-            return
-        }
-        when (t.errorCode) {
-            NetCode.SUCCESS -> onSuccess(t)
-            NetCode.TOKEN_EXPIRED -> baseView?.logBackIn()
-            else -> baseView?.showToast(t.errorMsg)
+
+        when (response.errorCode) {
+            SUCCESS -> onSuccess?.invoke(response)
+            TOKEN_EXPIRED -> baseView?.logBackIn()
+            else -> {
+                baseView?.showToast(response.errorMsg)
+                onFail?.invoke(response.errorCode, response.errorMsg)
+            }
         }
     }
 
     override fun onError(e: Throwable) {
         baseView?.hideLoadingView()
-        val exception: ApiException? = ExceptionHandle.handleException(e)
-        onFail(exception?.code, exception?.message)
-
-        Logger.e("api error, code: ${exception?.code}, message: ${exception?.message}")
+        val exception: ApiException? = handleException(e)
+        exception?.let {
+            onFail?.invoke(it.code, it.message)
+            Logger.e("api error, code: ${it.code}, message: ${it.message}")
+        }
     }
-
-    abstract fun onSuccess(entity: T?)
-
-    abstract fun onFail(code: Int?, msg: String?)
 
 }

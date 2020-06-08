@@ -1,4 +1,4 @@
-package com.android.debugtools.base
+package com.william.base_component.adapter
 
 import android.annotation.SuppressLint
 import android.app.Activity
@@ -9,28 +9,28 @@ import androidx.annotation.IdRes
 import androidx.annotation.LayoutRes
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.RecyclerView
-import com.android.debugtools.base.BaseRvViewHolder.Companion.create
 import com.jakewharton.rxbinding3.view.clicks
+import com.william.base_component.adapter.BaseRvViewHolder.Companion.create
+import com.william.base_component.alias.OnAdapterItemChildClick
+import com.william.base_component.alias.OnAdapterItemChildLongClick
+import com.william.base_component.alias.OnAdapterItemClick
+import com.william.base_component.alias.OnAdapterItemLongClick
 import io.reactivex.android.schedulers.AndroidSchedulers
 import java.util.concurrent.TimeUnit
 
 /**
  * @author William
  * @date 2020-02-17 17:38
- * Class Comment：通用适配器
+ * Class Comment：RecyclerView adapter base class
  */
-abstract class BaseRvAdapter<T> : RecyclerView.Adapter<BaseRvViewHolder> {
+abstract class BaseRvAdapter<T> constructor() : RecyclerView.Adapter<BaseRvViewHolder>() {
     protected var mActivity: Activity? = null
     protected var mFragment: Fragment? = null
-    protected var mList: MutableList<T>? = null
-    private var mOnItemClickListener: OnItemClickListener<T>? = null
-    private var mOnItemLongClickListener: OnItemLongClickListener<T>? = null
-    private var mOnItemChildClickListener: OnItemChildClickListener<T>? = null
-    private var mOnItemChildLongClickListener: OnItemChildLongClickListener<T>? = null
-
-    constructor() {
-        mList = ArrayList()
-    }
+    private var mList: MutableList<T> = ArrayList()
+    private var mOnItemClickListener: OnAdapterItemClick<T>? = null
+    private var mOnItemLongClickListener: OnAdapterItemLongClick<T>? = null
+    private var mOnItemChildClickListener: OnAdapterItemChildClick<T>? = null
+    private var mOnItemChildLongClickListener: OnAdapterItemChildLongClick<T>? = null
 
     constructor(activity: Activity?) : this() {
         mActivity = activity
@@ -41,41 +41,37 @@ abstract class BaseRvAdapter<T> : RecyclerView.Adapter<BaseRvViewHolder> {
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): BaseRvViewHolder {
-        return create(mActivity, mFragment, inflateView(getLayoutResourceId(), parent))
+        return create(mActivity, mFragment, inflateView(layoutResourceId, parent))
     }
 
     override fun onBindViewHolder(holder: BaseRvViewHolder, position: Int) {
-        onBindViewHolder(
-            holder,
-            position,
-            if (position >= mList!!.size) null else mList!![position]
-        )
         holder.itemView.setOnClickListener {
-            mOnItemClickListener?.onItemClick(
+            mOnItemClickListener?.invoke(
                 holder,
                 position,
-                if (position >= mList!!.size) null else mList!![position]
+                if (position >= mList.size) null else mList[position]
             )
         }
         holder.itemView.setOnLongClickListener {
             if (mOnItemLongClickListener != null) {
-                mOnItemLongClickListener?.onItemLongClick(
+                mOnItemLongClickListener?.invoke(
                     holder,
                     position,
-                    if (position >= mList!!.size) null else mList!![position]
+                    if (position >= mList.size) null else mList[position]
                 )
                 return@setOnLongClickListener true
             }
             false
         }
+        onBindViewHolder(
+            holder,
+            position,
+            if (position >= mList.size) null else mList[position]
+        )
     }
 
-    /**
-     * 布局id
-     *
-     * @return r
-     */
-    protected abstract fun getLayoutResourceId(): Int
+    @get:LayoutRes
+    protected abstract val layoutResourceId: Int
 
     /**
      * 绑定holder
@@ -84,12 +80,10 @@ abstract class BaseRvAdapter<T> : RecyclerView.Adapter<BaseRvViewHolder> {
      * @param position p
      * @param bean     b
      */
-    protected open fun onBindViewHolder(holder: BaseRvViewHolder, position: Int, bean: T?) {
-
-    }
+    protected abstract fun onBindViewHolder(holder: BaseRvViewHolder, position: Int, bean: T?)
 
     override fun getItemCount(): Int {
-        return if (mList != null) mList!!.size else 0
+        return mList.size
     }
 
     /**
@@ -114,20 +108,20 @@ abstract class BaseRvAdapter<T> : RecyclerView.Adapter<BaseRvViewHolder> {
     operator fun get(position: Int): T? {
         return if (position < 0 || position >= itemCount) {
             null
-        } else mList!![position]
+        } else mList[position]
     }
 
     operator fun set(position: Int, bean: T) {
         if (position < 0 || position >= itemCount) {
             return
         }
-        mList!![position] = bean
+        mList[position] = bean
         notifyItemChanged(position)
     }
 
     fun add(bean: T?) {
         if (bean != null) {
-            mList!!.add(bean)
+            mList.add(bean)
         }
     }
 
@@ -136,46 +130,46 @@ abstract class BaseRvAdapter<T> : RecyclerView.Adapter<BaseRvViewHolder> {
             return
         }
         if (bean != null) {
-            mList!!.add(position, bean)
+            mList.add(position, bean)
         }
     }
 
     fun addAll(beans: List<T>?) {
         if (beans != null) {
-            mList!!.addAll(beans)
+            mList.addAll(beans)
         }
     }
 
     fun remove(position: Int): T? {
-        return if (position >= 0 && position < mList!!.size) {
-            mList!!.removeAt(position)
+        return if (position >= 0 && position < mList.size) {
+            mList.removeAt(position)
         } else null
     }
 
     fun remove(t: T?): Boolean {
         return if (t != null) {
-            mList!!.remove(t)
+            mList.remove(t)
         } else false
     }
 
     fun clear() {
-        if (mList!!.isNotEmpty()) {
-            mList!!.clear()
+        if (mList.isNotEmpty()) {
+            mList.clear()
         }
     }
 
     fun clearAndNotifyDataSetChanged() {
-        if (mList!!.isNotEmpty()) {
-            mList!!.clear()
+        if (mList.isNotEmpty()) {
+            mList.clear()
         }
         notifyDataSetChanged()
     }
 
     val isEmpty: Boolean
-        get() = mList!!.isEmpty()
+        get() = mList.isEmpty()
 
     val isNotEmpty: Boolean
-        get() = mList!!.isNotEmpty()
+        get() = mList.isNotEmpty()
 
     /**
      * 添加子项View到点击事件中
@@ -197,7 +191,7 @@ abstract class BaseRvAdapter<T> : RecyclerView.Adapter<BaseRvViewHolder> {
             ?.throttleFirst(800, TimeUnit.MILLISECONDS)
             ?.observeOn(AndroidSchedulers.mainThread())
             ?.subscribe {
-                mOnItemChildClickListener?.onItemChildCLick(v, holder, position, bean)
+                mOnItemChildClickListener?.invoke(v, holder, position, bean)
             }
     }
 
@@ -209,7 +203,6 @@ abstract class BaseRvAdapter<T> : RecyclerView.Adapter<BaseRvViewHolder> {
      * @param position 当前位置
      * @param bean     数据
      */
-    @Suppress("unused")
     protected fun addOnChildLongClickListener(
         @IdRes viewId: Int,
         holder: BaseRvViewHolder,
@@ -217,76 +210,29 @@ abstract class BaseRvAdapter<T> : RecyclerView.Adapter<BaseRvViewHolder> {
         bean: T
     ) {
         holder.getView<View>(viewId)?.setOnLongClickListener { v: View ->
-            mOnItemChildLongClickListener?.onItemChildLongClick(v, holder, position, bean)
+            mOnItemChildLongClickListener?.invoke(v, holder, position, bean)
             true
         }
     }
 
-    fun setOnItemClickListener(OnItemClickListener: OnItemClickListener<T>): BaseRvAdapter<T> {
-        mOnItemClickListener = OnItemClickListener
+    fun setOnItemClickListener(listener: OnAdapterItemClick<T>): BaseRvAdapter<T> {
+        mOnItemClickListener = listener
         return this
     }
 
-    fun setOnItemLongClickListener(OnItemLongClickListener: OnItemLongClickListener<T>): BaseRvAdapter<T> {
-        mOnItemLongClickListener = OnItemLongClickListener
+    fun setOnItemLongClickListener(listener: OnAdapterItemLongClick<T>): BaseRvAdapter<T> {
+        mOnItemLongClickListener = listener
         return this
     }
 
-    fun setOnItemChildClickListener(OnItemChildClickListener: OnItemChildClickListener<T>): BaseRvAdapter<T> {
-        mOnItemChildClickListener = OnItemChildClickListener
+    fun setOnItemChildClickListener(listener: OnAdapterItemChildClick<T>): BaseRvAdapter<T> {
+        mOnItemChildClickListener = listener
         return this
     }
 
-    @Suppress("unused")
-    fun setOnItemChildLongClickListener(OnItemChildLongClickListener: OnItemChildLongClickListener<T>): BaseRvAdapter<T> {
-        mOnItemChildLongClickListener = OnItemChildLongClickListener
+    fun setOnItemChildLongClickListener(listener: OnAdapterItemChildLongClick<T>): BaseRvAdapter<T> {
+        mOnItemChildLongClickListener = listener
         return this
-    }
-
-    interface OnItemClickListener<T> {
-        /**
-         * 条目点击事件
-         *
-         * @param holder   h
-         * @param position p
-         * @param bean     b
-         */
-        fun onItemClick(holder: BaseRvViewHolder, position: Int, bean: T?)
-    }
-
-    interface OnItemLongClickListener<T> {
-        /**
-         * 条目长按事件
-         *
-         * @param holder   h
-         * @param position p
-         * @param bean     b
-         */
-        fun onItemLongClick(holder: BaseRvViewHolder, position: Int, bean: T?)
-    }
-
-    interface OnItemChildClickListener<T> {
-        /**
-         * 条目子项点击事件
-         *
-         * @param view     v
-         * @param holder   h
-         * @param position p
-         * @param bean     b
-         */
-        fun onItemChildCLick(view: View, holder: BaseRvViewHolder, position: Int, bean: T)
-    }
-
-    interface OnItemChildLongClickListener<T> {
-        /**
-         * 条目子项长按事件
-         *
-         * @param view     v
-         * @param holder   h
-         * @param position p
-         * @param bean     b
-         */
-        fun onItemChildLongClick(view: View, holder: BaseRvViewHolder, position: Int, bean: T)
     }
 
 }

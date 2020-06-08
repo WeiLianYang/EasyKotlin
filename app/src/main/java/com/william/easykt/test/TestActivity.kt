@@ -5,7 +5,6 @@ import android.content.Intent
 import com.william.base_component.mvp.BaseMvpActivity
 import com.william.easykt.R
 import com.william.easykt.data.Banner
-import com.william.easykt.data.HttpResponse
 import com.william.easykt.databinding.ActivityTestBinding
 
 
@@ -23,19 +22,17 @@ class TestActivity : BaseMvpActivity<TestPresenter>(), TestContract.IView {
     }
 
     override fun initData() {
-        setTitleText(R.string.album_title)
 
-        mPresenter?.getBanners()
+        mPresenter.getBanners()
     }
 
     override val mViewBinding: ActivityTestBinding by lazy(LazyThreadSafetyMode.NONE) {
         ActivityTestBinding.inflate(layoutInflater)
     }
 
-    override val layoutId: Int
-        get() = R.layout.activity_test
+    override fun getLayoutId(): Int = R.layout.activity_test
 
-    override fun setupData(response: HttpResponse<List<Banner>>?) {
+    override fun setupData(response: List<Banner>?) {
         mViewBinding.tvText.text = response?.toString()
         mViewBinding.ivTestImage.setImageResource(R.mipmap.ic_launcher)
         mViewBinding.includeLayout.ivIncludeImage.setImageResource(R.mipmap.ic_launcher_round)

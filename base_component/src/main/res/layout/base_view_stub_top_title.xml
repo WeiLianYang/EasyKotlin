@@ -64,6 +64,7 @@
         android:id="@+id/view_baseLine"
         android:layout_width="match_parent"
         android:layout_height="1dp"
+        android:visibility="gone"
         android:background="@color/color_f5f5f5"
         app:layout_constraintBottom_toBottomOf="parent" />
 

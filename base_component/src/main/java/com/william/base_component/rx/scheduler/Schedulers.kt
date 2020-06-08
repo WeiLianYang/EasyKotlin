@@ -10,17 +10,17 @@ import io.reactivex.schedulers.Schedulers
  * Class Comment：
  */
 
-class ComputationMainScheduler<T> private constructor() :
+class ComputationMainScheduler<T> :
     BaseScheduler<T>(Schedulers.computation(), AndroidSchedulers.mainThread())
 
-class SingleMainScheduler<T> private constructor() :
-    BaseScheduler<T>(Schedulers.single(), AndroidSchedulers.mainThread())
+class SingleMainScheduler<T> : BaseScheduler<T>(Schedulers.single(), AndroidSchedulers.mainThread())
 
-class TrampolineMainScheduler<T> private constructor() :
+class TrampolineMainScheduler<T> :
     BaseScheduler<T>(Schedulers.trampoline(), AndroidSchedulers.mainThread())
 
-class NewThreadMainScheduler<T> private constructor() :
+class NewThreadMainScheduler<T> :
     BaseScheduler<T>(Schedulers.newThread(), AndroidSchedulers.mainThread())
 
-
 class IoMainScheduler<T> : BaseScheduler<T>(Schedulers.io(), AndroidSchedulers.mainThread())
+
+class IoIoScheduler<T> : BaseScheduler<T>(Schedulers.io(), Schedulers.io())

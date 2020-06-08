@@ -1,5 +1,6 @@
 package com.william.base_component.utils
 
+import android.content.res.Resources
 import com.william.base_component.BaseApp
 
 
@@ -9,12 +10,24 @@ import com.william.base_component.BaseApp
  * Class Comment：
  */
 
-fun getDensity(): Float = BaseApp.instance.mContext.resources.displayMetrics.density
+fun getDensity(): Float = BaseApp.instance.resources.displayMetrics.density
 
-fun getFloatPixel(dp: Int): Float = dp * getDensity()
+fun getScreenWidth(): Int = BaseApp.instance.resources.displayMetrics.widthPixels
 
-fun getIntPixel(dp: Int): Int = getFloatPixel(dp).toInt()
+fun getScreenHeight(): Int = BaseApp.instance.resources.displayMetrics.heightPixels
 
-fun getScreenWidth(): Int = BaseApp.instance.mContext.resources.displayMetrics.widthPixels
+fun getStatusBarHeight(): Int {
+    val resources = Resources.getSystem()
+    val resourceId = resources.getIdentifier("status_bar_height", "dimen", "android")
+    return resources.getDimensionPixelSize(resourceId)
+}
 
-fun getScreenHeight(): Int = BaseApp.instance.mContext.resources.displayMetrics.heightPixels
+fun getNavBarHeight(): Int {
+    val res = Resources.getSystem()
+    val resourceId = res.getIdentifier("navigation_bar_height", "dimen", "android")
+    return if (resourceId != 0) {
+        res.getDimensionPixelSize(resourceId)
+    } else {
+        0
+    }
+}

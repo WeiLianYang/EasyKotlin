@@ -2,9 +2,7 @@ package com.william.easykt.test
 
 import com.william.base_component.mvp.base.BasePresenter
 import com.william.base_component.rx.BaseObserver
-import com.william.base_component.rx.SchedulerUtils
-import com.william.easykt.data.Banner
-import com.william.easykt.data.HttpResponse
+import com.william.base_component.rx.ioToMain
 
 
 /**
@@ -15,16 +13,16 @@ import com.william.easykt.data.HttpResponse
 class TestPresenter : BasePresenter<TestContract.IView, TestModel>(), TestContract.IPresenter {
 
     override fun getBanners() {
-        model?.getBanners()?.compose(SchedulerUtils.ioToMain())
-            ?.subscribe(object : BaseObserver<HttpResponse<List<Banner>>>() {
-                override fun onSuccess(entity: HttpResponse<List<Banner>>?) {
-                    view?.setupData(entity)
-                }
+        model?.getBanners()?.compose(ioToMain())
+            ?.subscribe(
+                BaseObserver(
+                    this, showLoading = true,
+                    onSuccess = {
+                        view?.setupData(it.data)
+                    }, onFail = { code: Int?, msg: String? ->
 
-                override fun onFail(code: Int?, msg: String?) {
-
-                }
-            })
+                    })
+            )
     }
 
 }

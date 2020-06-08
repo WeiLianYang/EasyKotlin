@@ -26,8 +26,8 @@ android {
         }
     }
 
-    viewBinding {
-        enabled = true
+    buildFeatures {
+        viewBinding = true
     }
 
 }
@@ -52,14 +52,10 @@ dependencies {
     api dependency["androidx-emoji-appcompat"]
     api dependency["androidx-emoji-bundled"]
     api dependency["android-material"]
+    api dependency["commons-codec"]
     api dependency["pnikosis-materialish-progress"]
     api dependency["glide"]
     api dependency["glide-transformations"]
-    api dependency["yanzhenjie-album"]
-    api dependency["yanzhenjie-durban"]
-    api(dependency["yanzhenjie-permission"]) {
-        exclude group: 'com.android.support'
-    }
     api dependency["yoyo-easing"]
     api dependency["yoyo-animation"]
     api dependency["switch-button"]
@@ -80,12 +76,16 @@ dependencies {
     api dependency["pageindicatorview"]
     api dependency["wechat-sdk"]
     api dependency["smartrefresh-layout"]
+    api dependency["smartrefresh-header"]
     api dependency["androidx-core-ktx"]
     api dependency["kotlin-stdlib"]
     api dependency["debugToolsLib"]
-    api dependency["autodispose"]
-    api dependency["autodispose-lifecycle"]
-    api dependency["autodispose-android"]
-    api dependency["autodispose-android-archcomponents"]
+    api dependency["fastjson"]
+    api dependency["bottomnavigationviewex"]
+    api dependency["bannerViewPager"]
+    api dependency["live-event-bus"]
+    api dependency["PermissionX"]
+    api dependency["magicindicator"]
+
 
 }

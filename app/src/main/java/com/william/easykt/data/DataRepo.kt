@@ -1,6 +1,5 @@
 package com.william.easykt.data
 
-import com.william.base_component.net.response.BaseEntity
 import java.io.Serializable
 
 /**
@@ -8,9 +7,6 @@ import java.io.Serializable
  * @date 2020/5/19 13:05
  * Class Comment：业务数据返回模型
  */
-data class HttpResponse<T>(
-    val data: T
-) : BaseEntity()
 
 // 通用的带有列表数据的实体
 data class BaseListResponseBody<T>(
@@ -25,46 +21,46 @@ data class BaseListResponseBody<T>(
 
 //文章
 data class ArticleResponseBody(
-        val curPage: Int,
-        var datas: MutableList<Article>,
-        val offset: Int,
-        val over: Boolean,
-        val pageCount: Int,
-        val size: Int,
-        val total: Int
+    val curPage: Int,
+    var datas: MutableList<Article>,
+    val offset: Int,
+    val over: Boolean,
+    val pageCount: Int,
+    val size: Int,
+    val total: Int
 )
 
 //文章
 data class Article(
-        val apkLink: String,
-        val audit: Int,
-        val author: String,
-        val chapterId: Int,
-        val chapterName: String,
-        var collect: Boolean,
-        val courseId: Int,
-        val desc: String,
-        val envelopePic: String,
-        val fresh: Boolean,
-        val id: Int,
-        val link: String,
-        val niceDate: String,
-        val niceShareDate: String,
-        val origin: String,
-        val prefix: String,
-        val projectLink: String,
-        val publishTime: Long,
-        val shareDate: String,
-        val shareUser: String,
-        val superChapterId: Int,
-        val superChapterName: String,
-        val tags: MutableList<Tag>,
-        val title: String,
-        val type: Int,
-        val userId: Int,
-        val visible: Int,
-        val zan: Int,
-        var top: String
+    val apkLink: String,
+    val audit: Int,
+    val author: String,
+    val chapterId: Int,
+    val chapterName: String,
+    var collect: Boolean,
+    val courseId: Int,
+    val desc: String,
+    val envelopePic: String,
+    val fresh: Boolean,
+    val id: Int,
+    val link: String,
+    val niceDate: String,
+    val niceShareDate: String,
+    val origin: String,
+    val prefix: String,
+    val projectLink: String,
+    val publishTime: Long,
+    val shareDate: String,
+    val shareUser: String,
+    val superChapterId: Int,
+    val superChapterName: String,
+    val tags: MutableList<Tag>,
+    val title: String,
+    val type: Int,
+    val userId: Int,
+    val visible: Int,
+    val zan: Int,
+    var top: String
 )
 
 data class Tag(
@@ -104,13 +100,13 @@ data class Friend(
 
 //知识体系
 data class KnowledgeTreeBody(
-        val children: MutableList<Knowledge>,
-        val courseId: Int,
-        val id: Int,
-        val name: String,
-        val order: Int,
-        val parentChapterId: Int,
-        val visible: Int
+    val children: MutableList<Knowledge>,
+    val courseId: Int,
+    val id: Int,
+    val name: String,
+    val order: Int,
+    val parentChapterId: Int,
+    val visible: Int
 ) : Serializable
 
 data class Knowledge(
@@ -169,9 +165,9 @@ data class CollectionArticle(
 
 // 导航
 data class NavigationBean(
-        val articles: MutableList<Article>,
-        val cid: Int,
-        val name: String
+    val articles: MutableList<Article>,
+    val cid: Int,
+    val name: String
 )
 
 // 项目
@@ -224,19 +220,19 @@ data class TodoListBean(
 
 // 所有TODO，包括待办和已完成
 data class AllTodoResponseBody(
-        val type: Int,
-        val doneList: MutableList<TodoListBean>,
-        val todoList: MutableList<TodoListBean>
+    val type: Int,
+    val doneList: MutableList<TodoListBean>,
+    val todoList: MutableList<TodoListBean>
 )
 
 data class TodoResponseBody(
-        val curPage: Int,
-        val datas: MutableList<TodoBean>,
-        val offset: Int,
-        val over: Boolean,
-        val pageCount: Int,
-        val size: Int,
-        val total: Int
+    val curPage: Int,
+    val datas: MutableList<TodoBean>,
+    val offset: Int,
+    val over: Boolean,
+    val pageCount: Int,
+    val size: Int,
+    val total: Int
 )
 
 // 公众号列表实体
@@ -282,6 +278,6 @@ data class CoinInfoBean(
 
 // 我的分享
 data class ShareResponseBody(
-        val coinInfo: CoinInfoBean,
-        val shareArticles: ArticleResponseBody
+    val coinInfo: CoinInfoBean,
+    val shareArticles: ArticleResponseBody
 )
