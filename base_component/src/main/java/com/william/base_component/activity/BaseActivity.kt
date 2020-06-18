@@ -2,6 +2,7 @@ package com.william.base_component.activity
 
 
 import android.os.Bundle
+import android.view.LayoutInflater
 import android.view.View
 import android.widget.ImageView
 import android.widget.TextView
@@ -41,9 +42,7 @@ abstract class BaseActivity : AppCompatActivity(), IBaseView {
 
     /**
      * Implemented by subclasses using standard delegates, for example:：
-     *   override val mViewBinding: ActivityTestBinding by lazy(LazyThreadSafetyMode.NONE) {
-     *       ActivityTestBinding.inflate(layoutInflater)
-     *   }
+     * override val mViewBinding: ActivityMainBinding by bindingView()
      */
     protected abstract val mViewBinding: ViewBinding
 
@@ -180,5 +179,12 @@ abstract class BaseActivity : AppCompatActivity(), IBaseView {
         hideLoadingView()
         super.onDestroy()
     }
+
+    protected inline fun <reified T : ViewBinding> bindingView(): Lazy<T> =
+        lazy(LazyThreadSafetyMode.NONE) {
+            val viewBindClass = T::class.java
+            val method = viewBindClass.getDeclaredMethod("inflate", LayoutInflater::class.java)
+            return@lazy method.invoke(null, layoutInflater) as T
+        }
 
 }

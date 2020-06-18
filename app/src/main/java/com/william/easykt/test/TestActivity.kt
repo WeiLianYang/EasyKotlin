@@ -26,9 +26,7 @@ class TestActivity : BaseMvpActivity<TestPresenter>(), TestContract.IView {
         mPresenter.getBanners()
     }
 
-    override val mViewBinding: ActivityTestBinding by lazy(LazyThreadSafetyMode.NONE) {
-        ActivityTestBinding.inflate(layoutInflater)
-    }
+    override val mViewBinding: ActivityTestBinding by bindingView()
 
     override fun getLayoutId(): Int = R.layout.activity_test
 

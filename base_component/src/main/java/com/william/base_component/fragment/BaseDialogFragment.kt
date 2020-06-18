@@ -70,4 +70,11 @@ abstract class BaseDialogFragment : DialogFragment() {
 
     protected open fun getGravity() = Gravity.CENTER
 
+    protected inline fun <reified T : ViewBinding> bindingView(): Lazy<T> =
+        lazy(LazyThreadSafetyMode.NONE) {
+            val viewBindClass = T::class.java
+            val method = viewBindClass.getDeclaredMethod("inflate", LayoutInflater::class.java)
+            return@lazy method.invoke(null, layoutInflater) as T
+        }
+
 }

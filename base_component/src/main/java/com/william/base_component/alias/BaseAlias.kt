@@ -68,9 +68,3 @@ typealias OnGlideResourceReady = (resource: Drawable?, model: Any?, target: Targ
  * Callback for [com.william.base_component.image.GlideLoader.load]
  */
 typealias OnGlideLoadFailed = (e: GlideException?, model: Any?, target: Target<Drawable?>?, isFirstResource: Boolean) -> Unit
-
-/**
- * Permission request result callback function
- * Callback for [com.william.base_component.utils.checkPermissionAndRequest]
- */
-typealias OnPermissionCallback = () -> Unit

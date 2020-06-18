@@ -73,11 +73,11 @@ fun loadImage(
     onResourceReady: OnGlideResourceReady? = null,
     onLoadFailed: OnGlideLoadFailed? = null
 ) {
-    val recourse: Any = when (url) {
+    val recourse: Any? = when (url) {
         is String -> url
         is Int -> url
         is ByteArray -> url
-        else -> return
+        else -> null
     }
 
     val requestBuilder: RequestBuilder<Drawable>? = getRequestManager(
@@ -94,8 +94,8 @@ fun loadImage(
         ?.addListener(object : RequestListener<Drawable?> {
             override fun onLoadFailed(
                 e: GlideException?,
-                model: Any,
-                target: Target<Drawable?>,
+                model: Any?,
+                target: Target<Drawable?>?,
                 isFirstResource: Boolean
             ): Boolean {
                 onLoadFailed?.invoke(e, model, target, isFirstResource)
@@ -104,9 +104,9 @@ fun loadImage(
 
             override fun onResourceReady(
                 resource: Drawable?,
-                model: Any,
-                target: Target<Drawable?>,
-                dataSource: DataSource,
+                model: Any?,
+                target: Target<Drawable?>?,
+                dataSource: DataSource?,
                 isFirstResource: Boolean
             ): Boolean {
                 onResourceReady?.invoke(
