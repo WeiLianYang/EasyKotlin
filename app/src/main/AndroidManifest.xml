@@ -26,6 +26,10 @@
             </intent-filter>
         </activity>
         <activity android:name=".test.TestActivity" />
+
+        <activity android:name=".ui.SwipeCardActivity" />
+
+        <activity android:name=".ui.WaveAnimationActivity" />
     </application>
 
 </manifest>

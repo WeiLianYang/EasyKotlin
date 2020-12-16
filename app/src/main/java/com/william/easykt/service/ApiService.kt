@@ -8,7 +8,7 @@ import retrofit2.http.*
 /**
  * @author William
  * @date 2020/5/19 13:15
- * Class Comment：
+ * Class Comment：接口来自于 https://www.wanandroid.com/blog/show/2#47
  */
 interface ApiService {
 
@@ -188,7 +188,6 @@ interface ApiService {
 
     /**
      * 获取TODO列表数据
-     * http://wanandroid.com/lg/todo/list/0/json
      * @param type
      */
     @POST("/lg/todo/list/{type}/json")
@@ -196,7 +195,6 @@ interface ApiService {
 
     /**
      * 获取未完成Todo列表
-     * http://wanandroid.com/lg/todo/listnotdo/0/json/1
      * @param type 类型拼接在链接上，目前支持0,1,2,3
      * @param page 拼接在链接上，从1开始
      */
@@ -208,7 +206,6 @@ interface ApiService {
 
     /**
      * 获取已完成Todo列表
-     * http://www.wanandroid.com/lg/todo/listdone/0/json/1
      * @param type 类型拼接在链接上，目前支持0,1,2,3
      * @param page 拼接在链接上，从1开始
      */
@@ -220,7 +217,6 @@ interface ApiService {
 
     /**
      * V2版本 ： 获取TODO列表数据
-     * http://www.wanandroid.com/lg/todo/v2/list/页码/json
      * @param page 页码从1开始，拼接在 url 上
      * @param map
      *          status 状态， 1-完成；0未完成; 默认全部展示；
@@ -236,7 +232,6 @@ interface ApiService {
 
     /**
      * 仅更新完成状态Todo
-     * http://www.wanandroid.com/lg/todo/done/80/json
      * @param id 拼接在链接上，为唯一标识
      * @param status 0或1，传1代表未完成到已完成，反之则反之
      */
@@ -249,7 +244,6 @@ interface ApiService {
 
     /**
      * 删除一条Todo
-     * http://www.wanandroid.com/lg/todo/delete/83/json
      * @param id
      */
     @POST("/lg/todo/delete/{id}/json")
@@ -257,7 +251,6 @@ interface ApiService {
 
     /**
      * 新增一条Todo
-     * http://www.wanandroid.com/lg/todo/add/json
      * @param body
      *          title: 新增标题
      *          content: 新增详情
@@ -270,7 +263,6 @@ interface ApiService {
 
     /**
      * 更新一条Todo内容
-     * http://www.wanandroid.com/lg/todo/update/83/json
      * @param body
      *          title: 新增标题
      *          content: 新增详情

@@ -3,7 +3,11 @@ package com.william.base_component.utils
 import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
+import android.graphics.Outline
+import android.view.View
+import android.view.ViewOutlineProvider
 import com.william.base_component.BaseApp
+import com.william.base_component.extension.dp
 
 /**
  * @author William
@@ -61,4 +65,23 @@ fun getAppVersionName(): String {
 fun <T> openActivity(context: Context, clazz: Class<T>) {
     val intent = Intent(context, clazz)
     context.startActivity(intent)
+}
+
+/**
+ * 设置视图裁剪的圆角半径
+ * @param radius
+ */
+fun setClipViewCornerRadius(view: View?, radius: Int) {
+    if (radius <= 0) {
+        return
+    }
+    view?.apply {
+        outlineProvider = object : ViewOutlineProvider() {
+            override fun getOutline(v: View, outline: Outline) {
+                outline.setRoundRect(0, 0, v.width, v.height, radius.dp.toFloat());
+            }
+        }
+        clipToOutline = true
+    }
+
 }

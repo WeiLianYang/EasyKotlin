@@ -1,7 +1,5 @@
 package com.william.easykt.test
 
-import android.content.Context
-import android.content.Intent
 import com.william.base_component.mvp.BaseMvpActivity
 import com.william.easykt.R
 import com.william.easykt.data.Banner
@@ -36,12 +34,4 @@ class TestActivity : BaseMvpActivity<TestPresenter>(), TestContract.IView {
         mViewBinding.includeLayout.ivIncludeImage.setImageResource(R.mipmap.ic_launcher_round)
     }
 
-    companion object {
-
-        @JvmStatic
-        fun startTarget(context: Context) {
-            val intent = Intent(context, TestActivity::class.java)
-            context.startActivity(intent)
-        }
-    }
 }

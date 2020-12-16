@@ -11,7 +11,6 @@ import androidx.annotation.StringRes
 import androidx.appcompat.app.AppCompatActivity
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.fragment.app.FragmentActivity
-import androidx.lifecycle.Observer
 import androidx.viewbinding.ViewBinding
 import com.jeremyliao.liveeventbus.LiveEventBus
 import com.william.base_component.R
@@ -41,7 +40,7 @@ abstract class BaseActivity : AppCompatActivity(), IBaseView {
     private lateinit var mBaseBinding: BaseActivityBinding
 
     /**
-     * Implemented by subclasses using standard delegates, for example:：
+     * Implemented by subclasses using standard delegates, for example:
      * override val mViewBinding: ActivityMainBinding by bindingView()
      */
     protected abstract val mViewBinding: ViewBinding
@@ -104,7 +103,7 @@ abstract class BaseActivity : AppCompatActivity(), IBaseView {
         onRegisterEvent()?.let {
             LiveEventBus
                 .get(it, Any::class.java)
-                .observe(this, Observer { data: Any? ->
+                .observe(this, { data: Any? ->
                     try {
                         onReceiveEvent(data)
                     } catch (e: Exception) {

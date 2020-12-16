@@ -29,12 +29,14 @@ private fun getRetrofit(): Retrofit {
 
 private fun getOkHttpClient(): OkHttpClient {
     val builder = OkHttpClient().newBuilder()
-    val httpLoggingInterceptor = HttpLoggingInterceptor()
-    if (BuildConfig.DEBUG) {
-        httpLoggingInterceptor.level = HttpLoggingInterceptor.Level.BODY
-    } else {
-        httpLoggingInterceptor.level = HttpLoggingInterceptor.Level.NONE
+    val httpLoggingInterceptor = HttpLoggingInterceptor().apply {
+        level = if (BuildConfig.DEBUG) {
+            HttpLoggingInterceptor.Level.BODY
+        } else {
+            HttpLoggingInterceptor.Level.NONE
+        }
     }
+
     // TODO: William 2020/5/19 12:20 需要加上缓存、cookie、SSL证书设置
     builder.run {
         addInterceptor(httpLoggingInterceptor)
