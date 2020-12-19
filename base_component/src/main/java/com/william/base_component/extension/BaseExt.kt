@@ -14,13 +14,13 @@ import com.william.base_component.BaseApp
  */
 fun Fragment.toast(content: String?) {
     content?.let {
-        Toast.makeText(this.activity?.applicationContext, content, Toast.LENGTH_SHORT).show()
+        Toast.makeText(this.activity?.applicationContext, it, Toast.LENGTH_SHORT).show()
     }
 }
 
 fun Context.toast(content: String?) {
     content?.let {
-        Toast.makeText(BaseApp.instance, content, Toast.LENGTH_SHORT).show()
+        Toast.makeText(BaseApp.instance, it, Toast.LENGTH_SHORT).show()
     }
 }
 
