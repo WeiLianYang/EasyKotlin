@@ -10,6 +10,6 @@ import com.william.base_component.net.createService
  */
 object Api {
 
-    val service: ApiService = createService(ApiService::class.java)
+    val apiService = createService<ApiService>()
 
 }

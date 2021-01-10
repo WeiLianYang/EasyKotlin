@@ -58,12 +58,19 @@ fun getAppVersionName(): String {
 }
 
 /**
- * 打开某个activity，针对于不需要参数跳转的可以用这个
+ * 打开某个activity，传值，也可不传值
  * @param context 上下文
- * @param clazz 目标activity的class对象
+ * @param block 传参表达式
+ * @param T 目标activity
  */
-fun <T> openActivity(context: Context, clazz: Class<T>) {
-    val intent = Intent(context, clazz)
+inline fun <reified T> openActivity(
+    context: Context,
+    noinline block: (Intent.() -> Unit)? = null
+) {
+    val intent = Intent(context, T::class.java)
+    if (block != null) {
+        intent.block()
+    }
     context.startActivity(intent)
 }
 

@@ -15,7 +15,7 @@ import io.reactivex.Observable
 class TestModel : BaseModel(), TestContract.IModel {
 
     override fun getBanners(): Observable<BaseResponse<List<Banner>>> {
-        return Api.service.getBanners()
+        return Api.apiService.getBanners()
     }
 
 }

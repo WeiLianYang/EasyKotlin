@@ -1,10 +1,8 @@
 package com.william.base_component.extension
 
-import android.content.Context
 import android.content.res.Resources
 import android.util.TypedValue
 import android.widget.Toast
-import androidx.fragment.app.Fragment
 import com.william.base_component.BaseApp
 
 /**
@@ -12,16 +10,14 @@ import com.william.base_component.BaseApp
  * @date 2020/4/18 20:52
  * Class Comment：Custom extension functions and extension properties.
  */
-fun Fragment.toast(content: String?) {
-    content?.let {
-        Toast.makeText(this.activity?.applicationContext, it, Toast.LENGTH_SHORT).show()
+fun String?.toast(duration: Int = Toast.LENGTH_SHORT) {
+    this?.let {
+        Toast.makeText(BaseApp.instance, it, duration).show()
     }
 }
 
-fun Context.toast(content: String?) {
-    content?.let {
-        Toast.makeText(BaseApp.instance, it, Toast.LENGTH_SHORT).show()
-    }
+fun Int.toast(duration: Int = Toast.LENGTH_SHORT) {
+    Toast.makeText(BaseApp.instance, this, duration).show()
 }
 
 

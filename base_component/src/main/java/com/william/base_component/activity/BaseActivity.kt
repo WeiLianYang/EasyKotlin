@@ -154,7 +154,7 @@ abstract class BaseActivity : AppCompatActivity(), IBaseView {
     }
 
     override fun showToast(msg: String?) {
-        toast(msg)
+        msg.toast()
     }
 
     override fun showLoadingView(isCanNotCancel: Boolean) {

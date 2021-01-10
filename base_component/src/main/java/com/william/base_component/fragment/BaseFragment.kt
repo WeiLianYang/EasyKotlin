@@ -122,7 +122,7 @@ abstract class BaseFragment : Fragment(), IBaseView {
     }
 
     override fun showToast(msg: String?) {
-        toast(msg)
+        msg.toast()
     }
 
     override fun showLoadingView(isCanNotCancel: Boolean) {

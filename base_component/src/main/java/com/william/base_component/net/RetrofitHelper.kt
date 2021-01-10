@@ -52,3 +52,8 @@ private fun getOkHttpClient(): OkHttpClient {
 fun <T> createService(clazz: Class<T>): T {
     return getRetrofit().create(clazz)
 }
+
+/**
+ * optimize
+ */
+inline fun <reified T> createService(): T = createService(T::class.java)

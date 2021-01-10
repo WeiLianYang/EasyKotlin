@@ -15,15 +15,17 @@ class MainActivity : AppCompatActivity() {
         setContentView(R.layout.activity_main)
 
         tv_button1.setOnClickListener {
-            openActivity(this, TestActivity::class.java)
+            openActivity<TestActivity>(this) {
+                putExtra("name", "Stark")
+            }
         }
 
         tv_button2.setOnClickListener {
-            openActivity(this, SwipeCardActivity::class.java)
+            openActivity<SwipeCardActivity>(this)
         }
 
         tv_button3.setOnClickListener {
-            openActivity(this, WaveAnimationActivity::class.java)
+            openActivity<WaveAnimationActivity>(this)
         }
     }
 
