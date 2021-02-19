@@ -70,6 +70,6 @@ dependencies {
     api dependency["live-event-bus"]
     api dependency["PermissionX"]
     api dependency["magicindicator"]
-
+    api dependency["pageTransformerHelp"]
 
 }

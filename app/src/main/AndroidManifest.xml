@@ -30,6 +30,8 @@
         <activity android:name=".ui.SwipeCardActivity" />
 
         <activity android:name=".ui.WaveAnimationActivity" />
+
+        <activity android:name=".ui.PagerCardActivity" />
     </application>
 
 </manifest>

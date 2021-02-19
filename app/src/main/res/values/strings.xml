@@ -4,4 +4,5 @@
     <string name="test_net_data">测试加载网络数据</string>
     <string name="test_card_effects">测试卡片滑动效果</string>
     <string name="test_wave_effects">测试手指水波纹效果</string>
+    <string name="test_card_pager">测试卡片滑动效果2</string>
 </resources>

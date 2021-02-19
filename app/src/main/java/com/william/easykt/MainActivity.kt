@@ -4,6 +4,7 @@ import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import com.william.base_component.utils.openActivity
 import com.william.easykt.test.TestActivity
+import com.william.easykt.ui.PagerCardActivity
 import com.william.easykt.ui.SwipeCardActivity
 import com.william.easykt.ui.WaveAnimationActivity
 import kotlinx.android.synthetic.main.activity_main.*
@@ -26,6 +27,10 @@ class MainActivity : AppCompatActivity() {
 
         tv_button3.setOnClickListener {
             openActivity<WaveAnimationActivity>(this)
+        }
+
+        tv_button4.setOnClickListener {
+            openActivity<PagerCardActivity>(this)
         }
     }
 
