@@ -102,7 +102,7 @@ abstract class BaseActivity : AppCompatActivity(), IBaseView {
     private fun initEvent() {
         onRegisterEvent()?.let {
             LiveEventBus
-                .get(it, Any::class.java)
+                .get(it)
                 .observe(this, { data: Any? ->
                     try {
                         onReceiveEvent(data)

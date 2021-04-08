@@ -61,7 +61,7 @@ ext {
             "yanzhenjie-album"                  : "com.yanzhenjie:album:2.1.2",
             "yanzhenjie-durban"                 : "com.yanzhenjie:durban:1.0.1",
             "magicindicator"                    : "com.github.hackware1993:MagicIndicator:1.5.0",
-            "live-event-bus"                    : "com.jeremyliao:live-event-bus-x:1.6.1",
+            "live-event-bus"                    : "com.jeremyliao:live-event-bus-x:1.7.3",
             "bottomnavigationviewex"            : "com.github.ittianyu:BottomNavigationViewEx:2.0.4",
             "rxbinding"                         : "com.jakewharton.rxbinding3:rxbinding:3.1.0",
             "glide"                             : "com.github.bumptech.glide:glide:4.11.0",
@@ -88,7 +88,8 @@ ext {
             "debugToolsLib"                     : "com.williamyang.debugtools:debugtoolslib:1.0.0",
             "leakcanary"                        : "com.squareup.leakcanary:leakcanary-android:2.2",
             "statusbarutil"                     : "com.jaeger.statusbarutil:library:1.5.1",
-            "bannerViewPager"                   : "com.github.zhpanvip:BannerViewPager:3.1.2"
+            "bannerViewPager"                   : "com.github.zhpanvip:BannerViewPager:3.5.0",
+            "viewpagerindicator"                : "com.github.zhpanvip:viewpagerindicator:1.2.0"
     ]
 
 }
