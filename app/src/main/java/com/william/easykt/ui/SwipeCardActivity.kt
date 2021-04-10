@@ -1,7 +1,6 @@
 package com.william.easykt.ui
 
 import com.william.base_component.activity.BaseActivity
-import com.william.easykt.R
 import com.william.easykt.databinding.ActivitySwipeCardBinding
 import com.william.easykt.ui.adapter.SwipeCardAdapter
 
@@ -17,12 +16,11 @@ class SwipeCardActivity : BaseActivity() {
 
     private lateinit var cardAdapter: SwipeCardAdapter
 
-    override fun getLayoutId(): Int = R.layout.activity_swipe_card
-
     override fun initAction() {
     }
 
     override fun initData() {
+        setTitleText("SwipeCardActivity")
         cardAdapter = SwipeCardAdapter()
         mViewBinding.viewPager.apply {
             offscreenPageLimit = 3

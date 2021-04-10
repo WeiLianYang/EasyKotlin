@@ -1,11 +1,9 @@
 package com.william.base_component.mvp
 
-import androidx.annotation.LayoutRes
 import androidx.viewbinding.ViewBinding
 import com.scwang.smartrefresh.header.MaterialHeader
 import com.scwang.smartrefresh.layout.SmartRefreshLayout
 import com.scwang.smartrefresh.layout.api.RefreshLayout
-import com.william.base_component.R
 import com.william.base_component.databinding.BaseActivityRefreshBinding
 import com.william.base_component.mvp.base.BasePresenter
 import com.william.base_component.mvp.base.IBaseModel
@@ -47,11 +45,6 @@ abstract class BaseMvpRefreshActivity<P : BasePresenter<out IBaseView, out IBase
         initRefreshSetting()
     }
 
-    override fun getLayoutId(): Int = R.layout.base_activity_refresh
-
-    @LayoutRes
-    abstract fun getContentLayoutId(): Int
-
     open fun getSmartRefreshLayout(): SmartRefreshLayout? =
         (mViewBinding as? BaseActivityRefreshBinding)?.mSmartRefreshLayout
 
@@ -65,9 +58,7 @@ abstract class BaseMvpRefreshActivity<P : BasePresenter<out IBaseView, out IBase
             setEnableLoadMore(false)
 
             // 设置子布局
-            if (getContentLayoutId() != 0) {
-                setRefreshContent(mContentViewBinding.root)
-            }
+            setRefreshContent(mContentViewBinding.root)
             setRefreshHeader(MaterialHeader(mActivity))
             val footer = CustomClassicsFooter(mActivity)
             footer.setFinishDuration(0)

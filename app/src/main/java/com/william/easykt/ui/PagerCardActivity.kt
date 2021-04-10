@@ -2,7 +2,6 @@ package com.william.easykt.ui
 
 import com.william.base_component.activity.BaseActivity
 import com.william.base_component.extension.dp
-import com.william.easykt.R
 import com.william.easykt.databinding.ActivityPagerCardBinding
 import com.william.easykt.ui.adapter.PagerCardAdapter
 
@@ -18,13 +17,11 @@ class PagerCardActivity : BaseActivity() {
 
     private lateinit var cardAdapter: PagerCardAdapter
 
-    override fun getLayoutId(): Int = R.layout.activity_pager_card
-
     override fun initAction() {
     }
 
     override fun initData() {
-        setTitleText("卡片轮播")
+        setTitleText("PagerCardActivity")
         cardAdapter = PagerCardAdapter()
         mViewBinding.viewPager.apply {
             pageMargin = 18.dp

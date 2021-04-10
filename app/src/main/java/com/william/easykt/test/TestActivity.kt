@@ -26,8 +26,6 @@ class TestActivity : BaseMvpActivity<TestPresenter>(), TestContract.IView {
 
     override val mViewBinding: ActivityTestBinding by bindingView()
 
-    override fun getLayoutId(): Int = R.layout.activity_test
-
     override fun setupData(response: List<Banner>?) {
         mViewBinding.tvText.text = response?.toString()
         mViewBinding.ivTestImage.setImageResource(R.mipmap.ic_launcher)

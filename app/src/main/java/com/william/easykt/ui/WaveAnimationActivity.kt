@@ -7,7 +7,6 @@ import android.graphics.Paint
 import android.view.animation.LinearInterpolator
 import com.william.base_component.activity.BaseActivity
 import com.william.base_component.extension.dp
-import com.william.easykt.R
 import com.william.easykt.databinding.ActivityWaveAnimationBinding
 
 
@@ -19,13 +18,12 @@ import com.william.easykt.databinding.ActivityWaveAnimationBinding
 class WaveAnimationActivity : BaseActivity() {
     override val mViewBinding: ActivityWaveAnimationBinding by bindingView()
 
-    override fun getLayoutId(): Int = R.layout.activity_wave_animation
-
     override fun initAction() {
 
     }
 
     override fun initData() {
+        setTitleText("WaveAnimationActivity")
         mViewBinding.mWaveView.apply {
             setInitialRadius(15f.dp)
             setMaxRadiusRate(1f)

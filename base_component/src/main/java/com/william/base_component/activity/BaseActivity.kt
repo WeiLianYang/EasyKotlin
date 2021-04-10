@@ -6,7 +6,6 @@ import android.view.LayoutInflater
 import android.view.View
 import android.widget.ImageView
 import android.widget.TextView
-import androidx.annotation.LayoutRes
 import androidx.annotation.StringRes
 import androidx.appcompat.app.AppCompatActivity
 import androidx.constraintlayout.widget.ConstraintLayout
@@ -74,24 +73,21 @@ abstract class BaseActivity : AppCompatActivity(), IBaseView {
             mViewBaseLine = findViewById(R.id.view_baseLine)
             initTitleBarListener()
         }
-        if (getLayoutId() != 0) {
-            val params = ConstraintLayout.LayoutParams(
-                ConstraintLayout.LayoutParams.MATCH_PARENT,
-                ConstraintLayout.LayoutParams.MATCH_CONSTRAINT
-            )
-            if (isShowTitleBar()) {
-                params.topToBottom = R.id.cl_baseTitle
-            } else {
-                params.topToTop = ConstraintLayout.LayoutParams.PARENT_ID
-            }
-            params.bottomToBottom = ConstraintLayout.LayoutParams.PARENT_ID
-            mBaseBinding.mClBaseContent.addView(mViewBinding.root, params)
+
+        val params = ConstraintLayout.LayoutParams(
+            ConstraintLayout.LayoutParams.MATCH_PARENT,
+            ConstraintLayout.LayoutParams.MATCH_CONSTRAINT
+        )
+        if (isShowTitleBar()) {
+            params.topToBottom = R.id.cl_baseTitle
+        } else {
+            params.topToTop = ConstraintLayout.LayoutParams.PARENT_ID
         }
+        params.bottomToBottom = ConstraintLayout.LayoutParams.PARENT_ID
+        mBaseBinding.mClBaseContent.addView(mViewBinding.root, params)
+
         mBaseBinding.mClBaseContent.fitsSystemWindows = isFitSystemWindow()
     }
-
-    @LayoutRes
-    protected abstract fun getLayoutId(): Int
 
     open fun initView() {}
 
