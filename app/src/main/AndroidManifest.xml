@@ -32,6 +32,8 @@
         <activity android:name=".ui.WaveAnimationActivity" />
 
         <activity android:name=".ui.PagerCardActivity" />
+
+        <activity android:name=".ui.AutoScrollActivity" />
     </application>
 
 </manifest>

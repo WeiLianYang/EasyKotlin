@@ -4,6 +4,7 @@ import com.william.base_component.activity.BaseActivity
 import com.william.base_component.utils.openActivity
 import com.william.easykt.databinding.ActivityMainBinding
 import com.william.easykt.test.TestActivity
+import com.william.easykt.ui.AutoScrollActivity
 import com.william.easykt.ui.PagerCardActivity
 import com.william.easykt.ui.SwipeCardActivity
 import com.william.easykt.ui.WaveAnimationActivity
@@ -36,6 +37,10 @@ class MainActivity : BaseActivity() {
 
             tv_button4.setOnClickListener {
                 openActivity<PagerCardActivity>(mActivity)
+            }
+
+            tv_button5.setOnClickListener {
+                openActivity<AutoScrollActivity>(mActivity)
             }
         }
     }
