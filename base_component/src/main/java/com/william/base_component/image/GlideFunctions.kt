@@ -180,10 +180,9 @@ private fun createOptions(
         transformation?.let {
             options.transform(it)
         }
-
-        if (width != null && height != null) {
-            return options.override(width, height)
-        }
+    }
+    if (width != null && height != null) {
+        return options.override(width, height)
     }
     return options
 }
