@@ -71,5 +71,6 @@ dependencies {
     api dependency["PermissionX"]
     api dependency["magicindicator"]
     api dependency["pageTransformerHelp"]
+    api dependency["mmkv"]
 
 }
