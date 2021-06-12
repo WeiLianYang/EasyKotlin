@@ -4,10 +4,7 @@ import com.william.base_component.activity.BaseActivity
 import com.william.base_component.utils.openActivity
 import com.william.easykt.databinding.ActivityMainBinding
 import com.william.easykt.test.TestActivity
-import com.william.easykt.ui.AutoScrollActivity
-import com.william.easykt.ui.PagerCardActivity
-import com.william.easykt.ui.SwipeCardActivity
-import com.william.easykt.ui.WaveAnimationActivity
+import com.william.easykt.ui.*
 import kotlinx.android.synthetic.main.activity_main.*
 
 /**
@@ -41,6 +38,10 @@ class MainActivity : BaseActivity() {
 
             tv_button5.setOnClickListener {
                 openActivity<AutoScrollActivity>(mActivity)
+            }
+
+            tv_button6.setOnClickListener {
+                openActivity<PermissionActivity>(mActivity)
             }
         }
     }

@@ -65,12 +65,10 @@ fun getAppVersionName(): String {
  */
 inline fun <reified T> openActivity(
     context: Context,
-    noinline block: (Intent.() -> Unit)? = null
+    noinline block: (Intent.() -> Unit) = {}
 ) {
     val intent = Intent(context, T::class.java)
-    if (block != null) {
-        intent.block()
-    }
+    intent.block()
     context.startActivity(intent)
 }
 

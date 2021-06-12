@@ -57,7 +57,7 @@ ext {
             "yanzhenjie-rv"                     : "com.yanzhenjie.recyclerview:x:1.3.2",
             "permission"                        : "com.yanzhenjie:permission:2.0.3",
             "andpermission"                     : "com.yanzhenjie.permission:support:2.0.1",
-            "PermissionX"                       : "com.permissionx.guolindev:permissionx:1.1.1",
+            "PermissionX"                       : "com.permissionx.guolindev:permissionx:1.4.0",
             "yanzhenjie-album"                  : "com.yanzhenjie:album:2.1.2",
             "yanzhenjie-durban"                 : "com.yanzhenjie:durban:1.0.1",
             "magicindicator"                    : "com.github.hackware1993:MagicIndicator:1.5.0",
