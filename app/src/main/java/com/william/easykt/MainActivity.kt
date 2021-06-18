@@ -1,11 +1,30 @@
+/*
+ * Copyright WeiLianYang
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
 package com.william.easykt
 
 import com.william.base_component.activity.BaseActivity
 import com.william.base_component.utils.openActivity
+import com.william.base_component.utils.openBrowser
 import com.william.easykt.databinding.ActivityMainBinding
 import com.william.easykt.test.TestActivity
-import com.william.easykt.ui.*
-import kotlinx.android.synthetic.main.activity_main.*
+import com.william.easykt.ui.AutoScrollActivity
+import com.william.easykt.ui.PagerCardActivity
+import com.william.easykt.ui.SwipeCardActivity
+import com.william.easykt.ui.WaveAnimationActivity
 
 /**
  * @author William
@@ -18,30 +37,35 @@ class MainActivity : BaseActivity() {
     override fun initAction() {
 
         mViewBinding.apply {
-            tv_button1.setOnClickListener {
+            tvButton1.setOnClickListener {
                 openActivity<TestActivity>(mActivity) {
                     putExtra("name", "Stark")
                 }
             }
 
-            tv_button2.setOnClickListener {
+            tvButton2.setOnClickListener {
                 openActivity<SwipeCardActivity>(mActivity)
             }
 
-            tv_button3.setOnClickListener {
+            tvButton3.setOnClickListener {
                 openActivity<WaveAnimationActivity>(mActivity)
             }
 
-            tv_button4.setOnClickListener {
+            tvButton4.setOnClickListener {
                 openActivity<PagerCardActivity>(mActivity)
             }
 
-            tv_button5.setOnClickListener {
+            tvButton5.setOnClickListener {
                 openActivity<AutoScrollActivity>(mActivity)
             }
 
-            tv_button6.setOnClickListener {
-                openActivity<PermissionActivity>(mActivity)
+            tvButton7.setOnClickListener {
+                openBrowser(
+                    mActivity,
+                    "https://www.baidu.com",
+                    "com.tencent.mtt",
+                    "com.tencent.mtt.MainActivity"
+                )
             }
         }
     }
