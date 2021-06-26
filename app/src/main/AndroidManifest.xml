@@ -3,6 +3,45 @@
     xmlns:tools="http://schemas.android.com/tools"
     package="com.william.easykt">
 
+    <!-- Android 11 packageManager.queryIntentActivities()
+         管理软件包可见性 https://developer.android.com/training/basics/intents/package-visibility -->
+    <queries>
+        <package android:name="com.tencent.mtt" />
+        <package android:name="com.UCMobile" />
+        <package android:name="sogou.mobile.explorer" />
+        <package android:name="com.baidu.browser.apps" />
+        <package android:name="com.qihoo.browser" />
+        <package android:name="com.ijinshan.browser_fast" />
+        <package android:name="com.android.chrome" />
+        <package android:name="org.mozilla.firefox" />
+    </queries>
+
+    <!--
+    <queries>
+        <intent>
+            <action android:name="android.intent.action.VIEW" />
+            <data android:mimeType="text/plain" />
+        </intent>
+
+         <intent>
+             <action android:name="android.intent.action.VIEW" />
+             <data android:mimeType="text/html" />
+         </intent>
+        <intent>
+             <action android:name="android.intent.action.VIEW" />
+             <data android:mimeType="http" />
+         </intent>
+         <intent>
+             <action android:name="android.intent.action.VIEW" />
+             <data android:mimeType="https" />
+         </intent>
+         <intent>
+             <action android:name="android.intent.action.VIEW" />
+             <data android:mimeType="application/xhtml+xml" />
+         </intent>
+    </queries>
+    -->
+
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
 

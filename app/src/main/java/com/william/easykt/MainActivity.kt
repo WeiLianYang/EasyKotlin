@@ -60,12 +60,15 @@ class MainActivity : BaseActivity() {
             }
 
             tvButton7.setOnClickListener {
+                /*
                 openBrowser(
                     mActivity,
                     "https://www.baidu.com",
                     "com.tencent.mtt",
                     "com.tencent.mtt.MainActivity"
                 )
+                */
+                openBrowser(this@MainActivity, "https://www.baidu.com")
             }
         }
     }

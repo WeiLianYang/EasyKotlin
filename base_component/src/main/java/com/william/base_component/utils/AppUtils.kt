@@ -136,3 +136,27 @@ fun openBrowser(
         context.startActivity(intent)
     }
 }
+
+fun openBrowser(context: Context, url: String?) {
+    if (url.isNullOrEmpty()) {
+        return
+    }
+    val intent = Intent(Intent.ACTION_VIEW, Uri.parse(url))
+    runCatching {
+        val resolveList = context.packageManager.queryIntentActivities(intent, 0)
+        "queryIntent resolveList size: ${resolveList.size}".logD()
+        val hasAvailableBrowser = resolveList.isNotEmpty()
+        if (hasAvailableBrowser) {
+            intent.apply {
+                addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK)
+                addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+            }
+            context.startActivity(intent)
+        }
+        hasAvailableBrowser
+    }.onSuccess {
+        "open browser result : $it".logD()
+    }.onFailure {
+        "open browser failed : ${it.message}".logE()
+    }
+}
