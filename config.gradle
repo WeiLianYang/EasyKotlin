@@ -90,7 +90,7 @@ ext {
             "statusbarutil"                     : "com.jaeger.statusbarutil:library:1.5.1",
             "bannerViewPager"                   : "com.github.zhpanvip:BannerViewPager:3.5.0",
             "viewpagerindicator"                : "com.github.zhpanvip:viewpagerindicator:1.2.0",
-            "mmkv"                              : 'com.tencent:mmkv-static:1.2.8'
+            "mmkv"                              : 'com.tencent:mmkv-static:1.2.10'
     ]
 
 }

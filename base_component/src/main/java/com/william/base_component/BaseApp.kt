@@ -26,6 +26,7 @@ import com.orhanobut.logger.AndroidLogAdapter
 import com.orhanobut.logger.Logger
 import com.orhanobut.logger.PrettyFormatStrategy
 import com.william.base_component.manager.ActivityStackManager
+import com.william.base_component.manager.KVStoreManager
 import kotlin.properties.Delegates
 
 
@@ -45,11 +46,10 @@ class BaseApp : Application() {
             private set
     }
 
-    private var mActivityCount = 0
-
     override fun onCreate() {
         super.onCreate()
         instance = applicationContext
+        KVStoreManager.init(this)
 
         initLoggerConfig()
         initLiveEventConfig()
@@ -71,16 +71,13 @@ class BaseApp : Application() {
                 ActivityStackManager.addActivity(activity)
             }
 
-            override fun onActivityStarted(activity: Activity) {
-                mActivityCount++
-            }
+            override fun onActivityStarted(activity: Activity) {}
 
             override fun onActivityResumed(activity: Activity) {}
+
             override fun onActivityPaused(activity: Activity) {}
 
-            override fun onActivityStopped(activity: Activity) {
-                mActivityCount--
-            }
+            override fun onActivityStopped(activity: Activity) {}
 
             override fun onActivitySaveInstanceState(activity: Activity, outState: Bundle) {}
 
@@ -89,8 +86,6 @@ class BaseApp : Application() {
             }
         })
     }
-
-    fun isAppInBackground(): Boolean = mActivityCount == 0
 
     override fun attachBaseContext(base: Context?) {
         super.attachBaseContext(base)

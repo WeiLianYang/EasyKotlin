@@ -19,6 +19,7 @@ package com.william.base_component.manager
 import android.content.Context
 import android.os.Parcelable
 import com.tencent.mmkv.MMKV
+import com.william.base_component.utils.logD
 import java.util.*
 
 /**
@@ -31,10 +32,13 @@ object KVStoreManager {
     /**
      * 区别业务存储，设置多进程访问
      */
-    var mmkv: MMKV? = MMKV.mmkvWithID("YqAdSdkKv", MMKV.MULTI_PROCESS_MODE)
+    val mmkv: MMKV? by lazy {
+        MMKV.mmkvWithID("easyKt", MMKV.MULTI_PROCESS_MODE)
+    }
 
     fun init(context: Context) {
         val rootDir: String = MMKV.initialize(context.applicationContext)
+        rootDir.logD()
     }
 
     fun put(key: String, value: Any?) {
