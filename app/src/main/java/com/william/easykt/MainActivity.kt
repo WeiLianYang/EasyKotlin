@@ -16,15 +16,18 @@
 
 package com.william.easykt
 
+import android.content.Intent
+import android.os.Build
+import android.os.storage.StorageManager
+import androidx.core.content.getSystemService
 import com.william.base_component.activity.BaseActivity
+import com.william.base_component.utils.logD
 import com.william.base_component.utils.openActivity
 import com.william.base_component.utils.openBrowser
 import com.william.easykt.databinding.ActivityMainBinding
 import com.william.easykt.test.TestActivity
-import com.william.easykt.ui.AutoScrollActivity
-import com.william.easykt.ui.PagerCardActivity
-import com.william.easykt.ui.SwipeCardActivity
-import com.william.easykt.ui.WaveAnimationActivity
+import com.william.easykt.ui.*
+import java.util.*
 
 /**
  * @author William
@@ -59,6 +62,10 @@ class MainActivity : BaseActivity() {
                 openActivity<AutoScrollActivity>(mActivity)
             }
 
+            tvButton6.setOnClickListener {
+                openActivity<PermissionActivity>(mActivity)
+            }
+
             tvButton7.setOnClickListener {
                 /*
                 openBrowser(
@@ -70,6 +77,31 @@ class MainActivity : BaseActivity() {
                 */
                 openBrowser(this@MainActivity, "https://www.baidu.com")
             }
+
+            tvButton8.setOnClickListener {
+                if (Build.VERSION.SDK_INT > Build.VERSION_CODES.O) {
+                    // App needs 10 MB within internal storage.
+                    val numBytesNeededForMyApp = 1024 * 1024 * 10L
+                    val storageManager = applicationContext.getSystemService<StorageManager>()!!
+                    val appSpecificInternalDirUuid: UUID = storageManager.getUuidForPath(filesDir)
+                    val availableBytes =
+                        storageManager.getAllocatableBytes(appSpecificInternalDirUuid)
+                    val kb = availableBytes / 1024
+                    val mb = kb / 1024
+                    val gb = mb / 1024
+                    "available space : $availableBytes byte , $kb kb ,  $mb MB , $gb GB".logD()
+                    if (availableBytes >= numBytesNeededForMyApp) {
+                        storageManager.allocateBytes(
+                            appSpecificInternalDirUuid,
+                            numBytesNeededForMyApp
+                        )
+                    } else {
+                        val storageIntent = Intent(StorageManager.ACTION_MANAGE_STORAGE)
+                        startActivity(storageIntent)
+                    }
+                }
+            }
+
         }
     }
 
