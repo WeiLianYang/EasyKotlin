@@ -6,7 +6,6 @@ plugins {
 }
 
 def androidConfig = rootProject.ext.android
-def dependency = rootProject.ext.dependencies
 
 android {
     compileSdkVersion androidConfig.compileSdkVersion
@@ -45,10 +44,10 @@ android {
 }
 
 dependencies {
-    implementation fileTree(dir: 'libs', include: ['*.jar'])
-    testImplementation dependency["junit"]
-    androidTestImplementation dependency["androidx-junit"]
-    androidTestImplementation dependency["androidx-espresso"]
+    implementation fileTree(dir: 'libs', include: ['*.jar', '*.aar'])
+    testImplementation 'junit:junit:4.13.2'
+    androidTestImplementation 'androidx.test.ext:junit:1.1.2'
+    androidTestImplementation 'androidx.test.espresso:espresso-core:3.3.0'
 
     implementation project(':base_component')
 
