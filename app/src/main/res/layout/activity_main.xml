@@ -26,7 +26,6 @@
         android:id="@+id/tv_button1"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="100dp"
         android:padding="20dp"
         android:text="@string/test_net_data"
         app:layout_constraintLeft_toLeftOf="parent"
@@ -103,4 +102,26 @@
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/tv_button7" />
+
+    <Button
+        android:id="@+id/tv_button9"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:padding="20dp"
+        android:text="@string/test_flurry_analytics"
+        android:textAllCaps="false"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tv_button8" />
+
+    <Button
+        android:id="@+id/tv_button10"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:padding="20dp"
+        android:text="@string/test_flurry_crash"
+        android:textAllCaps="false"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tv_button9" />
 </androidx.constraintlayout.widget.ConstraintLayout>

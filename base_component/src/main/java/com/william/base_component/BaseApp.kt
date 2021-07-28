@@ -21,6 +21,7 @@ import android.app.Application
 import android.content.Context
 import android.os.Bundle
 import androidx.multidex.MultiDex
+import com.flurry.android.FlurryAgent
 import com.jeremyliao.liveeventbus.LiveEventBus
 import com.orhanobut.logger.AndroidLogAdapter
 import com.orhanobut.logger.Logger
@@ -40,6 +41,7 @@ class BaseApp : Application() {
     companion object {
 
         const val TAG = "BaseApp"
+        const val FLURRY_KEY = "ZPTYYTJZ8RBDFDQYNNGC"
 
         @JvmStatic
         var instance: Context by Delegates.notNull()
@@ -49,11 +51,21 @@ class BaseApp : Application() {
     override fun onCreate() {
         super.onCreate()
         instance = applicationContext
+
+        initFlurryAnalytics()
+
         KVStoreManager.init(this)
 
         initLoggerConfig()
         initLiveEventConfig()
         registerLifecycleCallbacks()
+    }
+
+    private fun initFlurryAnalytics() {
+        FlurryAgent.Builder()
+            .withLogEnabled(BuildConfig.DEBUG)
+            .withCaptureUncaughtExceptions(true)
+            .build(this, FLURRY_KEY)
     }
 
     private fun initLiveEventConfig() {
@@ -71,13 +83,17 @@ class BaseApp : Application() {
                 ActivityStackManager.addActivity(activity)
             }
 
-            override fun onActivityStarted(activity: Activity) {}
+            override fun onActivityStarted(activity: Activity) {
+                FlurryAgent.onStartSession(activity)
+            }
 
             override fun onActivityResumed(activity: Activity) {}
 
             override fun onActivityPaused(activity: Activity) {}
 
-            override fun onActivityStopped(activity: Activity) {}
+            override fun onActivityStopped(activity: Activity) {
+                FlurryAgent.onEndSession(activity)
+            }
 
             override fun onActivitySaveInstanceState(activity: Activity, outState: Bundle) {}
 

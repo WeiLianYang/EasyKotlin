@@ -20,6 +20,7 @@ import android.content.Intent
 import android.os.Build
 import android.os.storage.StorageManager
 import androidx.core.content.getSystemService
+import com.flurry.android.FlurryAgent
 import com.william.base_component.activity.BaseActivity
 import com.william.base_component.utils.logD
 import com.william.base_component.utils.openActivity
@@ -28,6 +29,7 @@ import com.william.easykt.databinding.ActivityMainBinding
 import com.william.easykt.test.TestActivity
 import com.william.easykt.ui.*
 import java.util.*
+
 
 /**
  * @author William
@@ -99,6 +101,22 @@ class MainActivity : BaseActivity() {
                         val storageIntent = Intent(StorageManager.ACTION_MANAGE_STORAGE)
                         startActivity(storageIntent)
                     }
+                }
+            }
+
+            tvButton9.setOnClickListener {
+                // param keys and values have to be of String type
+                val map = hashMapOf("user" to "Jack", "age" to "18")
+                // up to 10 params can be logged with each event
+                FlurryAgent.logEvent("userEvent", map)
+            }
+
+            tvButton10.setOnClickListener {
+//                throw IndexOutOfBoundsException()
+                kotlin.runCatching {
+                    throw NullPointerException()
+                }.onFailure {
+                    FlurryAgent.onError("errorId", "message", it)
                 }
             }
 
