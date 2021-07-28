@@ -20,8 +20,6 @@ package com.william.base_component.activity
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
-import android.widget.ImageView
-import android.widget.TextView
 import androidx.annotation.StringRes
 import androidx.appcompat.app.AppCompatActivity
 import androidx.constraintlayout.widget.ConstraintLayout
@@ -34,6 +32,7 @@ import com.william.base_component.extension.toast
 import com.william.base_component.fragment.LoadingDialog
 import com.william.base_component.manager.setStatusBar
 import com.william.base_component.mvp.base.IBaseView
+import com.william.base_component.widgets.TitleBarLayout
 
 
 /**
@@ -45,11 +44,7 @@ abstract class BaseActivity : AppCompatActivity(), IBaseView {
 
     protected lateinit var mActivity: FragmentActivity
 
-    private lateinit var mIvBaseTitleLeft: ImageView
-    private lateinit var mTvBaseTitleText: TextView
-    private lateinit var mIvBaseTitleRight: ImageView
-    private lateinit var mTvBaseTitleRight: TextView
-    private lateinit var mViewBaseLine: View
+    private lateinit var titleBarLayout: TitleBarLayout
 
     private var mLoadingDialog: LoadingDialog? = null
     private lateinit var mBaseBinding: BaseActivityBinding
@@ -82,11 +77,7 @@ abstract class BaseActivity : AppCompatActivity(), IBaseView {
     private fun initLayout() {
         if (isShowTitleBar()) {
             mBaseBinding.vsBaseTitle.inflate()
-            mIvBaseTitleLeft = findViewById(R.id.iv_baseTitleLeft)
-            mTvBaseTitleText = findViewById(R.id.tv_baseTitleText)
-            mIvBaseTitleRight = findViewById(R.id.iv_baseTitleRight)
-            mTvBaseTitleRight = findViewById(R.id.tv_baseTitleRight)
-            mViewBaseLine = findViewById(R.id.view_baseLine)
+            titleBarLayout = findViewById(R.id.titleLayout)
             initTitleBarListener()
         }
 
@@ -95,7 +86,7 @@ abstract class BaseActivity : AppCompatActivity(), IBaseView {
             ConstraintLayout.LayoutParams.MATCH_CONSTRAINT
         )
         if (isShowTitleBar()) {
-            params.topToBottom = R.id.cl_baseTitle
+            params.topToBottom = R.id.titleLayout
         } else {
             params.topToTop = ConstraintLayout.LayoutParams.PARENT_ID
         }
@@ -136,14 +127,10 @@ abstract class BaseActivity : AppCompatActivity(), IBaseView {
     protected open fun isFitSystemWindow(): Boolean = true
 
     private fun initTitleBarListener() {
-        mIvBaseTitleLeft.setOnClickListener {
-            onBackPressed()
-        }
-        mIvBaseTitleRight.setOnClickListener {
-            onRightIconClickListener(it)
-        }
-        mTvBaseTitleRight.setOnClickListener {
-            onRightTextClickListener(it)
+        titleBarLayout.apply {
+            leftIconClickListener = { onBackPressed() }
+            rightIconClickListener = { onRightIconClickListener(it) }
+            rightTextClickListener = { onRightTextClickListener(it) }
         }
     }
 
@@ -152,11 +139,27 @@ abstract class BaseActivity : AppCompatActivity(), IBaseView {
     protected open fun onRightTextClickListener(view: View?) {}
 
     protected fun setTitleText(@StringRes stringId: Int) {
-        mTvBaseTitleText.text = resources.getText(stringId)
+        setTitleText(resources.getText(stringId).toString())
     }
 
     protected fun setTitleText(title: String) {
-        mTvBaseTitleText.text = title
+        titleBarLayout.setTitle(title)
+    }
+
+    fun setTitleLeftImageRes(resId: Int) {
+        titleBarLayout.setLeftImageRes(resId)
+    }
+
+    fun setTitleRightImageRes(resId: Int) {
+        titleBarLayout.setRightImageRes(resId)
+    }
+
+    fun setTitleRightText(text: String?) {
+        titleBarLayout.setRightText(text)
+    }
+
+    fun setTitleLineVisible(visible: Boolean) {
+        titleBarLayout.setLineVisible(visible)
     }
 
     override fun getCurrentActivity() = mActivity
