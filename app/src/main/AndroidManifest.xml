@@ -110,7 +110,8 @@
         <activity android:name=".ui.AutoScrollActivity" />
 
         <activity android:name=".ui.PermissionActivity" />
-
+        
+        <activity android:name=".ui.NestedScrollingActivity" />
     </application>
 
 </manifest>
