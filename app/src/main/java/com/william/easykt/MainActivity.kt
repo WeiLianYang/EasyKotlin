@@ -119,6 +119,10 @@ class MainActivity : BaseActivity() {
                     FlurryAgent.onError("errorId", "message", it)
                 }
             }
+            
+            tvButton11.setOnClickListener {
+                openActivity<NestedScrollingActivity>(mActivity)
+            }
 
         }
     }
