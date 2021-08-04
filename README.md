@@ -1,6 +1,6 @@
 # EasyKotlin
 
-[![API](https://img.shields.io/badge/API-23%2B-brightgreen.svg?style=flat)](https://android-arsenal.com/api?level=23) [![License](https://img.shields.io/badge/License%20-Apache%202-337ab7.svg)](https://github.com/WeiLianYang/EasyKotlin/blob/main/LICENSE)
+[![API](https://img.shields.io/badge/API-23%2B-brightgreen.svg?style=flat)](https://android-arsenal.com/api?level=23) [![License](https://img.shields.io/badge/License%20-Apache%202-337ab7.svg)](https://github.com/WeiLianYang/EasyKotlin/blob/master/LICENSE)
 
 1. 在使用Kotlin语言开发Android项目过程中，总结的一套MVP库。希望每个开始使用Kotlin的人都能快速的上手，熟练的应用。
 2. 借助Kotlin的天然优势，项目中收集了很多写法巧妙且精简的代码模板，相信一定会让你眼前一亮的。
