@@ -42,7 +42,7 @@ dependencies {
 
     testImplementation 'junit:junit:4.13.2'
     androidTestImplementation 'androidx.test.ext:junit:1.1.2'
-    androidTestImplementation 'androidx.test.espresso:espresso-core:3.3.0'
+    androidTestImplementation 'androidx.test.espresso:espresso-core:3.4.0'
 
     debugApi 'com.squareup.leakcanary:leakcanary-android:2.7'
 
@@ -51,35 +51,47 @@ dependencies {
     api 'androidx.cardview:cardview:1.0.0'
     api 'androidx.appcompat:appcompat:1.3.0'
     api 'androidx.annotation:annotation:1.2.0'
-    api 'com.google.android.material:material:1.3.0'
+    api 'com.google.android.material:material:1.4.0'
+    api 'androidx.datastore:datastore-preferences:1.0.0-alpha08'
+
+    api "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
+    api "org.jetbrains.kotlin:kotlin-reflect:$kotlin_version"
+
     api 'com.github.bumptech.glide:glide:4.12.0'
     api 'jp.wasabeef:glide-transformations:3.3.0'
+
     api 'com.orhanobut:logger:2.2.0'
+
     api 'io.reactivex.rxjava2:rxjava:2.2.11'
     api 'io.reactivex.rxjava2:rxandroid:2.1.1'
+
     api 'com.squareup.retrofit2:retrofit:2.9.0'
     api 'com.squareup.retrofit2:converter-gson:2.9.0'
     api 'com.squareup.retrofit2:adapter-rxjava2:2.9.0'
     api 'com.squareup.okhttp3:okhttp:4.9.1'
     api 'com.squareup.okhttp3:logging-interceptor:4.9.1'
+
     api 'com.jakewharton.rxbinding3:rxbinding:3.1.0'
-    api 'com.romandanylyk:pageindicatorview:1.0.2'
+
     api 'com.scwang.smartrefresh:SmartRefreshLayout:1.1.2'
     api 'com.scwang.smartrefresh:SmartRefreshHeader:1.1.2'
-    api "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
+
     api 'com.williamyang.debugtools:debugtoolslib:1.0.0'
+
     api 'com.github.zhpanvip:BannerViewPager:3.5.0'
+
     api 'com.jeremyliao:live-event-bus-x:1.7.3'
+
     api 'com.permissionx.guolindev:permissionx:1.4.0'
+
     api 'com.github.hackware1993:MagicIndicator:1.7.0'
     api 'com.github.OCNYang:PageTransformerHelp:v1.0.1'
+    api 'com.romandanylyk:pageindicatorview:1.0.2'
+
     api 'com.tencent:mmkv-static:1.2.10'
-    // 统计分析
+    
     api 'com.flurry.android:analytics:12.13.0'
     api 'com.google.android.gms:play-services-base:15.0.1'
     api 'com.google.android.gms:play-services-ads:15.0.1'
-    // Required for Flurry Analytics integration
-    // Optional - If you want to use the Ads SDK
-//    api 'com.flurry.android:ads:12.13.0'
 
 }
