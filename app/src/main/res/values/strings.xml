@@ -34,7 +34,7 @@
     <string name="test_kotlin_flow1">异步计算的值流</string>
     <string name="test_kotlin_flow2">冷流</string>
     <string name="test_kotlin_flow3">取消流</string>
-    <string name="test_kotlin_flow4">流构建器：asFlow()</string>
+    <string name="test_kotlin_flow4">流构建器：.asFlow() / flowOf()</string>
     <string name="test_kotlin_flow5">过渡流操作符</string>
     <string name="test_kotlin_flow6">转换操作符</string>
     <string name="test_kotlin_flow7">限长操作符</string>
