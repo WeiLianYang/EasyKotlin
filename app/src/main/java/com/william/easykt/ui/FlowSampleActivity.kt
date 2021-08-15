@@ -26,6 +26,7 @@ import kotlin.system.measureTimeMillis
  * author : WilliamYang
  * date : 2021/7/30 10:41
  * description : Kotlin flow demo
+ * @see <a href="http://www.kotlincn.net/docs/reference/coroutines/flow.html">异步流</a>
  */
 class FlowSampleActivity : BaseActivity() {
 
@@ -55,7 +56,19 @@ class FlowSampleActivity : BaseActivity() {
                 sample15Zip()
                 sample15Combine()
             }
-            tvButton16.setOnClickListener { sample16() }
+            tvButton16.setOnClickListener {
+                sample16()
+                sample16FlatMapConcat()
+                sample16FlatMapMerge()
+                sample16FlatMapLatest()
+            }
+            tvButton17.setOnClickListener { sample17() }
+            tvButton18.setOnClickListener { sample18() }
+            tvButton19.setOnClickListener {
+                sample19()
+                sample19Collect()
+            }
+            tvButton20.setOnClickListener { sample20() }
         }
     }
 
@@ -447,6 +460,14 @@ class FlowSampleActivity : BaseActivity() {
     /**
      * usage 16 : 展平流
      * 1. 将流中的值转换为单个流进行下一步处理
+     *
+     * 输出结果：
+     * 1: First
+     * 1: Second
+     * 2: First
+     * 2: Second
+     * 3: First
+     * 3: Second
      */
     private fun sample16() {
         // 得到了一个包含流的流（Flow<Flow<String>>），需要将其进行展平为单个流以进行下一步处理
@@ -454,6 +475,273 @@ class FlowSampleActivity : BaseActivity() {
         runBlocking {
             newFlow.collect { flow ->
                 flow.collect { println(it) }
+            }
+        }
+    }
+
+    /**
+     * usage 16 : 展平流 flatMapConcat
+     * 顺序收集
+     *
+     * 输出结果：
+     * flatMapConcat : 1: First at 112 ms from start
+     * flatMapConcat : 1: Second at 613 ms from start
+     * flatMapConcat : 2: First at 715 ms from start
+     * flatMapConcat : 2: Second at 1218 ms from start
+     * flatMapConcat : 3: First at 1321 ms from start
+     * flatMapConcat : 3: Second at 1822 ms from start
+     */
+    private fun sample16FlatMapConcat() {
+        runBlocking {
+            val startTime = System.currentTimeMillis() // 记录开始时间
+            (1..3).asFlow()
+                .onEach { delay(100) } // 每 100 毫秒发射一个数字
+                .flatMapConcat { requestFlow(it) }
+                .collect { value -> // 收集并打印
+                    println("flatMapConcat : $value at ${System.currentTimeMillis() - startTime} ms from start")
+                }
+        }
+    }
+
+    /**
+     * usage 16 : 展平流 flatMapMerge
+     *
+     * 并发收集所有传入的流，并将它们的值合并到一个单独的流，以便尽快的发射值
+     *
+     * 输出结果：
+     * flatMapMerge : 1: First at 143 ms from start
+     * flatMapMerge : 2: First at 241 ms from start
+     * flatMapMerge : 3: First at 346 ms from start
+     * flatMapMerge : 1: Second at 645 ms from start
+     * flatMapMerge : 2: Second at 744 ms from start
+     * flatMapMerge : 3: Second at 851 ms from start
+     *
+     * 注意，flatMapMerge 会顺序调用代码块（本示例中的 { requestFlow(it) }），
+     * 但是并发收集结果流，相当于执行顺序是首先执行 map { requestFlow(it) } 然后在其返回结果上调用 flattenMerge。
+     */
+    private fun sample16FlatMapMerge() {
+        runBlocking {
+            val startTime = System.currentTimeMillis() // 记录开始时间
+            (1..3).asFlow()
+                .onEach { delay(100) } // 每 100 毫秒发射一个数字
+                .flatMapMerge { requestFlow(it) }
+                .collect { value -> // 收集并打印
+                    println("flatMapMerge : $value at ${System.currentTimeMillis() - startTime} ms from start")
+                }
+        }
+    }
+
+    /**
+     * usage 16 : 展平流 flatMapLatest
+     *
+     * 收集最新的流，在发出新流后立即取消先前流的收集
+     *
+     * 输出结果：
+     * flatMapLatest : 1: First at 111 ms from start
+     * flatMapLatest : 2: First at 217 ms from start
+     * flatMapLatest : 3: First at 321 ms from start
+     * flatMapLatest : 3: Second at 824 ms from start
+     *
+     * 注意，flatMapLatest 在一个新值到来时取消了块中的所有代码 (本示例中的 { requestFlow(it) }）。
+     * 这在该特定示例中不会有什么区别，由于调用 requestFlow 自身的速度是很快的，不会发生挂起，所以不会被取消。
+     * 然而，如果我们要在块中调用诸如 delay 之类的挂起函数，这将会被表现出来。
+     */
+    private fun sample16FlatMapLatest() {
+        runBlocking {
+            val startTime = System.currentTimeMillis() // 记录开始时间
+            (1..3).asFlow()
+                .onEach { delay(100) } // 每 100 毫秒发射一个数字
+                .flatMapLatest { requestFlow(it) }
+                .collect { value -> // 收集并打印
+                    println("flatMapLatest : $value at ${System.currentTimeMillis() - startTime} ms from start")
+                }
+        }
+    }
+
+    /**
+     * usage 17 : 收集者可以使用 Kotlin 的 try/catch 块来处理异常：
+     * 实际上捕获了在发射器或任何过渡或末端操作符中发生的任何异常
+     *
+     * 输出结果：
+     * string 1
+     * Caught java.lang.IllegalStateException: Crashed on 2
+     */
+    private fun sample17() {
+        runBlocking {
+            try {
+                (1..3).asFlow().map { value ->
+                    check(value <= 1) { "Crashed on $value" }
+                    "string $value"
+                }.collect { value ->
+                    println(value)
+                }
+            } catch (e: Throwable) {
+                println("Caught $e")
+            }
+        }
+    }
+
+    /**
+     * usage 18 : 异常透明性
+     * 1. 流必须对异常透明，即在 flow { ... } 构建器内部的 try/catch 块中发射值是违反异常透明性的。
+     *    这样可以保证收集器抛出的一个异常能被像先前示例中那样的 try/catch 块捕获。
+     * 2. 发射器可以使用 catch 操作符来保留此异常的透明性并允许封装它的异常处理。
+     *    catch 操作符的代码块可以分析异常并根据捕获到的异常以不同的方式对其做出反应：
+     *      - 可以使用 throw 重新抛出异常。
+     *      - 可以使用 catch 代码块中的 emit 将异常转换为值发射出去。
+     *      - 可以将异常忽略，或用日志打印，或使用一些其他代码处理它。
+     *
+     * 输出结果：
+     * string 1
+     * Caught java.lang.IllegalStateException: Crashed on 2
+     * 1
+     * Caught java.lang.IllegalStateException: Collected 2
+     */
+    private fun sample18() {
+        runBlocking {
+            flowOf(1, 2, 3)
+                .map { value ->
+                    check(value <= 1) { "Crashed on $value" }
+                    "string $value"
+                }
+                .catch { e -> emit("Caught $e") } // 发射一个异常
+                .collect { value -> println(value) }
+
+            // catch 过渡操作符遵循异常透明性，仅捕获上游异常（catch 操作符上游的异常，但是它下面的不是）。
+            // 如果 collect { ... } 块（位于 catch 之下）抛出一个异常，那么异常会逃逸：
+            /*
+            flowOf(1, 2, 3)
+                 .catch { e -> println("Caught $e") } // 不会捕获下游异常，会发生崩溃
+                 .collect { value ->
+                     check(value <= 1) { "Collected $value" }
+                     println(value)
+                 }
+                 */
+
+            // 声明式捕获
+            flowOf(1, 2, 3)
+                .onEach { value ->
+                    check(value <= 1) { "Collected $value" }
+                    println(value)
+                }
+                // 将 check 放到 catch 操作符之前 就能捕获所有异常
+                .catch { e -> println("Caught $e") }
+                .collect()
+        }
+    }
+
+
+    /**
+     * usage 19 : 流完成
+     * 当流收集完成时（普通情况或异常情况），它可能需要执行一个动作。它可以通过两种方式完成：命令式 或 声明式。
+     *
+     * 1. 命令式 finally 块
+     * 2. 声明式 处理：流拥有 onCompletion 过渡操作符，它在流完全收集时调用
+     *
+     * 输出结果：
+     * 1
+     * 2
+     * 3
+     * Done
+     * string 1
+     * Flow completed exception
+     * Caught exception
+     *
+     * string 1
+     * Flow completed with java.lang.IllegalStateException: Crashed on 2
+     * Caught exception
+     */
+    private fun sample19() {
+        runBlocking {
+            try {
+                (1..3).asFlow().collect { value -> println(value) }
+            } finally {
+                println("Done")
+            }
+            (1..3).asFlow()
+                .onCompletion { println("Done") }
+                .collect { value -> println(value) }
+
+            // onCompletion 的主要优点是其 lambda 表达式的可空参数 Throwable 可以用于确定流收集是正常完成还是有异常发生。
+            // 在下面的示例中 simple 流在发射数字 1 之后抛出了一个异常：
+            // onCompletion 操作符与 catch 不同，它不处理异常。我们可以看到前面的示例代码，异常仍然流向下游。
+            // 它将被提供给后面的 onCompletion 操作符，并可以由 catch 操作符处理。
+            (1..3).asFlow()
+                .map { value ->
+                    check(value <= 1) { "Crashed on $value" }
+                    "string $value"
+                }
+                .onCompletion { cause -> if (cause != null) println("Flow completed exceptionally") } // 2 观察上游异常
+                .catch { e -> println("Caught exception") } // 3 需要放在 onCompletion 之后，否则 onCompletion 不执行
+                .collect { value -> println(value) } // 1
+
+            // 与 catch 操作符的另一个不同点是
+            // onCompletion 能观察到所有异常并且仅在上游流成功完成（没有取消或失败）的情况下接收一个 null 异常。
+            (1..3).asFlow()
+                .onCompletion { cause -> println("Flow completed with $cause") } // 2 观察到下游异常
+                .map { value ->
+                    check(value <= 1) { "Crashed on $value" }
+                    "string $value"
+                }
+                .catch { e -> println("Caught exception") } // 3 需要放在 onCompletion 之后，否则 onCompletion 不执行
+                .collect { value ->
+                    println(value) // 1
+                }
+        }
+    }
+
+    /**
+     * usage 19 : 启动流收集
+     * launchIn 指定一个协程来完成流的收集，不阻塞当前协程
+     *
+     * 输出结果：
+     * Event: 1
+     * Event: 2
+     * Event: 3
+     * Done
+     *
+     * Done
+     * Event: 1
+     * Event: 2
+     * Event: 3
+     */
+    private fun sample19Collect() {
+        runBlocking {
+            // 模仿事件流
+            val events = (1..3).asFlow().onEach { delay(100) }
+
+            events.onEach { event -> println("Event: $event") }
+                .collect() // <--- 等待流收集
+            println("Done")
+        }
+
+        runBlocking {
+            // 模仿事件流
+            val events = (1..3).asFlow().onEach { delay(100) }
+
+            events.onEach { event -> println("Event: $event") }
+                .launchIn(this) // <--- 在单独的协程中执行流
+            println("Done")
+        }
+    }
+
+    /**
+     * usage 20 : 流取消检测
+     * 为方便起见，流构建器对每个发射值执行附加的 ensureActive 检测以进行取消。
+     * 这意味着从 flow { ... } 发出的繁忙循环是可以取消的：
+     *
+     * 输出结果：
+     * 1
+     * 2
+     * 3
+     * Exception in thread "main" kotlinx.coroutines.JobCancellationException:
+     * BlockingCoroutine was cancelled; job="coroutine#1":BlockingCoroutine{Cancelled}@5ec0a365
+     */
+    private fun sample20() {
+        runBlocking {
+            (1..5).asFlow().cancellable().collect { value ->
+                if (value == 3) cancel()
+                println("value: $value")
             }
         }
     }
