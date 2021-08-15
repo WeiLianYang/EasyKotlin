@@ -124,6 +124,10 @@ class MainActivity : BaseActivity() {
                 openActivity<NestedScrollingActivity>(mActivity)
             }
 
+            tvButton12.setOnClickListener {
+                openActivity<FlowSampleActivity>(mActivity)
+            }
+
         }
     }
 

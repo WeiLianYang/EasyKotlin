@@ -92,7 +92,9 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme.NoActionBar">
 
-        <activity android:name=".MainActivity">
+        <activity
+            android:name=".MainActivity"
+            android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -110,8 +112,10 @@
         <activity android:name=".ui.AutoScrollActivity" />
 
         <activity android:name=".ui.PermissionActivity" />
-        
+
         <activity android:name=".ui.NestedScrollingActivity" />
+
+        <activity android:name=".ui.FlowSampleActivity" />
     </application>
 
 </manifest>
