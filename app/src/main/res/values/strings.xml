@@ -35,7 +35,11 @@
     <string name="test_kotlin_flow2">冷流</string>
     <string name="test_kotlin_flow3">取消流</string>
     <string name="test_kotlin_flow4">流构建器：.asFlow() / flowOf()</string>
-    <string name="test_kotlin_flow5">过渡流操作符</string>
+    <string name="test_kotlin_flow5">过渡操作符</string>
     <string name="test_kotlin_flow6">转换操作符</string>
     <string name="test_kotlin_flow7">限长操作符</string>
+    <string name="test_kotlin_flow8">末端操作符</string>
+    <string name="test_kotlin_flow9">流是连续的</string>
+    <string name="test_kotlin_flow10">流的上下文</string>
+    <string name="test_kotlin_flow11">flowOn 操作符</string>
 </resources>
