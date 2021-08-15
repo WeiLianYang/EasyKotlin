@@ -20,6 +20,7 @@ import com.william.base_component.activity.BaseActivity
 import com.william.easykt.databinding.ActivityFlowSampleBinding
 import kotlinx.coroutines.*
 import kotlinx.coroutines.flow.*
+import kotlin.system.measureTimeMillis
 
 /**
  * author : WilliamYang
@@ -47,6 +48,14 @@ class FlowSampleActivity : BaseActivity() {
             tvButton9.setOnClickListener { sample9() }
             tvButton10.setOnClickListener { sample10() }
             tvButton11.setOnClickListener { sample11() }
+            tvButton12.setOnClickListener { sample12() }
+            tvButton13.setOnClickListener { sample13() }
+            tvButton14.setOnClickListener { sample14() }
+            tvButton15.setOnClickListener {
+                sample15Zip()
+                sample15Combine()
+            }
+            tvButton16.setOnClickListener { sample16() }
         }
     }
 
@@ -282,7 +291,7 @@ class FlowSampleActivity : BaseActivity() {
 
     /**
      * usage 11 : flowOn 操作符
-     * 该函数用于更改流发射的上下文。
+     * 1. 该函数用于更改流发射的上下文。
      * 以下示例展示了更改流上下文的正确方法，该示例还通过打印相应线程的名字以展示它们的工作方式：
      */
     private fun sample11() {
@@ -302,6 +311,151 @@ class FlowSampleActivity : BaseActivity() {
             }
         }
         // 发射值 和 收集值 处于不同的协程和线程中，并发运行
+    }
+
+    private fun intFlow(): Flow<Int> = flow {
+        for (i in 1..3) {
+            delay(100) // 假装我们异步等待了 100 毫秒
+            emit(i) // 发射下一个值
+        }
+    }
+
+    /**
+     * usage 12 : 对流缓冲
+     * 注意，当必须更改 CoroutineDispatcher 时，flowOn 操作符使用了相同的缓冲机制
+     * 我们可以在流上使用 buffer 操作符来并发运行这个 flow 流中发射元素的代码以及收集的代码，而不是顺序运行它们：
+     */
+    private fun sample12() {
+        runBlocking {
+            val time = measureTimeMillis {
+                intFlow()
+                    .buffer() // 缓冲发射项，无需等待。并发的发射值
+                    .collect { value ->
+                        delay(300) // 假装我们花费 300 毫秒来处理它
+                        println(value)
+                    }
+            }
+            println("Collected in $time ms")// 耗时少 2个 100ms
+        }
+    }
+
+    /**
+     * usage 13 : 合并
+     * 1. 当流代表部分操作结果或操作状态更新时，可能没有必要处理每个值，而是只处理最新的那个。
+     * 在本示例中，当收集器处理它们太慢的时候，conflate 操作符可以用于跳过中间值。
+     */
+    private fun sample13() {
+        runBlocking {
+            val time = measureTimeMillis {
+                intFlow()
+                    .conflate() // 合并发射项，不对每个值进行处理
+                    .collect { value ->
+                        delay(300) // 假装我们花费 300 毫秒来处理它
+                        println(value)// 1,3 虽然第一个数字仍在处理中，但第二个和第三个数字已经产生，因此第二个是 conflated ，只有最新的（第三个）被交付给收集器：
+                    }
+            }
+            println("Collected in $time ms")
+        }
+    }
+
+    /**
+     * usage 14 : 处理最新值
+     * 1. 当发射器和收集器都很慢的时候，合并是加快处理速度的一种方式。它通过删除发射值来实现。
+     * 另一种方式是取消缓慢的收集器，并在每次发射新值的时候重新启动它。
+     * 有一组与 xxx 操作符执行相同基本逻辑的 xxxLatest 操作符，但是在新值产生的时候取消执行其块中的代码。
+     * 输出结果：
+     * Collecting 1
+     * Collecting 2
+     * Collecting 3
+     * Done 3
+     * Collected in 703 ms
+     */
+    private fun sample14() {
+        runBlocking {
+            val time = measureTimeMillis {
+                intFlow()
+                    .collectLatest { value -> // 取消并重新发射最后一个值
+                        println("Collecting $value")
+                        delay(300) // 假装我们花费 300 毫秒来处理它
+                        println("Done $value")
+                    }
+            }
+            println("Collected in $time ms")
+        }
+    }
+
+    /**
+     * usage 15 : 组合多个流
+     * 1. flowA.zip(flowB)
+     *
+     * 输出结果：
+     * zip : 1 -> one at 467 ms from start
+     * zip : 2 -> two at 869 ms from start
+     * zip : 3 -> three at 1276 ms from start
+     */
+    private fun sample15Zip() {
+        /*runBlocking {
+            val flowA = (1..3).asFlow() // 数字 1..3
+            val flowB = flowOf("one", "two", "three") // 字符串
+            flowA.zip(flowB) { a, b ->
+                "$a -> $b"  // 组合单个字符串
+            }.collect {
+                println(it) // 收集并打印
+            }
+        }*/
+        runBlocking {
+            val flowA = (1..3).asFlow().onEach { delay(300) } // 发射数字 1..3，间隔 300 毫秒
+            val flowB = flowOf("one", "two", "three").onEach { delay(400) } // 每 400 毫秒发射一次字符串
+            val startTime = System.currentTimeMillis() // 记录开始的时间
+            flowA.zip(flowB) { a, b -> "$a -> $b" } // 使用“zip”组合单个字符串
+                .collect { value -> // 收集并打印
+                    println("zip : $value at ${System.currentTimeMillis() - startTime} ms from start")
+                }
+        }
+    }
+
+    /**
+     * usage 15 : 组合多个流
+     * 1. flowA.combine(flowB)
+     * 当组合中的流每次发射新值后，都会执行收集
+     *
+     * 输出结果：
+     * combine : 1 -> one at 410 ms from start
+     * combine : 2 -> one at 613 ms from start
+     * combine : 2 -> two at 814 ms from start
+     * combine : 3 -> two at 916 ms from start
+     * combine : 3 -> three at 1218 ms from start
+     */
+    private fun sample15Combine() {
+        runBlocking {
+            val flowA = (1..3).asFlow().onEach { delay(300) } // 发射数字 1..3，间隔 300 毫秒
+            val flowB = flowOf("one", "two", "three").onEach { delay(400) } // 每 400 毫秒发射一次字符串
+            val startTime = System.currentTimeMillis() // 记录开始的时间
+            flowA.combine(flowB) { a, b -> "$a -> $b" } // 使用“zip”组合单个字符串
+                .collect { value -> // 收集并打印
+                    println("combine : $value at ${System.currentTimeMillis() - startTime} ms from start")
+                }
+        }
+    }
+
+    private fun requestFlow(i: Int): Flow<String> = flow {
+        emit("$i: First")
+        delay(500) // 等待 500 毫秒
+        emit("$i: Second")
+    }
+
+    /**
+     * usage 16 : 展平流
+     * 1. 将流中的值转换为单个流进行下一步处理
+     */
+    private fun sample16() {
+        // 得到了一个包含流的流（Flow<Flow<String>>），需要将其进行展平为单个流以进行下一步处理
+        val newFlow: Flow<Flow<String>> = (1..3).asFlow().map { requestFlow(it) }
+        runBlocking {
+            newFlow.collect { flow ->
+                flow.collect { println(it) }
+            }
+        }
     }
 
     private fun log(msg: String) = println("[${Thread.currentThread().name}] $msg")
