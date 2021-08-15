@@ -34,7 +34,7 @@ class TestPresenter : BasePresenter<TestContract.IView, TestModel>(), TestContra
                 BaseObserver(
                     this, showLoading = true,
                     onSuccess = {
-                        view?.setupData(it.data)
+                        view?.setupData(it.data.toString())
                     }, onFail = { code: Int?, msg: String? ->
 
                     })

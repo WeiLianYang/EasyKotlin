@@ -40,7 +40,7 @@ interface ApiService {
      * http://www.wanandroid.com/article/top/json
      */
     @GET("article/top/json")
-    fun getTopArticles(): BaseResponse<MutableList<Article>>
+    suspend fun getTopArticles(): BaseResponse<MutableList<Article>>
 
     /**
      * 获取文章列表

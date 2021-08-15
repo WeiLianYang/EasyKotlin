@@ -39,7 +39,7 @@ private fun getRetrofit(): Retrofit {
         .client(getOkHttpClient())
         .baseUrl(apiBaseUrl)
         .addConverterFactory(GsonConverterFactory.create())
-        .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
+//        .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
         .build()
 }
 

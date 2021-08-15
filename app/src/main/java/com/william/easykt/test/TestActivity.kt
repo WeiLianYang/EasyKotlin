@@ -18,8 +18,11 @@ package com.william.easykt.test
 
 import com.william.base_component.mvp.BaseMvpActivity
 import com.william.easykt.R
-import com.william.easykt.data.Banner
 import com.william.easykt.databinding.ActivityTestBinding
+import com.william.easykt.service.Api
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.flow.*
+import kotlinx.coroutines.runBlocking
 
 
 /**
@@ -36,14 +39,26 @@ class TestActivity : BaseMvpActivity<TestPresenter>(), TestContract.IView {
     }
 
     override fun initData() {
+        setTitleText("TestActivity")
+//        mPresenter.getBanners()
 
-        mPresenter.getBanners()
+        runBlocking {
+            flow {
+                val response = Api.apiService.getTopArticles()
+                emit(response.data)
+            }.flowOn(Dispatchers.IO)
+                .onCompletion { cause -> if (cause != null) println("Flow completed exceptionally") } // 2 观察上游异常
+                .catch { e -> println("Caught exception: $e") } // 3 需要放在 onCompletion 之后，否则 onCompletion 不执行
+                .collect { value ->
+                    setupData(value.toString()) // 1
+                }
+        }
     }
 
     override val mViewBinding: ActivityTestBinding by bindingView()
 
-    override fun setupData(response: List<Banner>?) {
-        mViewBinding.tvText.text = response?.toString()
+    override fun setupData(response: String?) {
+        mViewBinding.tvText.text = response
         mViewBinding.ivTestImage.setImageResource(R.mipmap.ic_launcher)
         mViewBinding.includeLayout.ivIncludeImage.setImageResource(R.mipmap.ic_launcher_round)
     }

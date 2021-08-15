@@ -24,7 +24,7 @@ import io.reactivex.Observable
 interface TestContract {
     interface IView : IBaseView {
 
-        fun setupData(response: List<Banner>?)
+        fun setupData(response: String?)
     }
 
     interface IPresenter {
