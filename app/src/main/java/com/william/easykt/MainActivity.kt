@@ -26,7 +26,7 @@ import com.william.base_component.utils.logD
 import com.william.base_component.utils.openActivity
 import com.william.base_component.utils.openBrowser
 import com.william.easykt.databinding.ActivityMainBinding
-import com.william.easykt.test.TestActivity
+import com.william.easykt.test.TestVmActivity
 import com.william.easykt.ui.*
 import java.util.*
 
@@ -43,9 +43,7 @@ class MainActivity : BaseActivity() {
 
         mViewBinding.apply {
             tvButton1.setOnClickListener {
-                openActivity<TestActivity>(mActivity) {
-                    putExtra("name", "Stark")
-                }
+                openActivity<TestVmActivity>(mActivity)
             }
 
             tvButton2.setOnClickListener {
@@ -119,7 +117,7 @@ class MainActivity : BaseActivity() {
                     FlurryAgent.onError("errorId", "message", it)
                 }
             }
-            
+
             tvButton11.setOnClickListener {
                 openActivity<NestedScrollingActivity>(mActivity)
             }
