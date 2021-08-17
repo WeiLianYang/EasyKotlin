@@ -17,7 +17,7 @@ import kotlinx.coroutines.launch
  */
 
 fun <T> ViewModel.launchFlow(
-    block: () -> T,
+    block: suspend () -> T,
     success: (T) -> Unit = {},
     error: (Throwable) -> Unit = {}
 ) {
