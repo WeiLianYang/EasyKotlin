@@ -35,7 +35,7 @@ abstract class BaseDialogFragment : DialogFragment() {
     protected var mFragment: Fragment? = null
     protected var mActivity: FragmentActivity? = null
 
-    protected abstract val mViewBinding: ViewBinding
+    protected abstract val viewBinding: ViewBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -47,7 +47,7 @@ abstract class BaseDialogFragment : DialogFragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        val view = mViewBinding.root
+        val view = viewBinding.root
         mFragment = this
         mActivity = activity
         initView(view)

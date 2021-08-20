@@ -30,6 +30,7 @@
     <string name="test_flurry_crash">测试Flurry Crash</string>
     <string name="test_nested_scrolling">Nested Scrolling</string>
     <string name="test_kotlin_flow">测试 Kotlin Flow</string>
+    <string name="test_bottom_sheet">Bottom Sheet Dialog</string>
 
     <string name="test_kotlin_flow1">1. 异步计算的值流</string>
     <string name="test_kotlin_flow2">2. 冷流</string>

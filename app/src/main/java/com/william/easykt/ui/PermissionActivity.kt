@@ -30,7 +30,7 @@ import com.william.easykt.databinding.ActivityPermissionBinding
  */
 class PermissionActivity : BaseActivity() {
 
-    override val mViewBinding: ActivityPermissionBinding by bindingView()
+    override val viewBinding: ActivityPermissionBinding by bindingView()
 
     override fun initAction() {
     }
@@ -38,7 +38,7 @@ class PermissionActivity : BaseActivity() {
     override fun initData() {
         setTitleText(javaClass.simpleName)
 
-        mViewBinding.tvButton.setOnClickListener {
+        viewBinding.tvButton.setOnClickListener {
             requestPermission(
                 this,
                 mutableListOf(

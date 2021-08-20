@@ -28,7 +28,7 @@ import com.william.easykt.ui.scroll.addScrollImageView
  */
 class AutoScrollActivity : BaseActivity() {
 
-    override val mViewBinding: ActivityAutoScrollBinding by bindingView()
+    override val viewBinding: ActivityAutoScrollBinding by bindingView()
 
     override fun initAction() {
     }
@@ -36,6 +36,6 @@ class AutoScrollActivity : BaseActivity() {
     override fun initData() {
         setTitleText("AutoScrollActivity")
 
-        addScrollImageView(mViewBinding.flContent)
+        addScrollImageView(viewBinding.flContent)
     }
 }

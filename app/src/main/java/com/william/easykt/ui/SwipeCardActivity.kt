@@ -28,7 +28,7 @@ import com.william.easykt.ui.adapter.SwipeCardAdapter
  */
 class SwipeCardActivity : BaseActivity() {
 
-    override val mViewBinding: ActivitySwipeCardBinding by bindingView()
+    override val viewBinding: ActivitySwipeCardBinding by bindingView()
 
     private lateinit var cardAdapter: SwipeCardAdapter
 
@@ -38,7 +38,7 @@ class SwipeCardActivity : BaseActivity() {
     override fun initData() {
         setTitleText("SwipeCardActivity")
         cardAdapter = SwipeCardAdapter()
-        mViewBinding.viewPager.apply {
+        viewBinding.viewPager.apply {
             offscreenPageLimit = 3
             adapter = cardAdapter
             setPageTransformer(

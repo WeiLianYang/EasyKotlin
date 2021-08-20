@@ -45,8 +45,8 @@ abstract class BaseFragment : Fragment(), IBaseView {
     protected var mFragment: Fragment? = null
 
     protected lateinit var mContext: Context
-    protected lateinit var mBaseBinding: BaseFragmentBinding
-    protected abstract val mViewBinding: ViewBinding
+    protected lateinit var baseBinding: BaseFragmentBinding
+    protected abstract val viewBinding: ViewBinding
 
     private var hasLoadData = false
     private var mLoadingDialog: LoadingDialog? = null
@@ -67,8 +67,8 @@ abstract class BaseFragment : Fragment(), IBaseView {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        mBaseBinding = BaseFragmentBinding.inflate(layoutInflater)
-        val rootView = mBaseBinding.root
+        baseBinding = BaseFragmentBinding.inflate(layoutInflater)
+        val rootView = baseBinding.root
         initLayout()
         initView(rootView)
         initAction()
@@ -95,12 +95,12 @@ abstract class BaseFragment : Fragment(), IBaseView {
                 ConstraintLayout.LayoutParams.MATCH_PARENT,
                 ConstraintLayout.LayoutParams.MATCH_PARENT
             )
-            mViewBinding.root.parent?.let {
+            viewBinding.root.parent?.let {
                 // 因为mViewBinding只被初始化一次，下次访问时还是上次的值，所以需要将它的父View和其解除关系，避免被重新addView时崩溃
                 // 如果设置了ViewPager.offscreenPageLimits = adapter.count时这里不会走的，如果没有设置，这里就是一道保险
                 (it as ViewGroup).removeAllViews()
             }
-            mBaseBinding.mClBaseContent.addView(mViewBinding.root, params)
+            baseBinding.mClBaseContent.addView(viewBinding.root, params)
         }
     }
 

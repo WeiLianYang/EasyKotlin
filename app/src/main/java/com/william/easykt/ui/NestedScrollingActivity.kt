@@ -27,13 +27,13 @@ import com.william.easykt.ui.adapter.SimpleAdapter
  */
 class NestedScrollingActivity : BaseActivity() {
 
-    override val mViewBinding: ActivityNestedScrollingBinding by bindingView()
+    override val viewBinding: ActivityNestedScrollingBinding by bindingView()
 
     override fun initAction() {
     }
 
     override fun initData() {
         setTitleText("NestedScrollingLayout")
-        mViewBinding.recyclerView.adapter = SimpleAdapter()
+        viewBinding.recyclerView.adapter = SimpleAdapter()
     }
 }

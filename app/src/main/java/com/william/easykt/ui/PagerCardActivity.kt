@@ -29,7 +29,7 @@ import com.william.easykt.ui.adapter.PagerCardAdapter
  */
 class PagerCardActivity : BaseActivity() {
 
-    override val mViewBinding: ActivityPagerCardBinding by bindingView()
+    override val viewBinding: ActivityPagerCardBinding by bindingView()
 
     private lateinit var cardAdapter: PagerCardAdapter
 
@@ -39,7 +39,7 @@ class PagerCardActivity : BaseActivity() {
     override fun initData() {
         setTitleText("PagerCardActivity")
         cardAdapter = PagerCardAdapter()
-        mViewBinding.viewPager.apply {
+        viewBinding.viewPager.apply {
             pageMargin = 18.dp
             offscreenPageLimit = 3
             adapter = cardAdapter

@@ -47,7 +47,7 @@ import com.william.base_component.widgets.CustomClassicsFooter
 abstract class BaseMvpRefreshActivity<P : BasePresenter<out IBaseView, out IBaseModel>> :
     BaseMvpActivity<P>(), IBaseRefreshView {
 
-    override val mViewBinding: ViewBinding by lazy(LazyThreadSafetyMode.NONE) {
+    override val viewBinding: ViewBinding by lazy(LazyThreadSafetyMode.NONE) {
         BaseActivityRefreshBinding.inflate(layoutInflater)
     }
 
@@ -62,7 +62,7 @@ abstract class BaseMvpRefreshActivity<P : BasePresenter<out IBaseView, out IBase
     }
 
     open fun getSmartRefreshLayout(): SmartRefreshLayout? =
-        (mViewBinding as? BaseActivityRefreshBinding)?.mSmartRefreshLayout
+        (viewBinding as? BaseActivityRefreshBinding)?.mSmartRefreshLayout
 
     private fun initRefreshSetting() {
         getSmartRefreshLayout()?.apply {

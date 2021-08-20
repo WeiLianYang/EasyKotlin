@@ -30,14 +30,14 @@ import kotlin.system.measureTimeMillis
  */
 class FlowSampleActivity : BaseActivity() {
 
-    override val mViewBinding: ActivityFlowSampleBinding by bindingView()
+    override val viewBinding: ActivityFlowSampleBinding by bindingView()
 
     override fun initData() {
         setTitleText("FlowSample")
     }
 
     override fun initAction() {
-        mViewBinding.apply {
+        viewBinding.apply {
             tvButton1.setOnClickListener { sample1() }
             tvButton2.setOnClickListener { sample2() }
             tvButton3.setOnClickListener { sample3() }

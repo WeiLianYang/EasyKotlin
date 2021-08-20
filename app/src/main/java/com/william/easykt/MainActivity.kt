@@ -37,11 +37,11 @@ import java.util.*
  * Class Comment：主入口
  */
 class MainActivity : BaseActivity() {
-    override val mViewBinding: ActivityMainBinding by bindingView()
+    override val viewBinding: ActivityMainBinding by bindingView()
 
     override fun initAction() {
 
-        mViewBinding.apply {
+        viewBinding.apply {
             tvButton1.setOnClickListener {
                 openActivity<TestActivity>(mActivity) {
                     putExtra("name", "Stark")
@@ -119,13 +119,17 @@ class MainActivity : BaseActivity() {
                     FlurryAgent.onError("errorId", "message", it)
                 }
             }
-            
+
             tvButton11.setOnClickListener {
                 openActivity<NestedScrollingActivity>(mActivity)
             }
 
             tvButton12.setOnClickListener {
                 openActivity<FlowSampleActivity>(mActivity)
+            }
+
+            tvButton13.setOnClickListener {
+                SampleSheetDialog.show(mActivity.supportFragmentManager)
             }
 
         }

@@ -47,18 +47,18 @@ abstract class BaseActivity : AppCompatActivity(), IBaseView {
     private lateinit var titleBarLayout: TitleBarLayout
 
     private var mLoadingDialog: LoadingDialog? = null
-    private lateinit var mBaseBinding: BaseActivityBinding
+    private lateinit var baseBinding: BaseActivityBinding
 
     /**
      * Implemented by subclasses using standard delegates, for example:
-     * override val mViewBinding: ActivityMainBinding by bindingView()
+     * override val viewBinding: ActivityMainBinding by bindingView()
      */
-    protected abstract val mViewBinding: ViewBinding
+    protected abstract val viewBinding: ViewBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        mBaseBinding = BaseActivityBinding.inflate(layoutInflater)
-        setContentView(mBaseBinding.root)
+        baseBinding = BaseActivityBinding.inflate(layoutInflater)
+        setContentView(baseBinding.root)
 
         mActivity = this
 
@@ -76,7 +76,7 @@ abstract class BaseActivity : AppCompatActivity(), IBaseView {
 
     private fun initLayout() {
         if (isShowTitleBar()) {
-            mBaseBinding.vsBaseTitle.inflate()
+            baseBinding.vsBaseTitle.inflate()
             titleBarLayout = findViewById(R.id.titleLayout)
             initTitleBarListener()
         }
@@ -91,9 +91,9 @@ abstract class BaseActivity : AppCompatActivity(), IBaseView {
             params.topToTop = ConstraintLayout.LayoutParams.PARENT_ID
         }
         params.bottomToBottom = ConstraintLayout.LayoutParams.PARENT_ID
-        mBaseBinding.mClBaseContent.addView(mViewBinding.root, params)
+        baseBinding.mClBaseContent.addView(viewBinding.root, params)
 
-        mBaseBinding.mClBaseContent.fitsSystemWindows = isFitSystemWindow()
+        baseBinding.mClBaseContent.fitsSystemWindows = isFitSystemWindow()
     }
 
     open fun initView() {}

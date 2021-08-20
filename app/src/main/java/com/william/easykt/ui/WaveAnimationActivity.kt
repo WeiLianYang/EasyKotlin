@@ -32,7 +32,7 @@ import com.william.easykt.databinding.ActivityWaveAnimationBinding
  * Class Comment：
  */
 class WaveAnimationActivity : BaseActivity() {
-    override val mViewBinding: ActivityWaveAnimationBinding by bindingView()
+    override val viewBinding: ActivityWaveAnimationBinding by bindingView()
 
     override fun initAction() {
 
@@ -40,7 +40,7 @@ class WaveAnimationActivity : BaseActivity() {
 
     override fun initData() {
         setTitleText("WaveAnimationActivity")
-        mViewBinding.mWaveView.apply {
+        viewBinding.mWaveView.apply {
             setInitialRadius(15f.dp)
             setMaxRadiusRate(1f)
             setDuration(1500)
@@ -51,20 +51,20 @@ class WaveAnimationActivity : BaseActivity() {
             start()
         }
 
-        mViewBinding.start.setOnClickListener {
-            mViewBinding.mWaveView.start()
+        viewBinding.start.setOnClickListener {
+            viewBinding.mWaveView.start()
         }
 
-        mViewBinding.stop.setOnClickListener {
-            mViewBinding.mWaveView.stop()
+        viewBinding.stop.setOnClickListener {
+            viewBinding.mWaveView.stop()
         }
 
-        mViewBinding.stopImmediately.setOnClickListener {
-            mViewBinding.mWaveView.stopImmediately()
+        viewBinding.stopImmediately.setOnClickListener {
+            viewBinding.mWaveView.stopImmediately()
         }
 
         val animator = ObjectAnimator.ofPropertyValuesHolder(
-            mViewBinding.viewOuter,
+            viewBinding.viewOuter,
             PropertyValuesHolder.ofFloat("scaleX", 2f),
             PropertyValuesHolder.ofFloat("scaleY", 2f),
             PropertyValuesHolder.ofFloat("alpha", 0f)
@@ -75,7 +75,7 @@ class WaveAnimationActivity : BaseActivity() {
         }
 
         val animator2 = ObjectAnimator.ofPropertyValuesHolder(
-            mViewBinding.viewOuter2,
+            viewBinding.viewOuter2,
             PropertyValuesHolder.ofFloat("scaleX", 2f),
             PropertyValuesHolder.ofFloat("scaleY", 2f),
             PropertyValuesHolder.ofFloat("alpha", 0f)

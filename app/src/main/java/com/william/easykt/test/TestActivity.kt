@@ -55,12 +55,12 @@ class TestActivity : BaseMvpActivity<TestPresenter>(), TestContract.IView {
         }
     }
 
-    override val mViewBinding: ActivityTestBinding by bindingView()
+    override val viewBinding: ActivityTestBinding by bindingView()
 
     override fun setupData(response: String?) {
-        mViewBinding.tvText.text = response
-        mViewBinding.ivTestImage.setImageResource(R.mipmap.ic_launcher)
-        mViewBinding.includeLayout.ivIncludeImage.setImageResource(R.mipmap.ic_launcher_round)
+        viewBinding.tvText.text = response
+        viewBinding.ivTestImage.setImageResource(R.mipmap.ic_launcher)
+        viewBinding.includeLayout.ivIncludeImage.setImageResource(R.mipmap.ic_launcher_round)
     }
 
 }
