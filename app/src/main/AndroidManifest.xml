@@ -102,6 +102,8 @@
             </intent-filter>
         </activity>
         <activity android:name=".test.TestActivity" />
+        
+        <activity android:name=".test.TestVmActivity" />
 
         <activity android:name=".ui.SwipeCardActivity" />
 
