@@ -54,3 +54,7 @@ fun <T> DataStore<Preferences>.get(key: Preferences.Key<T>, defaultVal: T): Flow
         preferences[key] ?: defaultVal
     }
 }
+
+fun String?.getNoNull(default: String = ""): String {
+    return this ?: default
+}
