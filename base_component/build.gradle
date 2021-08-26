@@ -1,4 +1,3 @@
-
 /*
  * Copyright WeiLianYang
  *
@@ -62,7 +61,7 @@ dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar', '*.aar'])
 
     testImplementation 'junit:junit:4.13.2'
-    androidTestImplementation 'androidx.test.ext:junit:1.1.2'
+    androidTestImplementation 'androidx.test.ext:junit:1.1.3'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.4.0'
 
     debugApi 'com.squareup.leakcanary:leakcanary-android:2.7'
@@ -70,10 +69,13 @@ dependencies {
     api 'androidx.core:core-ktx:1.6.0'
     api 'androidx.multidex:multidex:2.0.1'
     api 'androidx.cardview:cardview:1.0.0'
-    api 'androidx.appcompat:appcompat:1.3.0'
+    api 'androidx.appcompat:appcompat:1.3.1'
     api 'androidx.annotation:annotation:1.2.0'
     api 'com.google.android.material:material:1.4.0'
-    api 'androidx.datastore:datastore-preferences:1.0.0-alpha08'
+
+    // datastore
+    api 'androidx.datastore:datastore-preferences:1.0.0'
+    api 'com.google.protobuf:protobuf-javalite:3.10.0'
 
     api "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
     api "org.jetbrains.kotlin:kotlin-reflect:$kotlin_version"
@@ -83,7 +85,7 @@ dependencies {
 
     api 'com.orhanobut:logger:2.2.0'
 
-    api 'io.reactivex.rxjava2:rxjava:2.2.11'
+    api 'io.reactivex.rxjava2:rxjava:2.2.12'
     api 'io.reactivex.rxjava2:rxandroid:2.1.1'
 
     api 'com.squareup.retrofit2:retrofit:2.9.0'
@@ -110,7 +112,7 @@ dependencies {
     api 'com.romandanylyk:pageindicatorview:1.0.2'
 
     api 'com.tencent:mmkv-static:1.2.10'
-    
+
     api 'com.flurry.android:analytics:12.13.0'
     api 'com.google.android.gms:play-services-base:15.0.1'
     api 'com.google.android.gms:play-services-ads:15.0.1'
@@ -119,8 +121,8 @@ dependencies {
     kapt "androidx.room:room-compiler:2.3.0"
     api "androidx.room:room-ktx:2.3.0"
     api "androidx.room:room-runtime:2.3.0"
-    
-     // lifecycle
+
+    // lifecycle
     api 'androidx.lifecycle:lifecycle-runtime-ktx:2.3.1'
     api 'androidx.lifecycle:lifecycle-common-java8:2.3.1'
     api 'androidx.lifecycle:lifecycle-extensions:2.2.0'
