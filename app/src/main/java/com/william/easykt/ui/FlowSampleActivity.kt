@@ -17,6 +17,7 @@
 package com.william.easykt.ui
 
 import com.william.base_component.activity.BaseActivity
+import com.william.base_component.utils.logW
 import com.william.easykt.databinding.ActivityFlowSampleBinding
 import kotlinx.coroutines.*
 import kotlinx.coroutines.flow.*
@@ -625,7 +626,11 @@ class FlowSampleActivity : BaseActivity() {
                     println(value)
                 }
                 // 将 check 放到 catch 操作符之前 就能捕获所有异常
-                .catch { e -> println("Caught $e") }
+                .onCompletion { cause -> "flow complete with $cause".logW() }
+                .catch { e ->
+                    println("Caught $e")
+//                    throw e // if throw, app will crash
+                }
                 .collect()
         }
     }
