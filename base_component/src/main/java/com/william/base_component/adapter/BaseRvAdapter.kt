@@ -156,6 +156,15 @@ abstract class BaseRvAdapter<T> constructor() : RecyclerView.Adapter<BaseRvViewH
         }
     }
 
+    @SuppressLint("NotifyDataSetChanged")
+    fun setList(beans: List<T>?) {
+        if (beans != null) {
+            mList.clear()
+            mList.addAll(beans)
+            notifyDataSetChanged()
+        }
+    }
+
     fun remove(position: Int): T? {
         return if (position >= 0 && position < mList.size) {
             mList.removeAt(position)

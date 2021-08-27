@@ -297,3 +297,7 @@ data class ShareResponseBody(
     val coinInfo: CoinInfoBean,
     val shareArticles: ArticleResponseBody
 )
+
+class MainEntranceBean(
+    var title: Int = 0
+)

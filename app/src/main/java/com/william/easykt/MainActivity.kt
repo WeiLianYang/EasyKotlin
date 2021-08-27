@@ -19,6 +19,7 @@ package com.william.easykt
 import android.content.Intent
 import android.os.Build
 import android.os.storage.StorageManager
+import androidx.activity.viewModels
 import androidx.core.content.getSystemService
 import com.flurry.android.FlurryAgent
 import com.william.base_component.activity.BaseActivity
@@ -28,6 +29,8 @@ import com.william.base_component.utils.openBrowser
 import com.william.easykt.databinding.ActivityMainBinding
 import com.william.easykt.test.TestVmActivity
 import com.william.easykt.ui.*
+import com.william.easykt.ui.adapter.MainAdapter
+import com.william.easykt.viewmodel.MainViewModel
 import java.util.*
 
 
@@ -39,97 +42,72 @@ import java.util.*
 class MainActivity : BaseActivity() {
     override val viewBinding: ActivityMainBinding by bindingView()
 
+    private val viewModel by viewModels<MainViewModel>()
+    private lateinit var mAdapter: MainAdapter
+
     override fun initAction() {
 
-        viewBinding.apply {
-            tvButton1.setOnClickListener {
-                openActivity<TestVmActivity>(mActivity)
-            }
+        viewBinding.recyclerView.adapter = MainAdapter().also {
+            mAdapter = it
+        }
 
-            tvButton2.setOnClickListener {
-                openActivity<SwipeCardActivity>(mActivity)
-            }
+        viewModel.dataList.observe(this, {
+            mAdapter.setList(it)
+        })
 
-            tvButton3.setOnClickListener {
-                openActivity<WaveAnimationActivity>(mActivity)
-            }
+        mAdapter.setOnItemClickListener { _, position, _ ->
 
-            tvButton4.setOnClickListener {
-                openActivity<PagerCardActivity>(mActivity)
-            }
-
-            tvButton5.setOnClickListener {
-                openActivity<AutoScrollActivity>(mActivity)
-            }
-
-            tvButton6.setOnClickListener {
-                openActivity<PermissionActivity>(mActivity)
-            }
-
-            tvButton7.setOnClickListener {
-                /*
-                openBrowser(
-                    mActivity,
-                    "https://www.baidu.com",
-                    "com.tencent.mtt",
-                    "com.tencent.mtt.MainActivity"
-                )
-                */
-                openBrowser(this@MainActivity, "https://www.baidu.com")
-            }
-
-            tvButton8.setOnClickListener {
-                if (Build.VERSION.SDK_INT > Build.VERSION_CODES.O) {
-                    // App needs 10 MB within internal storage.
-                    val numBytesNeededForMyApp = 1024 * 1024 * 10L
-                    val storageManager = applicationContext.getSystemService<StorageManager>()!!
-                    val appSpecificInternalDirUuid: UUID = storageManager.getUuidForPath(filesDir)
-                    val availableBytes =
-                        storageManager.getAllocatableBytes(appSpecificInternalDirUuid)
-                    val kb = availableBytes / 1024
-                    val mb = kb / 1024
-                    val gb = mb / 1024
-                    "available space : $availableBytes byte , $kb kb ,  $mb MB , $gb GB".logD()
-                    if (availableBytes >= numBytesNeededForMyApp) {
-                        storageManager.allocateBytes(
-                            appSpecificInternalDirUuid,
-                            numBytesNeededForMyApp
-                        )
-                    } else {
-                        val storageIntent = Intent(StorageManager.ACTION_MANAGE_STORAGE)
-                        startActivity(storageIntent)
+            when (position) {
+                0 -> openActivity<TestVmActivity>(mActivity)
+                1 -> openActivity<SwipeCardActivity>(mActivity)
+                2 -> openActivity<WaveAnimationActivity>(mActivity)
+                3 -> openActivity<PagerCardActivity>(mActivity)
+                4 -> openActivity<AutoScrollActivity>(mActivity)
+                5 -> openActivity<PermissionActivity>(mActivity)
+                6 -> openBrowser(this@MainActivity, "https://www.baidu.com")
+                7 -> {
+                    if (Build.VERSION.SDK_INT > Build.VERSION_CODES.O) {
+                        // App needs 10 MB within internal storage.
+                        val numBytesNeededForMyApp = 1024 * 1024 * 10L
+                        val storageManager = applicationContext.getSystemService<StorageManager>()!!
+                        val appSpecificInternalDirUuid: UUID =
+                            storageManager.getUuidForPath(filesDir)
+                        val availableBytes =
+                            storageManager.getAllocatableBytes(appSpecificInternalDirUuid)
+                        val kb = availableBytes / 1024
+                        val mb = kb / 1024
+                        val gb = mb / 1024
+                        "available space : $availableBytes byte , $kb kb ,  $mb MB , $gb GB".logD()
+                        if (availableBytes >= numBytesNeededForMyApp) {
+                            storageManager.allocateBytes(
+                                appSpecificInternalDirUuid,
+                                numBytesNeededForMyApp
+                            )
+                        } else {
+                            val storageIntent = Intent(StorageManager.ACTION_MANAGE_STORAGE)
+                            startActivity(storageIntent)
+                        }
                     }
                 }
-            }
-
-            tvButton9.setOnClickListener {
-                // param keys and values have to be of String type
-                val map = hashMapOf("user" to "Jack", "age" to "18")
-                // up to 10 params can be logged with each event
-                FlurryAgent.logEvent("userEvent", map)
-            }
-
-            tvButton10.setOnClickListener {
-//                throw IndexOutOfBoundsException()
-                kotlin.runCatching {
-                    throw NullPointerException()
-                }.onFailure {
-                    FlurryAgent.onError("errorId", "message", it)
+                8 -> {
+                    // param keys and values have to be of String type
+                    val map = hashMapOf("user" to "Jack", "age" to "18")
+                    // up to 10 params can be logged with each event
+                    FlurryAgent.logEvent("userEvent", map)
+                }
+                9 -> {
+                    kotlin.runCatching {
+                        throw NullPointerException()
+                    }.onFailure {
+                        FlurryAgent.onError("errorId", "message", it)
+                    }
+                }
+                10 -> openActivity<NestedScrollingActivity>(mActivity)
+                11 -> openActivity<FlowSampleActivity>(mActivity)
+                12 -> SampleSheetDialog.show(mActivity.supportFragmentManager)
+                else -> {
                 }
             }
-
-            tvButton11.setOnClickListener {
-                openActivity<NestedScrollingActivity>(mActivity)
-            }
-
-            tvButton12.setOnClickListener {
-                openActivity<FlowSampleActivity>(mActivity)
-            }
-
-            tvButton13.setOnClickListener {
-                SampleSheetDialog.show(mActivity.supportFragmentManager)
-            }
-
         }
     }
 

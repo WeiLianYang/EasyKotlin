@@ -22,6 +22,7 @@ import androidx.datastore.preferences.core.Preferences
 import androidx.datastore.preferences.core.edit
 import androidx.datastore.preferences.core.emptyPreferences
 import androidx.datastore.preferences.preferencesDataStore
+import com.william.base_component.BaseApp
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.map
@@ -58,3 +59,5 @@ fun <T> DataStore<Preferences>.get(key: Preferences.Key<T>, defaultVal: T): Flow
 fun String?.getNoNull(default: String = ""): String {
     return this ?: default
 }
+
+fun Int.toText(): String = BaseApp.instance.getString(this)
