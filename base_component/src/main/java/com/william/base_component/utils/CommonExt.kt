@@ -61,3 +61,5 @@ fun String?.getNoNull(default: String = ""): String {
 }
 
 fun Int.toText(): String = BaseApp.instance.getString(this)
+
+fun Int.toPx(): Int = BaseApp.instance.resources.getDimensionPixelOffset(this)

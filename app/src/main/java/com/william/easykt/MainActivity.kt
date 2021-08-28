@@ -26,11 +26,13 @@ import com.william.base_component.activity.BaseActivity
 import com.william.base_component.utils.logD
 import com.william.base_component.utils.openActivity
 import com.william.base_component.utils.openBrowser
+import com.william.base_component.utils.toPx
 import com.william.easykt.databinding.ActivityMainBinding
 import com.william.easykt.test.TestVmActivity
 import com.william.easykt.ui.*
 import com.william.easykt.ui.adapter.MainAdapter
 import com.william.easykt.viewmodel.MainViewModel
+import com.zyyoona7.itemdecoration.RecyclerViewDivider
 import java.util.*
 
 
@@ -46,9 +48,14 @@ class MainActivity : BaseActivity() {
     private lateinit var mAdapter: MainAdapter
 
     override fun initAction() {
-
-        viewBinding.recyclerView.adapter = MainAdapter().also {
-            mAdapter = it
+        viewBinding.recyclerView.apply {
+            adapter = MainAdapter().also {
+                mAdapter = it
+            }
+            RecyclerViewDivider.staggeredGrid()
+                .includeStartEdge()
+                .includeEdge().spacingSize(R.dimen.dp_10.toPx())
+                .build().addTo(this)
         }
 
         viewModel.dataList.observe(this, {
@@ -64,7 +71,7 @@ class MainActivity : BaseActivity() {
                 3 -> openActivity<PagerCardActivity>(mActivity)
                 4 -> openActivity<AutoScrollActivity>(mActivity)
                 5 -> openActivity<PermissionActivity>(mActivity)
-                6 -> openBrowser(this@MainActivity, "https://www.baidu.com")
+                6 -> openBrowser(this, "https://www.baidu.com")
                 7 -> {
                     if (Build.VERSION.SDK_INT > Build.VERSION_CODES.O) {
                         // App needs 10 MB within internal storage.

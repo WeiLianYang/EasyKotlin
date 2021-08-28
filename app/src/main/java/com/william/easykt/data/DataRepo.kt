@@ -301,3 +301,7 @@ data class ShareResponseBody(
 class MainEntranceBean(
     var title: Int = 0
 )
+
+class FlowUsageBean(
+    var title: Int = 0
+)

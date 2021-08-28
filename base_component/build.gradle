@@ -107,6 +107,8 @@ dependencies {
 
     api 'com.permissionx.guolindev:permissionx:1.4.0'
 
+    api 'com.github.zyyoona7:recyclerviewdivider:1.0.2'
+
     api 'com.github.hackware1993:MagicIndicator:1.7.0'
     api 'com.github.OCNYang:PageTransformerHelp:v1.0.1'
     api 'com.romandanylyk:pageindicatorview:1.0.2'

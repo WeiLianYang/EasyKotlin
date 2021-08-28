@@ -16,9 +16,15 @@
 
 package com.william.easykt.ui
 
+import androidx.activity.viewModels
 import com.william.base_component.activity.BaseActivity
 import com.william.base_component.utils.logW
+import com.william.base_component.utils.toPx
+import com.william.easykt.R
 import com.william.easykt.databinding.ActivityFlowSampleBinding
+import com.william.easykt.ui.adapter.FlowAdapter
+import com.william.easykt.viewmodel.FlowSampleViewModel
+import com.zyyoona7.itemdecoration.RecyclerViewDivider
 import kotlinx.coroutines.*
 import kotlinx.coroutines.flow.*
 import kotlin.system.measureTimeMillis
@@ -32,44 +38,63 @@ import kotlin.system.measureTimeMillis
 class FlowSampleActivity : BaseActivity() {
 
     override val viewBinding: ActivityFlowSampleBinding by bindingView()
+    private lateinit var mAdapter: FlowAdapter
+    private val viewModel by viewModels<FlowSampleViewModel>()
 
     override fun initData() {
         setTitleText("FlowSample")
     }
 
     override fun initAction() {
-        viewBinding.apply {
-            tvButton1.setOnClickListener { sample1() }
-            tvButton2.setOnClickListener { sample2() }
-            tvButton3.setOnClickListener { sample3() }
-            tvButton4.setOnClickListener { sample4() }
-            tvButton5.setOnClickListener { sample5() }
-            tvButton6.setOnClickListener { sample6() }
-            tvButton7.setOnClickListener { sample7() }
-            tvButton8.setOnClickListener { sample8() }
-            tvButton9.setOnClickListener { sample9() }
-            tvButton10.setOnClickListener { sample10() }
-            tvButton11.setOnClickListener { sample11() }
-            tvButton12.setOnClickListener { sample12() }
-            tvButton13.setOnClickListener { sample13() }
-            tvButton14.setOnClickListener { sample14() }
-            tvButton15.setOnClickListener {
-                sample15Zip()
-                sample15Combine()
+        viewBinding.recyclerView.apply {
+            adapter = FlowAdapter().also {
+                mAdapter = it
             }
-            tvButton16.setOnClickListener {
-                sample16()
-                sample16FlatMapConcat()
-                sample16FlatMapMerge()
-                sample16FlatMapLatest()
+            RecyclerViewDivider.staggeredGrid()
+                .includeStartEdge()
+                .includeEdge().spacingSize(R.dimen.dp_10.toPx())
+                .build().addTo(this)
+        }
+
+        viewModel.dataList.observe(this, {
+            mAdapter.setList(it)
+        })
+        mAdapter.setOnItemClickListener { _, position, _ ->
+            when (position) {
+                0 -> sample1()
+                1 -> sample2()
+                2 -> sample3()
+                3 -> sample4()
+                4 -> sample5()
+                5 -> sample6()
+                6 -> sample7()
+                7 -> sample8()
+                8 -> sample9()
+                9 -> sample10()
+                10 -> sample11()
+                11 -> sample12()
+                12 -> sample13()
+                13 -> sample14()
+                14 -> {
+                    sample15Zip()
+                    sample15Combine()
+                }
+                15 -> {
+                    sample16()
+                    sample16FlatMapConcat()
+                    sample16FlatMapMerge()
+                    sample16FlatMapLatest()
+                }
+                16 -> sample17()
+                17 -> sample18()
+                18 -> {
+                    sample19()
+                    sample19Collect()
+                }
+                19 -> sample20()
+                else -> {
+                }
             }
-            tvButton17.setOnClickListener { sample17() }
-            tvButton18.setOnClickListener { sample18() }
-            tvButton19.setOnClickListener {
-                sample19()
-                sample19Collect()
-            }
-            tvButton20.setOnClickListener { sample20() }
         }
     }
 
@@ -94,6 +119,7 @@ class FlowSampleActivity : BaseActivity() {
      */
     private fun sample1() = runBlocking {
         // 启动并发的协程以验证主线程并未阻塞
+        println("----> sample 1")
         launch {
             for (k in 1..3) {
                 println("I'm not blocked $k")
@@ -109,6 +135,7 @@ class FlowSampleActivity : BaseActivity() {
      * Flow 是一种类似于序列的冷流，flow 构建器中的代码直到流被收集的时候才运行
      */
     private fun sample2() = runBlocking {
+        println("----> sample 2")
         println("Calling simple function...")
         val flow = numberFlow()
         println("Calling collect...")
@@ -122,6 +149,7 @@ class FlowSampleActivity : BaseActivity() {
      * 流采用与协程同样的协作取消。像往常一样，流的收集可以在当流在一个可取消的挂起函数（例如 delay）中挂起的时候取消
      */
     private fun sample3() = runBlocking {
+        println("----> sample 3")
         withTimeoutOrNull(250) {
             // 在 250 毫秒后超时，超时后流将被取消
             numberFlow().collect { value -> println(value) }
@@ -135,6 +163,7 @@ class FlowSampleActivity : BaseActivity() {
      * 2. flowOf 构建器定义了一个发射固定值集的流。
      */
     private fun sample4() = runBlocking {
+        println("----> sample 4")
         // 将一个整数区间转化为流
         (1..3).asFlow().collect { value -> println(value) }
 //        flowOf(1, 2, 3).collect { value -> println(value) }
@@ -148,6 +177,7 @@ class FlowSampleActivity : BaseActivity() {
      * 4. 流与序列的主要区别在于这些操作符中的代码可以调用挂起函数。
      */
     private fun sample5() = runBlocking {
+        println("----> sample 5")
         (1..3).asFlow() // 一个请求流
             .map { request ->
                 performRequest(request) // Int 被转换为String
@@ -166,6 +196,7 @@ class FlowSampleActivity : BaseActivity() {
      * 1. 使用 transform 我们可以在执行长时间运行的异步请求之前发射一个字符串并跟踪这个响应：
      */
     private fun sample6() = runBlocking {
+        println("----> sample 6")
         (1..3).asFlow() // 一个请求流
             .transform { request ->
                 emit("Making request $request")
@@ -191,6 +222,7 @@ class FlowSampleActivity : BaseActivity() {
      * 2. 协程中的取消操作总是通过抛出异常来执行，这样所有的资源管理函数（如 try {...} finally {...} 块）会在取消的情况下正常运行
      */
     private fun sample7() = runBlocking {
+        println("----> sample 7")
         numbersFlow()
             .take(2) // 只获取前两个
             .collect { value -> println(value) }
@@ -204,6 +236,7 @@ class FlowSampleActivity : BaseActivity() {
      * 3. 使用 reduce 与 fold 将流规约到单个值。
      */
     private fun sample8() = runBlocking {
+        println("----> sample 8")
         val sum1 = (1..5).asFlow()
             .map { it * it } // 数字 1 至 5 的平方
             .reduce { a, b ->
@@ -240,6 +273,7 @@ class FlowSampleActivity : BaseActivity() {
      * 3. 默认情况下不启动新协程。 从上游到下游每个过渡操作符都会处理每个发射出的值然后再交给末端操作符。
      */
     private fun sample9() = runBlocking {
+        println("----> sample 9")
         (1..5).asFlow()
             .filter {
                 println("Filter $it")
@@ -267,6 +301,7 @@ class FlowSampleActivity : BaseActivity() {
      * 例如，如果有一个流 simple，然后以下代码在它的编写者指定的上下文中运行，而无论流 simple 的实现细节如何：
      */
     private fun sample10() = runBlocking {
+        println("----> sample 10")
         simpleFlow().collect { value ->
             log("Collected1: $value") // 运行在指定上下文中: [main]
         }
@@ -309,6 +344,7 @@ class FlowSampleActivity : BaseActivity() {
      * 以下示例展示了更改流上下文的正确方法，该示例还通过打印相应线程的名字以展示它们的工作方式：
      */
     private fun sample11() {
+        println("----> sample 11")
         // 在 [DefaultDispatcher-worker-1] 发射值
         val flow = flow {
             for (i in 1..3) {
@@ -340,6 +376,7 @@ class FlowSampleActivity : BaseActivity() {
      * 我们可以在流上使用 buffer 操作符来并发运行这个 flow 流中发射元素的代码以及收集的代码，而不是顺序运行它们：
      */
     private fun sample12() {
+        println("----> sample 12")
         runBlocking {
             val time = measureTimeMillis {
                 intFlow()
@@ -359,6 +396,7 @@ class FlowSampleActivity : BaseActivity() {
      * 在本示例中，当收集器处理它们太慢的时候，conflate 操作符可以用于跳过中间值。
      */
     private fun sample13() {
+        println("----> sample 13")
         runBlocking {
             val time = measureTimeMillis {
                 intFlow()
@@ -385,6 +423,7 @@ class FlowSampleActivity : BaseActivity() {
      * Collected in 703 ms
      */
     private fun sample14() {
+        println("----> sample 14")
         runBlocking {
             val time = measureTimeMillis {
                 intFlow()
@@ -417,6 +456,7 @@ class FlowSampleActivity : BaseActivity() {
                 println(it) // 收集并打印
             }
         }*/
+        println("----> sample 15Zip")
         runBlocking {
             val flowA = (1..3).asFlow().onEach { delay(300) } // 发射数字 1..3，间隔 300 毫秒
             val flowB = flowOf("one", "two", "three").onEach { delay(400) } // 每 400 毫秒发射一次字符串
@@ -441,6 +481,7 @@ class FlowSampleActivity : BaseActivity() {
      * combine : 3 -> three at 1218 ms from start
      */
     private fun sample15Combine() {
+        println("----> sample 15 Combine")
         runBlocking {
             val flowA = (1..3).asFlow().onEach { delay(300) } // 发射数字 1..3，间隔 300 毫秒
             val flowB = flowOf("one", "two", "three").onEach { delay(400) } // 每 400 毫秒发射一次字符串
@@ -471,6 +512,7 @@ class FlowSampleActivity : BaseActivity() {
      * 3: Second
      */
     private fun sample16() {
+        println("----> sample 16")
         // 得到了一个包含流的流（Flow<Flow<String>>），需要将其进行展平为单个流以进行下一步处理
         val newFlow: Flow<Flow<String>> = (1..3).asFlow().map { requestFlow(it) }
         runBlocking {
@@ -493,6 +535,7 @@ class FlowSampleActivity : BaseActivity() {
      * flatMapConcat : 3: Second at 1822 ms from start
      */
     private fun sample16FlatMapConcat() {
+        println("----> sample 16 flatMapConcat")
         runBlocking {
             val startTime = System.currentTimeMillis() // 记录开始时间
             (1..3).asFlow()
@@ -521,6 +564,7 @@ class FlowSampleActivity : BaseActivity() {
      * 但是并发收集结果流，相当于执行顺序是首先执行 map { requestFlow(it) } 然后在其返回结果上调用 flattenMerge。
      */
     private fun sample16FlatMapMerge() {
+        println("----> sample 16 sample16FlatMapMerge")
         runBlocking {
             val startTime = System.currentTimeMillis() // 记录开始时间
             (1..3).asFlow()
@@ -548,6 +592,7 @@ class FlowSampleActivity : BaseActivity() {
      * 然而，如果我们要在块中调用诸如 delay 之类的挂起函数，这将会被表现出来。
      */
     private fun sample16FlatMapLatest() {
+        println("----> sample 16 flatMapLatest")
         runBlocking {
             val startTime = System.currentTimeMillis() // 记录开始时间
             (1..3).asFlow()
@@ -568,6 +613,7 @@ class FlowSampleActivity : BaseActivity() {
      * Caught java.lang.IllegalStateException: Crashed on 2
      */
     private fun sample17() {
+        println("----> sample 17")
         runBlocking {
             try {
                 (1..3).asFlow().map { value ->
@@ -599,6 +645,7 @@ class FlowSampleActivity : BaseActivity() {
      * Caught java.lang.IllegalStateException: Collected 2
      */
     private fun sample18() {
+        println("----> sample 18")
         runBlocking {
             flowOf(1, 2, 3)
                 .map { value ->
@@ -657,6 +704,7 @@ class FlowSampleActivity : BaseActivity() {
      * Caught exception
      */
     private fun sample19() {
+        println("----> sample 19")
         runBlocking {
             try {
                 (1..3).asFlow().collect { value -> println(value) }
@@ -677,7 +725,7 @@ class FlowSampleActivity : BaseActivity() {
                     "string $value"
                 }
                 .onCompletion { cause -> if (cause != null) println("Flow completed exceptionally") } // 2 观察上游异常
-                .catch { e -> println("Caught exception") } // 3 需要放在 onCompletion 之后，否则 onCompletion 不执行
+                .catch { e -> println("Caught exception: $e") } // 3 需要放在 onCompletion 之后，否则 onCompletion 不执行
                 .collect { value -> println(value) } // 1
 
             // 与 catch 操作符的另一个不同点是
@@ -688,7 +736,7 @@ class FlowSampleActivity : BaseActivity() {
                     check(value <= 1) { "Crashed on $value" }
                     "string $value"
                 }
-                .catch { e -> println("Caught exception") } // 3 需要放在 onCompletion 之后，否则 onCompletion 不执行
+                .catch { e -> println("Caught exception: $e") } // 3 需要放在 onCompletion 之后，否则 onCompletion 不执行
                 .collect { value ->
                     println(value) // 1
                 }
@@ -711,6 +759,7 @@ class FlowSampleActivity : BaseActivity() {
      * Event: 3
      */
     private fun sample19Collect() {
+        println("----> sample 19 collect")
         runBlocking {
             // 模仿事件流
             val events = (1..3).asFlow().onEach { delay(100) }
@@ -743,6 +792,7 @@ class FlowSampleActivity : BaseActivity() {
      * BlockingCoroutine was cancelled; job="coroutine#1":BlockingCoroutine{Cancelled}@5ec0a365
      */
     private fun sample20() {
+        println("----> sample 20")
         runBlocking {
             (1..5).asFlow().cancellable().collect { value ->
                 if (value == 3) cancel()
