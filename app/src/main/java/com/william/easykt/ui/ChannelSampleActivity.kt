@@ -27,14 +27,8 @@ import com.william.easykt.databinding.ActivityChannelSampleBinding
 import com.william.easykt.ui.adapter.UsageAdapter
 import com.william.easykt.viewmodel.SampleViewModel
 import com.zyyoona7.itemdecoration.RecyclerViewDivider
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.cancelChildren
-import kotlinx.coroutines.channels.Channel
-import kotlinx.coroutines.channels.ReceiveChannel
-import kotlinx.coroutines.channels.consumeEach
-import kotlinx.coroutines.channels.produce
-import kotlinx.coroutines.launch
-import kotlinx.coroutines.runBlocking
+import kotlinx.coroutines.*
+import kotlinx.coroutines.channels.*
 
 /**
  * author : WilliamYang
@@ -185,16 +179,30 @@ class ChannelSampleActivity : BaseActivity() {
 
     /**
      * usage 6 : 扇出
+     * 1. 注意，取消生产者协程将关闭它的通道，从而最终终止处理器协程正在执行的此通道上的迭代。
      */
     private fun sample6() = runBlocking {
-
+        val producer = produceNumbersDelay()
+        repeat(5) {
+            launchProcessor(it, producer)
+        }
+        delay(950)
+        producer.cancel() // cancel producer coroutine and thus kill them all
     }
 
     /**
      * usage 7 : 扇入
+     * 1. 多个协程可以发送到同一个通道。
+     *    比如说，让我们创建一个字符串的通道，和一个在这个通道中以指定的延迟反复发送一个指定字符串的挂起函数：
      */
     private fun sample7() = runBlocking {
-
+        val channel = Channel<String>()
+        launch { sendString(channel, "foo", 200L) }
+        launch { sendString(channel, "BAR!", 500L) }
+        repeat(6) { // receive first six
+            channel.receive().logD()
+        }
+        coroutineContext.cancelChildren() // cancel all children to let main finish
     }
 
     /**
@@ -248,6 +256,27 @@ class ChannelSampleActivity : BaseActivity() {
         for (x in numbers) {
             "x: $x".logD()
             if (x % prime != 0) send(x)
+        }
+    }
+
+    private fun CoroutineScope.produceNumbersDelay() = produce {
+        var x = 1 // start from 1
+        while (true) {
+            send(x++) // produce next
+            delay(100) // wait 0.1s
+        }
+    }
+
+    private fun CoroutineScope.launchProcessor(id: Int, channel: ReceiveChannel<Int>) = launch {
+        for (number in channel) {
+            "Processor #$id received $number".logD()
+        }
+    }
+
+    private suspend fun sendString(channel: SendChannel<String>, s: String, time: Long) {
+        while (true) {
+            delay(time)
+            channel.send(s)
         }
     }
 
