@@ -22,8 +22,8 @@ import com.william.base_component.utils.logW
 import com.william.base_component.utils.toPx
 import com.william.easykt.R
 import com.william.easykt.databinding.ActivityFlowSampleBinding
-import com.william.easykt.ui.adapter.FlowAdapter
-import com.william.easykt.viewmodel.FlowSampleViewModel
+import com.william.easykt.ui.adapter.UsageAdapter
+import com.william.easykt.viewmodel.SampleViewModel
 import com.zyyoona7.itemdecoration.RecyclerViewDivider
 import kotlinx.coroutines.*
 import kotlinx.coroutines.flow.*
@@ -38,8 +38,8 @@ import kotlin.system.measureTimeMillis
 class FlowSampleActivity : BaseActivity() {
 
     override val viewBinding: ActivityFlowSampleBinding by bindingView()
-    private lateinit var mAdapter: FlowAdapter
-    private val viewModel by viewModels<FlowSampleViewModel>()
+    private lateinit var mAdapter: UsageAdapter
+    private val viewModel by viewModels<SampleViewModel>()
 
     override fun initData() {
         setTitleText("FlowSample")
@@ -47,7 +47,7 @@ class FlowSampleActivity : BaseActivity() {
 
     override fun initAction() {
         viewBinding.recyclerView.apply {
-            adapter = FlowAdapter().also {
+            adapter = UsageAdapter().also {
                 mAdapter = it
             }
             RecyclerViewDivider.staggeredGrid()
@@ -56,7 +56,7 @@ class FlowSampleActivity : BaseActivity() {
                 .build().addTo(this)
         }
 
-        viewModel.dataList.observe(this, {
+        viewModel.flowSampleDataList.observe(this, {
             mAdapter.setList(it)
         })
         mAdapter.setOnItemClickListener { _, position, _ ->

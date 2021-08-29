@@ -31,6 +31,7 @@
     <string name="test_nested_scrolling">Nested Scrolling</string>
     <string name="test_kotlin_flow">测试 Kotlin Flow</string>
     <string name="test_bottom_sheet">Bottom Sheet Dialog</string>
+    <string name="test_kotlin_channel">测试 Kotlin Channel</string>
 
     <string name="test_kotlin_flow1">1. 异步计算的值流</string>
     <string name="test_kotlin_flow2">2. 冷流</string>
@@ -52,5 +53,16 @@
     <string name="test_kotlin_flow18">18. 异常透明性：透明捕获 / 声明式捕获</string>
     <string name="test_kotlin_flow19">19. 流完成：命令式 / 声明式 / 启动流</string>
     <string name="test_kotlin_flow20">20. 流取消检测（会崩溃）</string>
+
+    <string name="test_kotlin_channel1">1. 通道基础</string>
+    <string name="test_kotlin_channel2">2. 关闭与迭代通道</string>
+    <string name="test_kotlin_channel3">3. 构建通道生产者</string>
+    <string name="test_kotlin_channel4">4. 管道</string>
+    <string name="test_kotlin_channel5">5. 使用管道的素数</string>
+    <string name="test_kotlin_channel6">6. 扇出</string>
+    <string name="test_kotlin_channel7">7. 扇入</string>
+    <string name="test_kotlin_channel8">8. 带缓冲的通道</string>
+    <string name="test_kotlin_channel9">9. 通道是公平的</string>
+    <string name="test_kotlin_channel10">10. 计时器通道</string>
 
 </resources>

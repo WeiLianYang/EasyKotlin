@@ -45,6 +45,7 @@ class MainViewModel : ViewModel() {
             MainEntranceBean(R.string.test_nested_scrolling),
             MainEntranceBean(R.string.test_kotlin_flow),
             MainEntranceBean(R.string.test_bottom_sheet),
+            MainEntranceBean(R.string.test_kotlin_channel),
         )
     )
 

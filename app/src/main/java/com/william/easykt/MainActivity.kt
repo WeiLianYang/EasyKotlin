@@ -112,6 +112,7 @@ class MainActivity : BaseActivity() {
                 10 -> openActivity<NestedScrollingActivity>(mActivity)
                 11 -> openActivity<FlowSampleActivity>(mActivity)
                 12 -> SampleSheetDialog.show(mActivity.supportFragmentManager)
+                13 -> openActivity<ChannelSampleActivity>(mActivity)
                 else -> {
                 }
             }

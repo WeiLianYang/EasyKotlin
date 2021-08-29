@@ -42,8 +42,9 @@ fun String.logW(tag: String = TAG) =
 fun String.logE(tag: String = TAG) =
     log(LEVEL.E, tag, this)
 
-private fun log(level: LEVEL, tag: String, message: String) {
+private fun log(level: LEVEL, tag: String, msg: String) {
     if (!enableLog) return
+    val message = "[${Thread.currentThread().name}] -> $msg"
     when (level) {
         LEVEL.V -> Log.v(tag, message)
         LEVEL.D -> Log.d(tag, message)

@@ -302,6 +302,9 @@ class MainEntranceBean(
     var title: Int = 0
 )
 
-class FlowUsageBean(
+/**
+ * 通用 sample 实体
+ */
+class UsageBean(
     var title: Int = 0
 )

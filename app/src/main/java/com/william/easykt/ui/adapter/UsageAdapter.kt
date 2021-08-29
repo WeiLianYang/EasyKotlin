@@ -21,22 +21,22 @@ import com.william.base_component.adapter.BaseRvAdapter
 import com.william.base_component.adapter.BaseRvViewHolder
 import com.william.base_component.utils.toText
 import com.william.easykt.R
-import com.william.easykt.data.FlowUsageBean
+import com.william.easykt.data.UsageBean
 
 /**
  * author：William
  * date：2021/8/27 22:43
- * description：Flow usage
+ * description：usage adapter
  */
-class FlowAdapter : BaseRvAdapter<FlowUsageBean>() {
+class UsageAdapter : BaseRvAdapter<UsageBean>() {
 
     override val layoutResourceId: Int
-        get() = R.layout.item_flow_case
+        get() = R.layout.item_usage
 
     override fun onBindViewHolder(
         holder: BaseRvViewHolder,
         position: Int,
-        bean: FlowUsageBean?
+        bean: UsageBean?
     ) {
         holder.setText(R.id.text, bean?.title?.toText())
     }
