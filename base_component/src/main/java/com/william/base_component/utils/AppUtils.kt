@@ -16,6 +16,7 @@
 
 package com.william.base_component.utils
 
+import android.app.Activity
 import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
@@ -80,7 +81,7 @@ fun getAppVersionName(): String {
  * @param block 传参表达式
  * @param T 目标activity
  */
-inline fun <reified T> openActivity(
+inline fun <reified T : Activity> openActivity(
     context: Context,
     noinline block: (Intent.() -> Unit) = {}
 ) {

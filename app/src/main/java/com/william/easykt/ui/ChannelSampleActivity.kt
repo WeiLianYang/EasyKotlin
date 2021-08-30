@@ -143,6 +143,7 @@ class ChannelSampleActivity : BaseActivity() {
      *    并且另一个或多个协程开始消费这些流，做一些操作，并生产了一些额外的结果。
      */
     private fun sample4() = runBlocking {
+        "sample 4".logV()
         val numbers = produceNumbers() // produces integers from 1 and on
         val squares = square(numbers) // squares integers
         repeat(5) {
@@ -168,6 +169,7 @@ class ChannelSampleActivity : BaseActivity() {
      * -> 29
      */
     private fun sample5() = runBlocking {
+        "sample 5".logV()
         var cur = numbersFrom(2)
         repeat(10) {
             val prime = cur.receive()
@@ -182,6 +184,7 @@ class ChannelSampleActivity : BaseActivity() {
      * 1. 注意，取消生产者协程将关闭它的通道，从而最终终止处理器协程正在执行的此通道上的迭代。
      */
     private fun sample6() = runBlocking {
+        "sample 6".logV()
         val producer = produceNumbersDelay()
         repeat(5) {
             launchProcessor(it, producer)
@@ -196,6 +199,7 @@ class ChannelSampleActivity : BaseActivity() {
      *    比如说，让我们创建一个字符串的通道，和一个在这个通道中以指定的延迟反复发送一个指定字符串的挂起函数：
      */
     private fun sample7() = runBlocking {
+        "sample 7".logV()
         val channel = Channel<String>()
         launch { sendString(channel, "foo", 200L) }
         launch { sendString(channel, "BAR!", 500L) }
@@ -207,9 +211,31 @@ class ChannelSampleActivity : BaseActivity() {
 
     /**
      * usage 8 : 带缓冲的通道
+     * 1. 无缓冲的通道在发送者和接收者相遇时传输元素（也称“对接”）。
+     * 2. 如果发送先被调用，则它将被挂起直到接收被调用，如果接收先被调用，它将被挂起直到发送被调用。
+     *
+     * 输出结果：
+     * -> Sending 0
+     * -> Sending 1
+     * -> Sending 2
+     * -> Sending 3
+     * -> Sending 4
+     * -> cancel sender coroutine
      */
     private fun sample8() = runBlocking {
-
+        "sample 8".logV()
+        val channel = Channel<Int>(4) // create buffered channel
+        val sender = launch { // launch sender coroutine
+            repeat(10) {
+                "Sending $it".logD() // print before sending each element
+                // 前四个元素被加入到了缓冲区并且发送者在试图发送第五个元素的时候被挂起
+                channel.send(it) // will suspend when buffer is full
+            }
+        }
+        // don't receive anything... just wait....
+        delay(1000)
+        "cancel sender coroutine".logV()
+        sender.cancel() // cancel sender coroutine
     }
 
     /**
