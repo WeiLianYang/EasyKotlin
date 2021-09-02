@@ -240,18 +240,65 @@ class ChannelSampleActivity : BaseActivity() {
 
     /**
      * usage 9 : 通道是公平的
+     * 发送和接收操作是 公平的 并且尊重调用它们的多个协程。
+     * 它们遵守先进先出原则，可以看到第一个协程调用 receive 并得到了元素。
+     * 在下面的例子中两个协程“乒”和“乓”都从共享的“桌子”通道接收到这个“球”元素。
      */
     private fun sample9() = runBlocking {
-
+        val table = Channel<Ball>() // 一个共享的 table（桌子）
+        launch {
+            player("ping", table)
+        }
+        launch {
+            player("pong", table)
+        }
+        table.send(Ball(0)) // 乒乓球
+        delay(1000) // 延迟 1 秒钟
+        coroutineContext.cancelChildren() // 游戏结束，取消它们
     }
 
     /**
      * usage 10 : 计时器通道
+     * 计时器通道是一种特别的会合通道，每次经过特定的延迟都会从该通道进行消费并产生 Unit。
+     * 虽然它看起来似乎没用，它被用来构建分段来创建复杂的基于时间的 produce 管道和进行窗口化操作以及其它时间相关的处理。
+     * 可以在 select 中使用计时器通道来进行“打勾”操作。
      */
     private fun sample10() = runBlocking {
+        val tickerChannel =
+            ticker(delayMillis = 100, initialDelayMillis = 0) // create ticker channel
+        var nextElement = withTimeoutOrNull(1) { tickerChannel.receive() }
+        println("Initial element is available immediately: $nextElement") // no initial delay
 
+        nextElement =
+            withTimeoutOrNull(50) { tickerChannel.receive() } // all subsequent elements have 100ms delay
+        println("Next element is not ready in 50 ms: $nextElement")
+
+        nextElement = withTimeoutOrNull(60) { tickerChannel.receive() }
+        println("Next element is ready in 100 ms: $nextElement")
+
+        // Emulate large consumption delays
+        println("Consumer pauses for 150ms")
+        delay(150)
+        // Next element is available immediately
+        nextElement = withTimeoutOrNull(1) { tickerChannel.receive() }
+        println("Next element is available immediately after large consumer delay: $nextElement")
+        // Note that the pause between `receive` calls is taken into account and next element arrives faster
+        nextElement = withTimeoutOrNull(60) { tickerChannel.receive() }
+        println("Next element is ready in 50ms after consumer pause in 150ms: $nextElement")
+
+        tickerChannel.cancel() // indicate that no more elements are needed
     }
 
+    data class Ball(var hits: Int)
+
+    private suspend fun player(name: String, table: Channel<Ball>) {
+        for (ball in table) { // 在循环中接收球
+            ball.hits++
+            println("$name $ball")
+            delay(300) // 等待一段时间
+            table.send(ball) // 将球发送回去
+        }
+    }
 
     private fun CoroutineScope.produceSquares(): ReceiveChannel<Int> = produce {
         for (x in 1..5) send(x * x)
