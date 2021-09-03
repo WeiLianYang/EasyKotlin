@@ -23,11 +23,7 @@ import androidx.activity.viewModels
 import androidx.core.content.getSystemService
 import com.flurry.android.FlurryAgent
 import com.william.base_component.activity.BaseActivity
-import com.william.base_component.extension.snackbar
-import com.william.base_component.utils.logD
-import com.william.base_component.utils.openActivity
-import com.william.base_component.utils.openBrowser
-import com.william.base_component.utils.toPx
+import com.william.base_component.utils.*
 import com.william.easykt.databinding.ActivityMainBinding
 import com.william.easykt.test.TestVmActivity
 import com.william.easykt.ui.*
@@ -115,8 +111,8 @@ class MainActivity : BaseActivity() {
                 12 -> SampleSheetDialog.show(mActivity.supportFragmentManager)
                 13 -> openActivity<ChannelSampleActivity>(mActivity)
                 14 -> {
-                    "Hello Snackbar".snackbar(viewBinding.root, "execute") {
-                        "execute success".snackbar(viewBinding.root)
+                    showSnackbar(viewBinding.root, "Hello Snackbar", "execute") {
+                        showSnackbar(viewBinding.root, R.string.test_success)
                     }
                 }
                 else -> {

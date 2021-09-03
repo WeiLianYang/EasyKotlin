@@ -17,6 +17,8 @@
 package com.william.base_component.utils
 
 import android.content.res.Resources
+import android.view.View
+import com.google.android.material.snackbar.Snackbar
 import com.william.base_component.BaseApp
 
 
@@ -46,4 +48,30 @@ fun getNavBarHeight(): Int {
     } else {
         0
     }
+}
+
+fun showSnackbar(
+    view: View,
+    text: CharSequence?,
+    actionText: String? = null,
+    duration: Int = Snackbar.LENGTH_SHORT,
+    listener: (v: View) -> Unit = {}
+) {
+    text?.let {
+        val bar = Snackbar.make(view, text, duration)
+        actionText?.let { bar.setAction(it, listener) }
+        bar.show()
+    }
+}
+
+fun showSnackbar(
+    view: View,
+    resId: Int,
+    actionTextId: Int? = null,
+    duration: Int = Snackbar.LENGTH_SHORT,
+    listener: (v: View) -> Unit = {}
+) {
+    val bar = Snackbar.make(view, resId, duration)
+    actionTextId?.let { bar.setAction(it, listener) }
+    bar.show()
 }
