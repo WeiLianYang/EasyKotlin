@@ -46,6 +46,7 @@ class MainViewModel : ViewModel() {
             MainEntranceBean(R.string.test_kotlin_flow),
             MainEntranceBean(R.string.test_bottom_sheet),
             MainEntranceBean(R.string.test_kotlin_channel),
+            MainEntranceBean(R.string.test_material_snackbar),
         )
     )
 

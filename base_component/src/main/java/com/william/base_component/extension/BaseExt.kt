@@ -18,7 +18,9 @@ package com.william.base_component.extension
 
 import android.content.res.Resources
 import android.util.TypedValue
+import android.view.View
 import android.widget.Toast
+import com.google.android.material.snackbar.Snackbar
 import com.william.base_component.BaseApp
 
 /**
@@ -36,6 +38,29 @@ fun Int.toast(duration: Int = Toast.LENGTH_SHORT) {
     Toast.makeText(BaseApp.instance, this, duration).show()
 }
 
+fun String?.snackbar(
+    view: View,
+    actionText: String? = null,
+    duration: Int = Snackbar.LENGTH_SHORT,
+    listener: (v: View) -> Unit = {}
+) {
+    this?.let { text ->
+        val bar = Snackbar.make(view, text, duration)
+        actionText?.let { bar.setAction(it, listener) }
+        bar.show()
+    }
+}
+
+fun Int.snackbar(
+    view: View,
+    actionTextId: Int? = null,
+    duration: Int = Snackbar.LENGTH_SHORT,
+    listener: (v: View) -> Unit = {}
+) {
+    val bar = Snackbar.make(view, this, duration)
+    actionTextId?.let { bar.setAction(it, listener) }
+    bar.show()
+}
 
 val Int.dp
     get() = this.toFloat().dp.toInt()

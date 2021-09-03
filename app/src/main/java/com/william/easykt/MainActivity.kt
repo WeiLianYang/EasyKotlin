@@ -23,6 +23,7 @@ import androidx.activity.viewModels
 import androidx.core.content.getSystemService
 import com.flurry.android.FlurryAgent
 import com.william.base_component.activity.BaseActivity
+import com.william.base_component.extension.snackbar
 import com.william.base_component.utils.logD
 import com.william.base_component.utils.openActivity
 import com.william.base_component.utils.openBrowser
@@ -113,6 +114,11 @@ class MainActivity : BaseActivity() {
                 11 -> openActivity<FlowSampleActivity>(mActivity)
                 12 -> SampleSheetDialog.show(mActivity.supportFragmentManager)
                 13 -> openActivity<ChannelSampleActivity>(mActivity)
+                14 -> {
+                    "Hello Snackbar".snackbar(viewBinding.root, "execute") {
+                        "execute success".snackbar(viewBinding.root)
+                    }
+                }
                 else -> {
                 }
             }
