@@ -137,6 +137,8 @@
         <activity android:name=".ui.FlowSampleActivity" />
 
         <activity android:name=".ui.ChannelSampleActivity" />
+
+        <activity android:name=".ui.DiffUtilActivity" />
     </application>
 
 </manifest>

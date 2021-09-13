@@ -308,3 +308,10 @@ class MainEntranceBean(
 class UsageBean(
     var title: Int = 0
 )
+
+
+class DiffUtilBean(
+    var id: Int = 0,
+    var title: String = "",
+    var content: String = ""
+)

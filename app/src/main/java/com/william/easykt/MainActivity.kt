@@ -115,6 +115,7 @@ class MainActivity : BaseActivity() {
                         showSnackbar(viewBinding.root, R.string.test_success)
                     }
                 }
+                15 -> openActivity<DiffUtilActivity>(mActivity)
                 else -> {
                 }
             }
