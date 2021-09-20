@@ -43,6 +43,13 @@ class DiffUtilActivity : BaseActivity() {
         viewModel.listData.observe(this, {
             diffAdapter.submitList(it)
         })
+
+        viewBinding.btnChange1.setOnClickListener {
+            diffAdapter.submitList(viewModel.getList(1))
+        }
+        viewBinding.btnChange2.setOnClickListener {
+            diffAdapter.submitList(viewModel.getList(2))
+        }
     }
 
     override fun initData() {

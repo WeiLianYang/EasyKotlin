@@ -19,7 +19,7 @@ package com.william.easykt.viewmodel
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.asLiveData
 import com.william.easykt.data.DiffUtilBean
-import kotlinx.coroutines.flow.flow
+import kotlinx.coroutines.flow.flowOf
 
 
 /**
@@ -29,12 +29,26 @@ import kotlinx.coroutines.flow.flow
  */
 class DiffUtilViewModel : ViewModel() {
 
-    val listData = flow {
+    val listData = flowOf(getList()).asLiveData()
+
+    fun getList(type: Int = 0): List<DiffUtilBean> {
         val list = arrayListOf<DiffUtilBean>()
-        for (index in 0..19) {
+        for (index in 0..10) {
+            if (type == 1) {
+                if (index == 1) {
+                    list.add(
+                        DiffUtilBean(index, "New title: 第 $index 条数据", "New content: 第 $index 条内容")
+                    )
+                    continue
+                }
+            } else if (type == 2) {
+                if (index == 0 || index == 2 || index == 3) {
+                    continue
+                }
+            }
             list.add(DiffUtilBean(index, "第 $index 条数据", "第 $index 条内容"))
         }
-        emit(list)
-    }.asLiveData()
+        return list
+    }
 
 }

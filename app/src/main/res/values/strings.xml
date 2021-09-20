@@ -35,6 +35,8 @@
     <string name="test_material_snackbar">Snackbar</string>
     <string name="test_success">execute success</string>
     <string name="test_diff_util">RecyclerView DiffUtil</string>
+    <string name="test_diff_util_button1">Change Item 1</string>
+    <string name="test_diff_util_button2">Remove Item</string>
 
     <string name="test_kotlin_flow1">1. 异步计算的值流</string>
     <string name="test_kotlin_flow2">2. 冷流</string>

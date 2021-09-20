@@ -32,8 +32,6 @@ import com.william.easykt.databinding.ItemDiffBinding
  */
 class DiffUtilAdapter : ListAdapter<DiffUtilBean, DiffUtilAdapter.UsageViewHolder>(DiffCallback()) {
 
-    private val dataList = mutableListOf<DiffUtilBean>()
-
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): UsageViewHolder {
         val binding = ItemDiffBinding.inflate(LayoutInflater.from(parent.context), parent, false)
         return UsageViewHolder(binding)
@@ -41,7 +39,7 @@ class DiffUtilAdapter : ListAdapter<DiffUtilBean, DiffUtilAdapter.UsageViewHolde
 
     @SuppressLint("SetTextI18n")
     override fun onBindViewHolder(holder: UsageViewHolder, position: Int) {
-        val itemData = dataList[position]
+        val itemData = getItem(position)
         holder.binding.tvId.text = "id: ${itemData.id}"
         holder.binding.tvTitle.text = "title: ${itemData.title}"
         holder.binding.tvContent.text = "content: ${itemData.content}"
@@ -56,14 +54,6 @@ class DiffUtilAdapter : ListAdapter<DiffUtilBean, DiffUtilAdapter.UsageViewHolde
     }
 
     class UsageViewHolder(val binding: ItemDiffBinding) : RecyclerView.ViewHolder(binding.root)
-
-    override fun submitList(list: List<DiffUtilBean>?) {
-        if (list != null) {
-            dataList.clear()
-            dataList.addAll(list)
-        }
-        super.submitList(list)
-    }
 
 }
 

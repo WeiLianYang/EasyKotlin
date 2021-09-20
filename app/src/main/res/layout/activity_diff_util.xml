@@ -1,5 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
-<!--
+<?xml version="1.0" encoding="utf-8"?><!--
   ~ Copyright WeiLianYang
   ~
   ~ Licensed under the Apache License, Version 2.0 (the "License");
@@ -29,5 +28,29 @@
         android:orientation="vertical"
         app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
         tools:listitem="@layout/item_usage" />
+
+    <Button
+        android:id="@+id/btn_change1"
+        android:layout_width="0dp"
+        android:layout_height="50dp"
+        android:layout_marginStart="20dp"
+        android:layout_marginEnd="20dp"
+        android:layout_marginBottom="@dimen/dp_10"
+        android:text="@string/test_diff_util_button1"
+        android:textAllCaps="false"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/btn_change2"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <Button
+        android:id="@+id/btn_change2"
+        android:layout_width="0dp"
+        android:layout_height="50dp"
+        android:layout_marginEnd="20dp"
+        android:text="@string/test_diff_util_button2"
+        android:textAllCaps="false"
+        app:layout_constraintBottom_toBottomOf="@+id/btn_change1"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/btn_change1" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
