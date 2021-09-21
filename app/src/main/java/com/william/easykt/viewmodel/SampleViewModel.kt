@@ -18,8 +18,10 @@ package com.william.easykt.viewmodel
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.asLiveData
+import com.william.base_component.utils.toStringArray
 import com.william.easykt.R
 import com.william.easykt.data.UsageBean
+import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.flowOf
 
 
@@ -73,5 +75,11 @@ class SampleViewModel : ViewModel() {
     )
 
     val channelSampleDataList = channelSampleDataFlow.asLiveData()
+
+    val coroutinesSampleData = flow {
+        val array = R.array.coroutines_string_array.toStringArray()
+        val list = array.map { UsageBean(title = it) }
+        emit(list)
+    }.asLiveData()
 
 }

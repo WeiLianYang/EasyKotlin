@@ -30,14 +30,14 @@ import com.william.easykt.data.UsageBean
  */
 class UsageAdapter : BaseRvAdapter<UsageBean>() {
 
-    override val layoutResourceId: Int
-        get() = R.layout.item_usage
+    override val layoutResourceId = R.layout.item_usage
 
     override fun onBindViewHolder(
         holder: BaseRvViewHolder,
         position: Int,
         bean: UsageBean?
     ) {
-        holder.setText(R.id.text, bean?.title?.toText())
+        val text = bean?.title ?: bean?.titleId?.toText()
+        holder.setText(R.id.text, text)
     }
 }

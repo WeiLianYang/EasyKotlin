@@ -44,7 +44,7 @@ fun String.logE(tag: String = TAG) =
 
 private fun log(level: LEVEL, tag: String, msg: String) {
     if (!enableLog) return
-    val message = "[${Thread.currentThread().name}] -> $msg"
+    val message = getMessage(msg)
     when (level) {
         LEVEL.V -> Log.v(tag, message)
         LEVEL.D -> Log.d(tag, message)
@@ -52,4 +52,23 @@ private fun log(level: LEVEL, tag: String, msg: String) {
         LEVEL.W -> Log.w(tag, message)
         LEVEL.E -> Log.e(tag, message)
     }
+}
+
+private fun getMessage(msg: String): String {
+    val name = getMethodName()
+    return if (name == null) msg else "$name -> $msg"
+}
+
+private fun getMethodName(): String? {
+    val stackTraceArray = Thread.currentThread().stackTrace ?: return null
+    for (stackTrace in stackTraceArray) {
+        if (stackTrace.isNativeMethod) {
+            continue
+        }
+        if (stackTrace.className == Thread::class.java.name || stackTrace.className.contains("LogExt")) {
+            continue
+        }
+        return "[${Thread.currentThread().name}(${Thread.currentThread().id}): ${stackTrace.fileName}:${stackTrace.lineNumber}]"
+    }
+    return null
 }

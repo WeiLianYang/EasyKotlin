@@ -116,6 +116,7 @@ class MainActivity : BaseActivity() {
                     }
                 }
                 15 -> openActivity<DiffUtilActivity>(mActivity)
+                16 -> openActivity<CoroutineSampleActivity>(mActivity)
                 else -> {
                 }
             }

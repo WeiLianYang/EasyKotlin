@@ -27,16 +27,17 @@
     <string name="test_open_target_page">打开指定页面</string>
     <string name="test_available_space">查询可用空间</string>
     <string name="test_flurry_analytics">测试Flurry分析</string>
-    <string name="test_flurry_crash">测试Flurry Crash</string>
+    <string name="test_flurry_crash">Test Flurry Crash</string>
     <string name="test_nested_scrolling">Nested Scrolling</string>
-    <string name="test_kotlin_flow">测试 Kotlin Flow</string>
+    <string name="test_kotlin_flow">Test Kotlin Flow</string>
     <string name="test_bottom_sheet">Bottom Sheet Dialog</string>
-    <string name="test_kotlin_channel">测试 Kotlin Channel</string>
+    <string name="test_kotlin_channel">Test Kotlin Channel</string>
     <string name="test_material_snackbar">Snackbar</string>
     <string name="test_success">execute success</string>
     <string name="test_diff_util">RecyclerView DiffUtil</string>
     <string name="test_diff_util_button1">Change Item 1</string>
     <string name="test_diff_util_button2">Remove Item</string>
+    <string name="test_kotlin_coroutines">Test Kotlin Coroutines</string>
 
     <string name="test_kotlin_flow1">1. 异步计算的值流</string>
     <string name="test_kotlin_flow2">2. 冷流</string>
@@ -69,5 +70,11 @@
     <string name="test_kotlin_channel8">8. 带缓冲的通道</string>
     <string name="test_kotlin_channel9">9. 通道是公平的</string>
     <string name="test_kotlin_channel10">10. 计时器通道</string>
+
+    <string-array name="coroutines_string_array">
+        <item>1. 基础：非阻塞式挂起</item>
+        <item>2. 基础：协程 Job.Join()</item>
+        <item>3. 基础：结构化的并发</item>
+    </string-array>
 
 </resources>

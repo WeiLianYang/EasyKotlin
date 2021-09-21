@@ -306,7 +306,8 @@ class MainEntranceBean(
  * 通用 sample 实体
  */
 class UsageBean(
-    var title: Int = 0
+    var titleId: Int = 0,
+    var title: String? = null
 )
 
 

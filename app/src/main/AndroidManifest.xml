@@ -139,6 +139,9 @@
         <activity android:name=".ui.ChannelSampleActivity" />
 
         <activity android:name=".ui.DiffUtilActivity" />
+
+        <activity android:name=".ui.CoroutineSampleActivity" />
+
     </application>
 
 </manifest>
