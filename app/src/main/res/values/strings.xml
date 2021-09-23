@@ -77,6 +77,9 @@
         <item>3. 基础：结构化的并发</item>
         <item>4. 基础：作用域构建器</item>
         <item>5. 基础：全局协程像守护线程</item>
+        <item>6. 取消协程的执行</item>
+        <item>7. 取消是协作的</item>
+        <item>8. 使计算代码可取消</item>
     </string-array>
 
 </resources>

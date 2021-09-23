@@ -140,17 +140,93 @@ class CoroutineSampleActivity : BaseActivity() {
         println("Coroutine scope is over") // 这一行在内嵌 launch 执行完毕后才输出
     }
 
-
-    private fun sample5() {
-
+    /**
+     * 一旦 函数调用了 job.cancel，我们在其它的协程中就看不到任何输出，因为它被取消了。
+     * 这里也有一个可以使 Job 挂起的函数 cancelAndJoin 它合并了对 cancel 以及 join 的调用。
+     *
+     * log:
+     * job: I'm sleeping 0 ...
+     * job: I'm sleeping 1 ...
+     * job: I'm sleeping 2 ...
+     * main: I'm tired of waiting!
+     * main: Now I can quit.
+     */
+    private fun sample5() = runBlocking {
+        val job = launch {
+            repeat(1000) { i ->
+                println("job: I'm sleeping $i ...")
+                delay(500L)
+            }
+        }
+        delay(1300L) // 延迟一段时间
+        println("main: I'm tired of waiting!")
+//        job.cancel() // 取消该作业
+//        job.join() // 等待作业执行结束
+        job.cancelAndJoin() // 合并了对 cancel 以及 join 的调用
+        println("main: Now I can quit.")
     }
 
-    private fun sample6() {
-
+    /**
+     * 协程的取消是 协作 的。一段协程代码必须协作才能被取消。
+     * 所有 kotlinx.coroutines 中的挂起函数都是 可被取消的。它们检查协程的取消，并在取消时抛出 CancellationException。
+     * 然而，如果协程正在执行计算任务，并且没有检查取消的话，那么它是不能被取消的，就如如下示例代码所示：
+     * 并且我们可以看到它连续打印出了“I'm sleeping”，甚至在调用取消后，作业仍然执行了五次循环迭代并运行到了它结束为止。
+     *
+     * log :
+     * job: I'm sleeping 0 ...
+     * job: I'm sleeping 1 ...
+     * job: I'm sleeping 2 ...
+     * main: I'm tired of waiting!
+     * job: I'm sleeping 3 ...
+     * job: I'm sleeping 4 ...
+     * main: Now I can quit.
+     */
+    private fun sample6() = runBlocking {
+        val startTime = System.currentTimeMillis()
+        val job = launch(Dispatchers.Default) {
+            var nextPrintTime = startTime
+            var i = 0
+            while (i < 5) { // 一个执行计算的循环，只是为了占用 CPU
+                // 每秒打印消息两次
+                if (System.currentTimeMillis() >= nextPrintTime) {
+                    println("job: I'm sleeping ${i++} ...")
+                    nextPrintTime += 500L
+                }
+            }
+        }
+        delay(1300L) // 等待一段时间
+        println("main: I'm tired of waiting!")
+        job.cancelAndJoin() // 取消一个作业并且等待它结束
+        println("main: Now I can quit.")
     }
 
-    private fun sample7() {
-
+    /**
+     * 第一种方法是定期调用挂起函数来检查取消。对于这种目的 yield 是一个好的选择。
+     * 另一种方法是显式的检查取消状态。让我们试试第二种方法。
+     *
+     * log :
+     * job: I'm sleeping 0 ...
+     * job: I'm sleeping 1 ...
+     * job: I'm sleeping 2 ...
+     * main: I'm tired of waiting!
+     */
+    private fun sample7() = runBlocking {
+        val startTime = System.currentTimeMillis()
+        val job = launch(Dispatchers.Default) {
+            var nextPrintTime = startTime
+            var i = 0
+            while (isActive) { // 可以被取消的计算循环
+                // 每秒打印消息两次
+                if (System.currentTimeMillis() >= nextPrintTime) {
+                    println("job: I'm sleeping ${i++} ...")
+                    nextPrintTime += 500L
+                }
+            }
+        }
+        delay(1300L) // 等待一段时间
+        println("main: I'm tired of waiting!")
+        job.cancelAndJoin() // 取消该作业并等待它结束
+        println("main: Now I can quit.")
     }
 }
 
