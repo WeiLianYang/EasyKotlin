@@ -75,6 +75,8 @@
         <item>1. 基础：非阻塞式挂起</item>
         <item>2. 基础：协程 Job.Join()</item>
         <item>3. 基础：结构化的并发</item>
+        <item>4. 基础：作用域构建器</item>
+        <item>5. 基础：全局协程像守护线程</item>
     </string-array>
 
 </resources>

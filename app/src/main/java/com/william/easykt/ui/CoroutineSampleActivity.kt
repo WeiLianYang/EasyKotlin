@@ -65,7 +65,7 @@ class CoroutineSampleActivity : BaseActivity() {
                 1 -> sample1()
                 2 -> sample2()
                 3 -> sample3()
-                4 -> sample4()
+                4 -> main()
                 5 -> sample5()
                 6 -> sample6()
                 7 -> sample7()
@@ -87,6 +87,9 @@ class CoroutineSampleActivity : BaseActivity() {
 
     /**
      * 对 sample0() 进行优化
+     * log :
+     * Hello,
+     * Coroutines!
      */
     @DelicateCoroutinesApi
     private fun sample1() = runBlocking {
@@ -110,13 +113,33 @@ class CoroutineSampleActivity : BaseActivity() {
         println("Hello,")
     }
 
-    private fun sample3() {
-
+    /**
+     * runBlocking 与 coroutineScope 可能看起来很类似，因为它们都会等待其协程体以及所有子协程结束。
+     * 主要区别在于，runBlocking 方法会阻塞当前线程来等待， 而 coroutineScope 只是挂起，会释放底层线程用于其他用途。
+     * 由于存在这点差异，runBlocking 是常规函数，而 coroutineScope 是挂起函数。
+     *
+     * log :
+     * Task from coroutine scope
+     * Task from runBlocking
+     * Task from nested launch
+     * Coroutine scope is over
+     */
+    private fun sample3() = runBlocking { // this: CoroutineScope
+        launch {
+            delay(200L)
+            println("Task from runBlocking")
+        }
+        coroutineScope { // 创建一个协程作用域
+            launch {
+                delay(500L)
+                println("Task from nested launch")
+            }
+            delay(100L)
+            println("Task from coroutine scope") // 这一行会在内嵌 launch 之前输出
+        }
+        println("Coroutine scope is over") // 这一行在内嵌 launch 执行完毕后才输出
     }
 
-    private fun sample4() {
-
-    }
 
     private fun sample5() {
 
@@ -129,4 +152,23 @@ class CoroutineSampleActivity : BaseActivity() {
     private fun sample7() {
 
     }
+}
+
+/**
+ * 在 GlobalScope 中启动的活动协程并不会使进程保活。它们就像守护线程。
+ *
+ * log :
+ * I'm sleeping 0 ...
+ * I'm sleeping 1 ...
+ * I'm sleeping 2 ...
+ */
+@DelicateCoroutinesApi
+private fun main() = runBlocking {
+    GlobalScope.launch {
+        repeat(10) { i ->
+            println("I'm sleeping $i ...")
+            delay(500L)
+        }
+    }
+    delay(1300L) // 在延迟后退出
 }
