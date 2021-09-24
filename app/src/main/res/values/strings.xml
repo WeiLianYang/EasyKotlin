@@ -80,6 +80,10 @@
         <item>6. 取消协程的执行</item>
         <item>7. 取消是协作的</item>
         <item>8. 使计算代码可取消</item>
+        <item>9. 在 finally 中释放资源</item>
+        <item>10. 运行不能取消的代码块</item>
+        <item>11. 超时会崩溃</item>
+        <item>11. 超时不崩溃</item>
     </string-array>
 
 </resources>

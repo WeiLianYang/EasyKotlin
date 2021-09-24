@@ -69,6 +69,10 @@ class CoroutineSampleActivity : BaseActivity() {
                 5 -> sample5()
                 6 -> sample6()
                 7 -> sample7()
+                8 -> sample8()
+                9 -> sample9()
+                10 -> sample10()
+                11 -> sample11()
                 else -> {
                 }
             }
@@ -228,6 +232,63 @@ class CoroutineSampleActivity : BaseActivity() {
         job.cancelAndJoin() // 取消该作业并等待它结束
         println("main: Now I can quit.")
     }
+
+    /**
+     * log :
+     * job: I'm sleeping 0 ...
+     * job: I'm sleeping 1 ...
+     * job: I'm sleeping 2 ...
+     * main: I'm tired of waiting!
+     * job: I'm running finally
+     * main: Now I can quit.
+     */
+    private fun sample8() = runBlocking {
+        val job = launch {
+            try {
+                repeat(1000) { i ->
+                    println("job: I'm sleeping $i ...")
+                    delay(500L)
+                }
+            } finally {
+                println("job: I'm running finally")
+            }
+        }
+        delay(1300L) // 延迟一段时间
+        println("main: I'm tired of waiting!")
+        job.cancelAndJoin() // 取消该作业并且等待它结束
+        println("main: Now I can quit.")
+    }
+
+    /**
+     * log :
+     * job: I'm sleeping 0 ...
+     * job: I'm sleeping 1 ...
+     * job: I'm sleeping 2 ...
+     * main: I'm tired of waiting!
+     * job: I'm running finally
+     * job: And I've just delayed for 1 sec because I'm non-cancellable
+     */
+    private fun sample9() = runBlocking {
+        val job = launch {
+            try {
+                repeat(1000) { i ->
+                    println("job: I'm sleeping $i ...")
+                    delay(500L)
+                }
+            } finally {
+                withContext(NonCancellable) {
+                    println("job: I'm running finally")
+                    delay(1000L)
+                    println("job: And I've just delayed for 1 sec because I'm non-cancellable")
+                }
+            }
+        }
+        delay(1300L) // 延迟一段时间
+        println("main: I'm tired of waiting!")
+        job.cancelAndJoin() // 取消该作业并等待它结束
+        println("main: Now I can quit.")
+    }
+
 }
 
 /**
@@ -247,4 +308,46 @@ private fun main() = runBlocking {
         }
     }
     delay(1300L) // 在延迟后退出
+}
+
+/**
+ * 在具有指定超时的协程中运行给定的挂起代码块，如果超过超时，则抛出TimeoutCancellationException 。
+ * 在块内执行的代码在超时时被取消，并且块内可取消挂起函数的活动或下一次调用将引发TimeoutCancellationException 。
+ *
+ * I'm sleeping 0 ...
+ * I'm sleeping 1 ...
+ * I'm sleeping 2 ...
+ * Exception in thread "main" kotlinx.coroutines.TimeoutCancellationException: Timed out waiting for 1300 ms
+ */
+fun sample10() = runBlocking {
+    withTimeout(1300L) {
+        repeat(1000) { i ->
+            println("I'm sleeping $i ...")
+            delay(500L)
+        }
+    }
+}
+
+/**
+ * 在具有指定超时的协程中运行给定的挂起代码块，如果超过此超时，则返回null 。
+ * 在块内执行的代码在超时时被取消，并且块内可取消挂起函数的活动或下一次调用将引发TimeoutCancellationException 。
+ * 在超时时抛出异常的兄弟函数是withTimeout 。 请注意，可以使用onTimeout子句为select调用指定超时操作。
+ * timeout 事件对于块中运行的代码是异步的，并且可能随时发生，甚至在从 timeout块内部返回之前。
+ * 如果您在块内打开或获取某些需要在块外关闭或释放的资源，请记住这一点。 有关详细信息，请参阅协程指南的异步超时和资源部分
+ *
+ * log :
+ * I'm sleeping 0 ...
+ * I'm sleeping 1 ...
+ * I'm sleeping 2 ...
+ * Result is null
+ */
+private fun sample11() = runBlocking {
+    val result = withTimeoutOrNull(1300L) {
+        repeat(1000) { i ->
+            println("I'm sleeping $i ...")
+            delay(500L)
+        }
+        "Done" // 在它运行得到结果之前取消它
+    }
+    println("Result is $result")
 }
