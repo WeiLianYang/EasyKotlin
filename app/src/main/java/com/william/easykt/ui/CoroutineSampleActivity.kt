@@ -25,6 +25,7 @@ import com.william.easykt.ui.adapter.UsageAdapter
 import com.william.easykt.viewmodel.SampleViewModel
 import com.zyyoona7.itemdecoration.RecyclerViewDivider
 import kotlinx.coroutines.*
+import kotlin.system.measureTimeMillis
 
 /**
  * author：William
@@ -74,6 +75,11 @@ class CoroutineSampleActivity : BaseActivity() {
                 10 -> sample10()
                 11 -> sample11()
                 12 -> sample12()
+                13 -> sample13()
+                14 -> sample14()
+                15 -> sample15()
+                16 -> sample16()
+                17 -> sample17()
                 else -> {
                 }
             }
@@ -290,6 +296,137 @@ class CoroutineSampleActivity : BaseActivity() {
         println("main: Now I can quit.")
     }
 
+    private suspend fun suspendFun1(): Int {
+        delay(1000L)
+        return 12
+    }
+
+    private suspend fun suspendFun2(): Int {
+        delay(1000L)
+        return 20
+    }
+
+    /**
+     * 不是 挂起 函数。它们可以在任何地方使用。
+     * 然而，它们总是在调用它们的代码中意味着异步（这里的意思是 并发 ）执行。
+     */
+    private fun asyncFun1() = GlobalScope.async {
+        suspendFun1()
+    }
+
+    private fun asyncFun2() = GlobalScope.async {
+        suspendFun2()
+    }
+
+    /**
+     * 顺序调用，会比较耗时
+     *
+     * log：
+     * The answer is 32
+     * Completed in 2003 ms
+     */
+    private fun sample13() = runBlocking {
+        val time = measureTimeMillis {
+            val one = suspendFun1()
+            val two = suspendFun2()
+            println("The answer is ${one + two}")
+        }
+        println("Completed in $time ms")
+    }
+
+    /**
+     * 并发调用，使用 await 获取结果
+     * The answer is 32
+     * Completed in 1020 ms
+     */
+    private fun sample14() = runBlocking {
+        val time = measureTimeMillis {
+            // 得到 Deferred, 其实是一个job，可以在稍后调用 await() 获取结果
+            val one = async { suspendFun1() }
+            val two = async { suspendFun2() }
+            println("The answer is ${one.await() + two.await()}")
+        }
+        println("Completed in $time ms")
+    }
+
+    /**
+     * async 可以通过将 start 参数设置为 CoroutineStart.LAZY 而变为惰性的。
+     * 在这个模式下，只有结果通过 await 获取的时候协程才会启动，或者在 Job 的 start 函数调用的时候。
+     *
+     * The answer is 32
+     * Completed in 1020 ms
+     */
+    private fun sample15() = runBlocking {
+        val time = measureTimeMillis {
+            val one = async(start = CoroutineStart.LAZY) { suspendFun1() }
+            val two = async(start = CoroutineStart.LAZY) { suspendFun2() }
+            // 执行一些计算
+            one.start() // 启动第一个
+            two.start() // 启动第二个
+            println("The answer is ${one.await() + two.await()}")
+        }
+        println("Completed in $time ms")
+    }
+
+    private suspend fun concurrentSum(): Int = coroutineScope {
+        val one = async { suspendFun1() }
+        val two = async { suspendFun2() }
+        one.await() + two.await()
+    }
+
+    private fun sample16() = runBlocking {
+        // 推荐写法。这种情况下，如果在 concurrentSum 函数内部发生了错误，
+        // 并且它抛出了一个异常，所有在作用域中启动的协程都会被取消。
+        val time = measureTimeMillis {
+            println("The answer is ${concurrentSum()}")
+        }
+        println("Completed in $time ms")
+
+        // 以下写法不推荐
+        /*val time = measureTimeMillis {
+            // 可以在协程外面启动异步执行
+            val one = asyncFun1()
+            val two = asyncFun2()
+            // 但是等待结果必须调用其它的挂起或者阻塞
+            // 当我们等待结果的时候，这里我们使用 `runBlocking { …… }` 来阻塞主线程
+            runBlocking {
+                println("The answer is ${one.await() + two.await()}")
+            }
+        }
+        println("Completed in $time ms")*/
+    }
+
+    /**
+     * Second child throws an exception
+     * First child was cancelled
+     * Computation failed with ArithmeticException
+     */
+    private fun sample17() = runBlocking {
+        try {
+            failedConcurrentSum()
+        } catch (e: ArithmeticException) {
+            println("Computation failed with ArithmeticException")
+        }
+    }
+
+    /**
+     * 请注意，如果其中一个子协程（即 two）失败，第一个 async 以及等待中的父协程都会被取消：
+     */
+    private suspend fun failedConcurrentSum(): Int = coroutineScope {
+        val one = async {
+            try {
+                delay(Long.MAX_VALUE) // 模拟一个长时间的运算
+                42
+            } finally {
+                println("First child was cancelled")
+            }
+        }
+        val two = async<Int> {
+            println("Second child throws an exception")
+            throw ArithmeticException()
+        }
+        one.await() + two.await()
+    }
 }
 
 /**

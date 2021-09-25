@@ -85,6 +85,11 @@
         <item>11&#8211;1. 超时会崩溃</item>
         <item>11&#8211;2. 超时不崩溃</item>
         <item>12. 异步超时与释放资源</item>
+        <item>13. 默认顺序调用</item>
+        <item>14. 使用 async 并发调用</item>
+        <item>15. 惰性启动的 async</item>
+        <item>16. 使用 async 的结构化并发</item>
+        <item>17. 取消始终通过协程的层次结构来进行传递</item>
     </string-array>
 
 </resources>
