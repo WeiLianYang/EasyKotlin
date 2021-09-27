@@ -90,6 +90,9 @@
         <item>15. 惰性启动的 async</item>
         <item>16. 使用 async 的结构化并发</item>
         <item>17. 取消始终通过协程的层次结构来进行传递</item>
+        <item>18. 调度器与线程</item>
+        <item>19. 非受限调度器</item>
+        <item>20. debug log</item>
     </string-array>
 
 </resources>

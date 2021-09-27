@@ -80,6 +80,9 @@ class CoroutineSampleActivity : BaseActivity() {
                 15 -> sample15()
                 16 -> sample16()
                 17 -> sample17()
+                18 -> sample18()
+                19 -> sample19()
+                20 -> sample20()
                 else -> {
                 }
             }
@@ -427,7 +430,79 @@ class CoroutineSampleActivity : BaseActivity() {
         }
         one.await() + two.await()
     }
+
+    /**
+     * 协程上下文包含一个 协程调度器 （参见 CoroutineDispatcher）它确定了相关的协程在哪个线程或哪些线程上执行。
+     * 协程调度器可以将协程限制在一个特定的线程执行，或将它分派到一个线程池，亦或是让它不受限地运行。
+     *
+     * main runBlocking      : I'm working in thread main
+     * Unconfined            : I'm working in thread main
+     * Default               : I'm working in thread DefaultDispatcher-worker-1
+     * newSingleThreadContext: I'm working in thread MyOwnThread
+     */
+    private fun sample18() = runBlocking {
+        launch { // 运行在父协程的上下文中，即 runBlocking 主协程
+            println("main runBlocking      : I'm working in thread ${Thread.currentThread().name}")
+        }
+        launch(Dispatchers.Unconfined) { // 不受限的——将工作在主线程中
+            println("Unconfined            : I'm working in thread ${Thread.currentThread().name}")
+        }
+        launch(Dispatchers.Default) { // 将会获取默认调度器，和GlobalScope.launch { …… } 使用相同的调度器。
+            println("Default               : I'm working in thread ${Thread.currentThread().name}")
+        }
+//        Executors.newSingleThreadExecutor().asCoroutineDispatcher()
+        // 一个专用的线程是一种非常昂贵的资源，在真实的应用程序中两者都必须被释放，
+        // 当不再需要的时候，使用 close 函数，或存储在一个顶层变量中使它在整个应用程序中被重用。
+        launch(newSingleThreadContext("MyOwnThread")) { // 将使它获得一个新的线程
+            println("newSingleThreadContext: I'm working in thread ${Thread.currentThread().name}")
+        }
+    }
+
+    /**
+     * 非受限调度器 vs 受限调度器
+     * 非受限的调度器是一种高级机制，可以在某些极端情况下提供帮助而不需要调度协程以便稍后执行或产生不希望的副作用，
+     * 因为某些操作必须立即在协程中执行。非受限调度器不应该在通常的代码中使用。
+     *
+     * Unconfined      : I'm working in thread main
+     * main runBlocking: I'm working in thread main
+     * Unconfined      : After delay in thread kotlinx.coroutines.DefaultExecutor
+     * main runBlocking: After delay in thread main
+     */
+    private fun sample19() = runBlocking {
+        launch(Dispatchers.Unconfined) { // not confined -- will work with main thread
+            println("Unconfined      : I'm working in thread ${Thread.currentThread().name}")
+            delay(500)
+            println("Unconfined      : After delay in thread ${Thread.currentThread().name}")
+        }
+        launch { // context of the parent, main runBlocking coroutine
+            println("main runBlocking: I'm working in thread ${Thread.currentThread().name}")
+            delay(1000)
+            println("main runBlocking: After delay in thread ${Thread.currentThread().name}")
+        }
+    }
+
+    /**
+     * debug log
+     */
+    private fun sample20() = runBlocking {
+        val a = async {
+            log("I'm computing a piece of the answer")
+            6
+        }
+        val b = async {
+            log("I'm computing another piece of the answer")
+            7
+        }
+        log("The answer is ${a.await() * b.await()}")
+
+        // 协程的 Job 是上下文的一部分，并且可以使用 coroutineContext [Job] 表达式在上下文中检索它：
+        // My job is BlockingCoroutine{Active}@c29ebeb
+        // 请注意，CoroutineScope 中的 isActive 只是 coroutineContext[Job]?.isActive == true 的一种方便的快捷方式。
+        println("My job is ${coroutineContext[Job]}")
+    }
 }
+
+private fun log(msg: String) = println("[${Thread.currentThread().name}] $msg")
 
 /**
  * 在 GlobalScope 中启动的活动协程并不会使进程保活。它们就像守护线程。
