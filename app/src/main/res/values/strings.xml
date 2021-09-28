@@ -93,6 +93,8 @@
         <item>18. 调度器与线程</item>
         <item>19. 非受限调度器</item>
         <item>20. debug log</item>
+        <item>21. 命名协程以用于调试</item>
+        <item>22. 协程作用域</item>
     </string-array>
 
 </resources>

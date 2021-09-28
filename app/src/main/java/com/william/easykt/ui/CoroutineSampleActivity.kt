@@ -83,6 +83,8 @@ class CoroutineSampleActivity : BaseActivity() {
                 18 -> sample18()
                 19 -> sample19()
                 20 -> sample20()
+                21 -> sample21()
+                22 -> sample22()
                 else -> {
                 }
             }
@@ -500,6 +502,60 @@ class CoroutineSampleActivity : BaseActivity() {
         // 请注意，CoroutineScope 中的 isActive 只是 coroutineContext[Job]?.isActive == true 的一种方便的快捷方式。
         println("My job is ${coroutineContext[Job]}")
     }
+
+    /**
+     * 命名协程以用于调试
+     */
+    private fun sample21() = runBlocking(CoroutineName("main")) {
+        log("Started main coroutine")
+        // run two background value computations
+        val v1 = async(CoroutineName("v1coroutine")) {
+            delay(500)
+            log("Computing v1")
+            252
+        }
+        val v2 = async(CoroutineName("v2coroutine")) {
+            delay(1000)
+            log("Computing v2")
+            6
+        }
+        log("The answer for v1 / v2 = ${v1.await() / v2.await()}")
+    }
+
+    class ActivityScope {
+        private val mainScope = CoroutineScope(Dispatchers.Default) // use Default for test purposes
+
+        fun destroy() {
+            mainScope.cancel()
+        }
+
+        fun doSomething() {
+            // launch ten coroutines for a demo, each working for a different time
+            repeat(10) { i ->
+                mainScope.launch {
+                    delay((i + 1) * 200L) // variable delay 200ms, 400ms, ... etc
+                    println("Coroutine $i is done")
+                }
+            }
+        }
+    } // class Activity ends
+
+    /**
+     * Launched coroutines
+     * Coroutine 0 is done
+     * Coroutine 1 is done
+     * Destroying activity!
+     */
+    private fun sample22() = runBlocking {
+        val activity = ActivityScope()
+        activity.doSomething() // run test function
+        println("Launched coroutines")
+        delay(500L) // delay for half a second
+        println("Destroying activity!")
+        activity.destroy() // cancels all coroutines
+        delay(1000) // visually confirm that they don't work
+    }
+
 }
 
 private fun log(msg: String) = println("[${Thread.currentThread().name}] $msg")
