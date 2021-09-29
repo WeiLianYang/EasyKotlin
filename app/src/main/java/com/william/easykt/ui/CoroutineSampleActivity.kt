@@ -420,7 +420,7 @@ class CoroutineSampleActivity : BaseActivity() {
     private suspend fun failedConcurrentSum(): Int = coroutineScope {
         val one = async {
             try {
-                delay(Long.MAX_VALUE) // 模拟一个长时间的运算
+                delay(5000) // 模拟一个长时间的运算
                 42
             } finally {
                 println("First child was cancelled")
@@ -428,7 +428,13 @@ class CoroutineSampleActivity : BaseActivity() {
         }
         val two = async<Int> {
             println("Second child throws an exception")
-            throw ArithmeticException()
+            // 如果不想让作用域中的协程被取消，捕获异常就可以了
+            try {
+                throw ArithmeticException()
+            } catch (e: Exception) {
+                e.printStackTrace()
+            }
+            50
         }
         one.await() + two.await()
     }
