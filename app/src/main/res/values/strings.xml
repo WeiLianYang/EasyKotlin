@@ -15,7 +15,7 @@
   -->
 
 <resources>
-    <string name="app_name">EasyKotlin</string>
+    <string name="app_name">EasyKt</string>
 
     <string name="test_net_data">测试加载网络数据</string>
     <string name="test_card_effects">测试卡片滑动效果</string>
@@ -38,6 +38,7 @@
     <string name="test_diff_util_button1">Change Item 1</string>
     <string name="test_diff_util_button2">Remove Item</string>
     <string name="test_kotlin_coroutines">Test Kotlin Coroutines</string>
+    <string name="test_activity_result">registerForActivityResult</string>
 
     <string name="test_kotlin_flow1">1. 异步计算的值流</string>
     <string name="test_kotlin_flow2">2. 冷流</string>
@@ -70,6 +71,12 @@
     <string name="test_kotlin_channel8">8. 带缓冲的通道</string>
     <string name="test_kotlin_channel9">9. 通道是公平的</string>
     <string name="test_kotlin_channel10">10. 计时器通道</string>
+
+    <string name="test_select_photo">select photo</string>
+    <string name="test_select_crop_photo">select and crop photo</string>
+    <string name="test_take_photo">take photo</string>
+    <string name="test_take_crop_photo">take and crop photo</string>
+    <string name="test_clear_photo">clear photo</string>
 
     <string-array name="coroutines_string_array">
         <item>1. 基础：非阻塞式挂起</item>

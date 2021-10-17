@@ -161,3 +161,7 @@ fun openBrowser(context: Context, url: String?) {
         "open browser failed : ${it.message}".logE()
     }
 }
+
+fun Uri?.isNotEmpty(): Boolean {
+    return this != null && this.toString().isNotEmpty()
+}

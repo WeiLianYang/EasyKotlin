@@ -49,6 +49,7 @@ class MainViewModel : ViewModel() {
             MainEntranceBean(R.string.test_material_snackbar),
             MainEntranceBean(R.string.test_diff_util),
             MainEntranceBean(R.string.test_kotlin_coroutines),
+            MainEntranceBean(R.string.test_activity_result),
         )
     )
 
