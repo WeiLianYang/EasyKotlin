@@ -90,16 +90,16 @@ class TakePhotoContract : ActivityResultContract<Unit?, Uri?>() {
 }
 
 /**
- * 裁剪照片的协定
- * Input type  : CropImageEntity 裁剪照片的相关参数集
- * Output type : Uri?            照片裁剪完成后的uri
+ * 剪裁照片的协定
+ * Input type  : CropParams 剪裁照片的相关参数集
+ * Output type : Uri?       照片剪裁完成后的uri
  */
-class CropPhotoContract : ActivityResultContract<CropImageEntity, Uri?>() {
+class CropPhotoContract : ActivityResultContract<CropParams, Uri?>() {
 
     private var outputUri: Uri? = null
 
     @CallSuper
-    override fun createIntent(context: Context, input: CropImageEntity): Intent {
+    override fun createIntent(context: Context, input: CropParams): Intent {
         // 获取输入图片uri的媒体类型
         val mimeType = context.contentResolver.getType(input.uri)
         // 创建新的图片名称
@@ -145,9 +145,9 @@ class CropPhotoContract : ActivityResultContract<CropImageEntity, Uri?>() {
 }
 
 /**
- * 裁剪照片的参数
+ * 剪裁照片的参数
  */
-class CropImageEntity(
+class CropParams(
     val uri: Uri,
     val aspectX: Int = 1,
     val aspectY: Int = 1,
@@ -157,8 +157,8 @@ class CropImageEntity(
     val outputY: Int = 250,
     val scale: Boolean = true,
     val crop: Boolean = true,
-    var noFaceDetection: Boolean = true,
-    var returnData: Boolean = false,
-    var outputFormat: String = Bitmap.CompressFormat.JPEG.toString(),
-    var extraOutputUri: Uri? = null
+    val noFaceDetection: Boolean = true,
+    val returnData: Boolean = false,
+    val outputFormat: String = Bitmap.CompressFormat.JPEG.toString(),
+    val extraOutputUri: Uri? = null
 )

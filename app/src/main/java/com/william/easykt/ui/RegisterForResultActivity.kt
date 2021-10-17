@@ -22,7 +22,7 @@ import com.william.base_component.BaseApp
 import com.william.base_component.activity.BaseActivity
 import com.william.base_component.extension.toast
 import com.william.easykt.databinding.ActivityRegisterForResultBinding
-import com.william.easykt.utils.CropImageEntity
+import com.william.easykt.utils.CropParams
 import com.william.easykt.utils.CropPhotoContract
 import com.william.easykt.utils.SelectPhotoContract
 import com.william.easykt.utils.TakePhotoContract
@@ -55,7 +55,7 @@ class RegisterForResultActivity : BaseActivity() {
         val selectPhoto = registerForActivityResult(SelectPhotoContract()) { uri: Uri? ->
             if (uri != null) {
                 if (needCrop) {
-                    cropPhoto.launch(CropImageEntity(uri))
+                    cropPhoto.launch(CropParams(uri))
                 } else {
                     viewBinding.ivImage.setImageURI(uri)
                 }
@@ -67,7 +67,7 @@ class RegisterForResultActivity : BaseActivity() {
             registerForActivityResult(TakePhotoContract()) { uri: Uri? ->
                 if (uri != null) {
                     if (needCrop) {
-                        cropPhoto.launch(CropImageEntity(uri))
+                        cropPhoto.launch(CropParams(uri))
                     } else {
                         viewBinding.ivImage.setImageURI(uri)
                     }
@@ -80,7 +80,7 @@ class RegisterForResultActivity : BaseActivity() {
             selectPhoto.launch(null)
         }
         viewBinding.btnSelectPhotoWithCrop.setOnClickListener {
-            // 从相册选择并裁剪
+            // 从相册选择并剪裁
             needCrop = true
             selectPhoto.launch(null)
         }
