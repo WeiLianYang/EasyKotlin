@@ -25,6 +25,7 @@ import com.william.easykt.ui.adapter.UsageAdapter
 import com.william.easykt.viewmodel.SampleViewModel
 import com.zyyoona7.itemdecoration.RecyclerViewDivider
 import kotlinx.coroutines.*
+import kotlin.coroutines.*
 import kotlin.system.measureTimeMillis
 
 /**
@@ -85,6 +86,7 @@ class CoroutineSampleActivity : BaseActivity() {
                 20 -> sample20()
                 21 -> sample21()
                 22 -> sample22()
+                23 -> sample23()
                 else -> {
                 }
             }
@@ -560,6 +562,41 @@ class CoroutineSampleActivity : BaseActivity() {
         println("Destroying activity!")
         activity.destroy() // cancels all coroutines
         delay(1000) // visually confirm that they don't work
+    }
+
+    /**
+     * In Coroutine
+     * Coroutine End: Success(5)
+     * In Coroutine
+     * Coroutine End: Success(aaaa)
+     */
+    private fun sample23() {
+        // createCoroutine
+        val continuation = suspend {
+            println("In Coroutine")
+            5
+        }.createCoroutine(object : Continuation<Int> {
+
+            override val context: CoroutineContext = EmptyCoroutineContext
+
+            override fun resumeWith(result: Result<Int>) {
+                println("Coroutine End: $result")
+            }
+        })
+        // 调用 resume 执行协程体
+        continuation.resume(Unit)
+
+        // startCoroutine 立即执行协程体
+        suspend {
+            println("In Coroutine")
+            "aaaa"
+        }.startCoroutine(object : Continuation<String> {
+            override val context = EmptyCoroutineContext
+
+            override fun resumeWith(result: Result<String>) {
+                println("Coroutine End: $result")
+            }
+        })
     }
 
 }

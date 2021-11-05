@@ -102,6 +102,7 @@
         <item>20. debug log</item>
         <item>21. 命名协程以用于调试</item>
         <item>22. 协程作用域</item>
+        <item>23. Continuation</item>
     </string-array>
 
 </resources>
