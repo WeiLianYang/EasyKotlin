@@ -565,19 +565,22 @@ class CoroutineSampleActivity : BaseActivity() {
     }
 
     /**
-     * In Coroutine
+     * In Coroutine: CoroutineName(cor-01)
      * Coroutine End: Success(5)
      * In Coroutine
      * Coroutine End: Success(aaaa)
      */
     private fun sample23() {
+        val corContext = CoroutineName("cor-01") + CoroutineExceptionHandler { c, a ->
+        }
+
         // createCoroutine
         val continuation = suspend {
-            println("In Coroutine")
+            println("In Coroutine: ${coroutineContext[CoroutineName]}")
             5
         }.createCoroutine(object : Continuation<Int> {
 
-            override val context: CoroutineContext = EmptyCoroutineContext
+            override val context: CoroutineContext = corContext
 
             override fun resumeWith(result: Result<Int>) {
                 println("Coroutine End: $result")
