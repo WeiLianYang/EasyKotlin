@@ -139,4 +139,7 @@ dependencies {
     api 'androidx.lifecycle:lifecycle-process:2.3.1'
     api "androidx.lifecycle:lifecycle-livedata-ktx:2.3.1"
 
+    // https://github.com/Blankj/AndroidUtilCode/blob/master/lib/utilcode/README-CN.md
+    api 'com.blankj:utilcodex:1.30.6'
+
 }

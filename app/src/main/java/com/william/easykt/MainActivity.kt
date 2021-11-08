@@ -28,6 +28,7 @@ import com.william.easykt.databinding.ActivityMainBinding
 import com.william.easykt.test.TestVmActivity
 import com.william.easykt.ui.*
 import com.william.easykt.ui.adapter.MainAdapter
+import com.william.easykt.utils.getBuildInfo
 import com.william.easykt.viewmodel.MainViewModel
 import com.zyyoona7.itemdecoration.RecyclerViewDivider
 import java.util.*
@@ -126,6 +127,8 @@ class MainActivity : BaseActivity() {
 
     override fun initData() {
         setTitleText("EasyKotlin")
+
+        getBuildInfo()
     }
 
 }
