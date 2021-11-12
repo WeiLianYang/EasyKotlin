@@ -17,6 +17,7 @@
 package com.william.easykt.ui
 
 import com.william.base_component.activity.BaseActivity
+import com.william.base_component.extension.bindingView
 import com.william.easykt.databinding.ActivityNestedScrollingBinding
 import com.william.easykt.ui.adapter.SimpleAdapter
 

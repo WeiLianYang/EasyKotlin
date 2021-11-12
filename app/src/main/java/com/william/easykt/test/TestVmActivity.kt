@@ -18,6 +18,7 @@ package com.william.easykt.test
 
 import androidx.activity.viewModels
 import com.william.base_component.activity.BaseActivity
+import com.william.base_component.extension.bindingView
 import com.william.easykt.databinding.ActivityTestBinding
 
 

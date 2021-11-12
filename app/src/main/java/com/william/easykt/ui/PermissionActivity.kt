@@ -19,6 +19,7 @@ package com.william.easykt.ui
 import android.Manifest
 import com.orhanobut.logger.Logger
 import com.william.base_component.activity.BaseActivity
+import com.william.base_component.extension.bindingView
 import com.william.base_component.utils.requestPermission
 import com.william.easykt.databinding.ActivityPermissionBinding
 

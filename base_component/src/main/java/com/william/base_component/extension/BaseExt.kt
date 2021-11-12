@@ -18,7 +18,11 @@ package com.william.base_component.extension
 
 import android.content.res.Resources
 import android.util.TypedValue
+import android.view.LayoutInflater
 import android.widget.Toast
+import androidx.appcompat.app.AppCompatActivity
+import androidx.fragment.app.Fragment
+import androidx.viewbinding.ViewBinding
 import com.william.base_component.BaseApp
 
 /**
@@ -48,3 +52,17 @@ val Float.sp
 private fun getTypedValue(unit: Int, value: Float): Float {
     return TypedValue.applyDimension(unit, value, Resources.getSystem().displayMetrics)
 }
+
+inline fun <reified T : ViewBinding> AppCompatActivity.bindingView(): Lazy<T> =
+    lazy(LazyThreadSafetyMode.NONE) {
+        val viewBindClass = T::class.java
+        val method = viewBindClass.getDeclaredMethod("inflate", LayoutInflater::class.java)
+        return@lazy method.invoke(null, layoutInflater) as T
+    }
+
+inline fun <reified T : ViewBinding> Fragment.bindingView(): Lazy<T> =
+    lazy(LazyThreadSafetyMode.NONE) {
+        val viewBindClass = T::class.java
+        val method = viewBindClass.getDeclaredMethod("inflate", LayoutInflater::class.java)
+        return@lazy method.invoke(null, layoutInflater) as T
+    }

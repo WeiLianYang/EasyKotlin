@@ -23,6 +23,7 @@ import androidx.activity.viewModels
 import androidx.core.content.getSystemService
 import com.flurry.android.FlurryAgent
 import com.william.base_component.activity.BaseActivity
+import com.william.base_component.extension.bindingView
 import com.william.base_component.utils.*
 import com.william.easykt.databinding.ActivityMainBinding
 import com.william.easykt.test.TestVmActivity

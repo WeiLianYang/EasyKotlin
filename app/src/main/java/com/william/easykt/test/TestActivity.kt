@@ -16,6 +16,7 @@
 
 package com.william.easykt.test
 
+import com.william.base_component.extension.bindingView
 import com.william.base_component.mvp.BaseMvpActivity
 import com.william.easykt.databinding.ActivityTestBinding
 

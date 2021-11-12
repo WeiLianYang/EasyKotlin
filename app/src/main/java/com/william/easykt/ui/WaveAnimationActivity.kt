@@ -22,6 +22,7 @@ import android.graphics.Color
 import android.graphics.Paint
 import android.view.animation.LinearInterpolator
 import com.william.base_component.activity.BaseActivity
+import com.william.base_component.extension.bindingView
 import com.william.base_component.extension.dp
 import com.william.easykt.databinding.ActivityWaveAnimationBinding
 

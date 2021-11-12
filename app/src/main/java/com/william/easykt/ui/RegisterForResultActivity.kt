@@ -20,6 +20,7 @@ import android.content.pm.PackageManager
 import android.net.Uri
 import com.william.base_component.BaseApp
 import com.william.base_component.activity.BaseActivity
+import com.william.base_component.extension.bindingView
 import com.william.base_component.extension.toast
 import com.william.easykt.databinding.ActivityRegisterForResultBinding
 import com.william.easykt.utils.CropParams
