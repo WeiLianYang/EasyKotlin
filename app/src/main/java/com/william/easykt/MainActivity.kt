@@ -120,6 +120,7 @@ class MainActivity : BaseActivity() {
                 15 -> openActivity<DiffUtilActivity>(mActivity)
                 16 -> openActivity<CoroutineSampleActivity>(mActivity)
                 17 -> openActivity<RegisterForResultActivity>(mActivity)
+                18 -> openActivity<FileActivity>(mActivity)
                 else -> {
                 }
             }

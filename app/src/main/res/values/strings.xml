@@ -39,6 +39,7 @@
     <string name="test_diff_util_button2">Remove Item</string>
     <string name="test_kotlin_coroutines">Test Kotlin Coroutines</string>
     <string name="test_activity_result">registerForActivityResult</string>
+    <string name="test_file">File Write/Read/Delete</string>
 
     <string name="test_kotlin_flow1">1. 异步计算的值流</string>
     <string name="test_kotlin_flow2">2. 冷流</string>
@@ -77,6 +78,13 @@
     <string name="test_take_photo">take photo</string>
     <string name="test_take_crop_photo">take and crop photo</string>
     <string name="test_clear_photo">clear photo</string>
+
+    <string name="test_write_file1">写入文件 openFileOutput</string>
+    <string name="test_read_file1">读取文件 openFileInput</string>
+    <string name="test_delete_file">删除文件 deleteFile</string>
+
+    <string name="test_write_file2">写入文件 FileOutputStream</string>
+    <string name="test_read_file2">读取文件 FileInputStream</string>
 
     <string-array name="coroutines_string_array">
         <item>1. 基础：非阻塞式挂起</item>
