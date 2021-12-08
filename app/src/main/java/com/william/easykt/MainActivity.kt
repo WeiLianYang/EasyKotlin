@@ -16,10 +16,16 @@
 
 package com.william.easykt
 
+import android.app.NotificationChannel
+import android.app.NotificationManager
+import android.app.PendingIntent
+import android.content.Context
 import android.content.Intent
+import android.media.RingtoneManager
 import android.os.Build
 import android.os.storage.StorageManager
 import androidx.activity.viewModels
+import androidx.core.app.NotificationCompat
 import androidx.core.content.getSystemService
 import com.flurry.android.FlurryAgent
 import com.william.base_component.activity.BaseActivity
@@ -121,6 +127,7 @@ class MainActivity : BaseActivity() {
                 16 -> openActivity<CoroutineSampleActivity>(mActivity)
                 17 -> openActivity<RegisterForResultActivity>(mActivity)
                 18 -> openActivity<FileActivity>(mActivity)
+                19 -> sendNotification()
                 else -> {
                 }
             }
@@ -131,6 +138,69 @@ class MainActivity : BaseActivity() {
         setTitleText("EasyKotlin")
 
         getBuildInfo()
+
+        handleIntent(intent)
+    }
+
+    override fun onNewIntent(intent: Intent?) {
+        super.onNewIntent(intent)
+        "onNewIntent() is called".logD()
+        setIntent(intent)
+
+        handleIntent(intent)
+    }
+
+    private fun handleIntent(intent: Intent?) {
+        if (null != intent) {
+            val map = hashMapOf<String, String>()
+            // 获取data里的值
+            val bundle = intent.extras
+            bundle?.keySet()?.forEach { key ->
+                val content = bundle.get(key)
+                "receive data, key = $key, content = $content".logI()
+                map[key] = content.toString()
+            }
+            "map===> $map".logI()
+        } else {
+            "intent = null".logW()
+        }
+    }
+
+    private var notificationId = 0
+
+    private fun sendNotification() {
+        val intent = Intent(this, MainActivity::class.java).apply {
+            flags = Intent.FLAG_ACTIVITY_NEW_TASK
+            putExtra("key1", "value1")
+            putExtra("key2", 2222)
+            putExtra("key3", true)
+        }
+
+        val pendingIntent = PendingIntent.getActivity(this, 0, intent, 0)
+
+        val channelId = getString(R.string.default_notification_channel_id)
+        val channelName = getString(R.string.default_notification_channel_name)
+        val defaultSoundUri = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION)
+
+        val builder = NotificationCompat.Builder(this, channelId)
+            .setSmallIcon(R.drawable.notification)
+            .setContentTitle("test notification title")
+            .setContentText("test notification content")
+            .setAutoCancel(true)
+            .setSound(defaultSoundUri)
+            .setContentIntent(pendingIntent)
+
+        val manager = getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
+        // Since android Oreo notification channel is needed.
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            manager.createNotificationChannel(
+                NotificationChannel(
+                    channelId, channelName, NotificationManager.IMPORTANCE_DEFAULT
+                )
+            )
+        }
+        notificationId++
+        manager.notify(notificationId, builder.build())
     }
 
 }

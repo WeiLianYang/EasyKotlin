@@ -40,6 +40,7 @@
     <string name="test_kotlin_coroutines">Test Kotlin Coroutines</string>
     <string name="test_activity_result">registerForActivityResult</string>
     <string name="test_file">File Write/Read/Delete</string>
+    <string name="test_notification">Send Notification</string>
 
     <string name="test_kotlin_flow1">1. 异步计算的值流</string>
     <string name="test_kotlin_flow2">2. 冷流</string>
@@ -112,5 +113,8 @@
         <item>22. 协程作用域</item>
         <item>23. Continuation</item>
     </string-array>
+
+    <string name="default_notification_channel_id">default_notification_channel_id</string>
+    <string name="default_notification_channel_name">default_notification_channel_name</string>
 
 </resources>

@@ -22,10 +22,14 @@ import android.content.Intent
 import android.content.pm.PackageManager
 import android.graphics.Outline
 import android.net.Uri
+import android.os.Build
+import android.telephony.TelephonyManager
+import android.text.TextUtils
 import android.view.View
 import android.view.ViewOutlineProvider
 import com.william.base_component.BaseApp
 import com.william.base_component.extension.dp
+import java.util.*
 
 /**
  * @author William
@@ -164,4 +168,33 @@ fun openBrowser(context: Context, url: String?) {
 
 fun Uri?.isNotEmpty(): Boolean {
     return this != null && this.toString().isNotEmpty()
+}
+
+/**
+ * 获取国家地区代码
+ * @param context 上下文
+ * @return 返回此语言环境的国家/地区代码，该代码应该是空字符串、大写的 ISO 3166 2 位字母代码或 UN M.49 3 位数字代码。
+ */
+fun getCountryCode(context: Context): String {
+    return if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+        context.resources.configuration.locales.get(0).country
+    } else {
+        context.resources.configuration.locale.country
+    }
+}
+
+/**
+ * 判断国家是否是国内用户
+ */
+fun isCN(context: Context): Boolean {
+    val tm = context.getSystemService(Context.TELEPHONY_SERVICE) as TelephonyManager
+    var countryIso = tm.simCountryIso
+    var isCN = false
+    if (!TextUtils.isEmpty(countryIso)) {
+        countryIso = countryIso.uppercase(Locale.US)
+        if (countryIso.contains("CN")) {
+            isCN = true
+        }
+    }
+    return isCN
 }
