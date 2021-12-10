@@ -30,21 +30,11 @@ class TestViewModel(private val repository: TestRepository) : ViewModel() {
 
     val testData = MutableLiveData<String>()
 
-    private val testDataFlow = repository.getDataFlow()
-
-    val testData2 = testDataFlow.asLiveData()
-
     fun requestData() {
         launchFlow(
             { repository.getData() },
             { testData.value = it.toString() }
         )
-    }
-
-    fun requestData2() {
-        viewModelScope.launch {
-            testDataFlow.single()
-        }
     }
 
     companion object {
