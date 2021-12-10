@@ -107,7 +107,7 @@ dependencies {
 
     api 'com.jeremyliao:live-event-bus-x:1.7.3'
 
-    api 'com.permissionx.guolindev:permissionx:1.4.0'
+    api 'com.guolindev.permissionx:permissionx:1.6.1'
 
     api 'com.github.zyyoona7:recyclerviewdivider:1.0.2'
 

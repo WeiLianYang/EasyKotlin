@@ -70,7 +70,8 @@ class SampleViewModel : ViewModel() {
             UsageBean(R.string.test_kotlin_channel7),
             UsageBean(R.string.test_kotlin_channel8),
             UsageBean(R.string.test_kotlin_channel9),
-            UsageBean(R.string.test_kotlin_channel10)
+            UsageBean(R.string.test_kotlin_channel10),
+            UsageBean(R.string.test_kotlin_channel11)
         )
     )
 

@@ -34,7 +34,7 @@ import kotlin.system.measureTimeMillis
  * author : WilliamYang
  * date : 2021/7/30 10:41
  * description : Kotlin flow demo
- * @see <a href="http://www.kotlincn.net/docs/reference/coroutines/flow.html">异步流</a>
+ * @see <a href="http://www.kotlincn.net/docs/reference/coroutines/flow.html">异步流 / 冷数据流</a>
  */
 class FlowSampleActivity : BaseActivity() {
 

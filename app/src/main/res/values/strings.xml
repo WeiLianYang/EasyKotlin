@@ -73,6 +73,7 @@
     <string name="test_kotlin_channel8">8. 带缓冲的通道</string>
     <string name="test_kotlin_channel9">9. 通道是公平的</string>
     <string name="test_kotlin_channel10">10. 计时器通道</string>
+    <string name="test_kotlin_channel11">11. 广播通道</string>
 
     <string name="test_select_photo">select photo</string>
     <string name="test_select_crop_photo">select and crop photo</string>

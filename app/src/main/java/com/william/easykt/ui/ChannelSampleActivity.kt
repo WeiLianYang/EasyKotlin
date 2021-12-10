@@ -35,7 +35,7 @@ import kotlinx.coroutines.channels.*
  * author : WilliamYang
  * date : 2021/8/29 16:36
  * description : Kotlin channel demo
- * @see <a href="http://www.kotlincn.net/docs/reference/coroutines/channels.html">通道</a>
+ * @see <a href="http://www.kotlincn.net/docs/reference/coroutines/channels.html">通道 / 热数据流，用于协程之间通信</a>
  */
 class ChannelSampleActivity : BaseActivity() {
 
@@ -72,6 +72,7 @@ class ChannelSampleActivity : BaseActivity() {
                 7 -> sample8()
                 8 -> sample9()
                 9 -> sample10()
+                10 -> sample11()
                 else -> {
                 }
             }
@@ -352,6 +353,60 @@ class ChannelSampleActivity : BaseActivity() {
             delay(time)
             channel.send(s)
         }
+    }
+
+    /**
+     * 启动一个生产者协程，其他协程可以使用返回的 receiveChannel 消费数据
+     */
+    val receiveChannel: ReceiveChannel<Int> = GlobalScope.produce {
+        repeat(10) {
+            delay(1000)
+            send(it)
+        }
+    }
+
+    /**
+     * 启动一个消费者协程，其他协程可以使用返回的 sendChannel 生产数据
+     */
+    val sendChannel: SendChannel<Int> = GlobalScope.actor {
+        val ele = receive()
+        while (ele < 10) {
+            println("ele: $ele")
+        }
+    }
+
+    /**
+     *  一对多，广播数据流。每个接收端都能收到发送的数据
+     *
+     * [#0] received: 0
+     * [#1] received: 0
+     * [#2] received: 0
+     * [#0] received: 1
+     * [#2] received: 1
+     * [#1] received: 1
+     * [#0] received: 2
+     * [#1] received: 2
+     * [#2] received: 2
+     */
+    private fun sample11() = runBlocking {
+        val broadcastChannel = BroadcastChannel<Int>(Channel.BUFFERED)
+
+        val producer = GlobalScope.launch {
+            List(3) { index ->
+                delay(1000)
+                broadcastChannel.send(index)
+            }
+            broadcastChannel.close()
+        }
+
+        List(3) { index ->
+            GlobalScope.launch {
+                val receiveChannel = broadcastChannel.openSubscription()
+                for (ele in receiveChannel) {
+                    println("[#$index] received: $ele")
+                }
+            }
+        }.joinAll()
     }
 
 }
