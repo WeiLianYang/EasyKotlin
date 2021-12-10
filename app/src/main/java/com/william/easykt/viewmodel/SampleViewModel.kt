@@ -54,6 +54,7 @@ class SampleViewModel : ViewModel() {
             UsageBean(R.string.test_kotlin_flow18),
             UsageBean(R.string.test_kotlin_flow19),
             UsageBean(R.string.test_kotlin_flow20),
+            UsageBean(R.string.test_kotlin_flow21),
         )
     )
 

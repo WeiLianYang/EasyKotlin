@@ -62,6 +62,7 @@
     <string name="test_kotlin_flow18">18. 异常透明性：透明捕获 / 声明式捕获</string>
     <string name="test_kotlin_flow19">19. 流完成：命令式 / 声明式 / 启动流</string>
     <string name="test_kotlin_flow20">20. 流取消检测（会崩溃）</string>
+    <string name="test_kotlin_flow21">21. 切换调度器：channelFlow</string>
 
     <string name="test_kotlin_channel1">1. 通道基础</string>
     <string name="test_kotlin_channel2">2. 关闭与迭代通道</string>
@@ -113,6 +114,7 @@
         <item>21. 命名协程以用于调试</item>
         <item>22. 协程作用域</item>
         <item>23. Continuation</item>
+        <item>24. Select 复用多个await</item>
     </string-array>
 
     <string name="default_notification_channel_id">default_notification_channel_id</string>

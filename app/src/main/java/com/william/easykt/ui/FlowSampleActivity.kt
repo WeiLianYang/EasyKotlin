@@ -28,6 +28,7 @@ import com.william.easykt.viewmodel.SampleViewModel
 import com.zyyoona7.itemdecoration.RecyclerViewDivider
 import kotlinx.coroutines.*
 import kotlinx.coroutines.flow.*
+import kotlinx.coroutines.selects.select
 import kotlin.system.measureTimeMillis
 
 /**
@@ -93,6 +94,7 @@ class FlowSampleActivity : BaseActivity() {
                     sample19Collect()
                 }
                 19 -> sample20()
+                20 -> sample21()
                 else -> {
                 }
             }
@@ -796,6 +798,24 @@ class FlowSampleActivity : BaseActivity() {
         println("----> sample 20")
         runBlocking {
             (1..5).asFlow().cancellable().collect { value ->
+                if (value == 3) cancel()
+                println("value: $value")
+            }
+        }
+    }
+
+    /**
+     * 生产元素时切换调度器
+     */
+    private fun sample21() {
+        println("----> sample 21")
+        runBlocking {
+            channelFlow {
+                send(1)
+                withContext(Dispatchers.IO) {
+                    send(2)
+                }
+            }.collect { value ->
                 if (value == 3) cancel()
                 println("value: $value")
             }

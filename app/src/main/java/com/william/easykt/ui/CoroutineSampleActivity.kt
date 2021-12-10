@@ -26,6 +26,7 @@ import com.william.easykt.ui.adapter.UsageAdapter
 import com.william.easykt.viewmodel.SampleViewModel
 import com.zyyoona7.itemdecoration.RecyclerViewDivider
 import kotlinx.coroutines.*
+import kotlinx.coroutines.selects.select
 import kotlin.coroutines.*
 import kotlin.system.measureTimeMillis
 
@@ -88,6 +89,7 @@ class CoroutineSampleActivity : BaseActivity() {
                 21 -> sample21()
                 22 -> sample22()
                 23 -> sample23()
+                24 -> sample24()
                 else -> {
                 }
             }
@@ -601,6 +603,34 @@ class CoroutineSampleActivity : BaseActivity() {
                 println("Coroutine End: $result")
             }
         })
+    }
+
+    /**
+     * 多路复用 select：复用多个 await
+     * select 总是会立即调用最先返回的事件的回调
+     *
+     * Computing v1
+     * result: deferred1 result:1111
+     * Computing v2
+     */
+    private fun sample24() = runBlocking {
+        // run two background value computations
+        val deferred1 = async(CoroutineName("v1coroutine")) {
+            delay(500)
+            log("Computing v1")
+            1111
+        }
+        val deferred2 = async(CoroutineName("v2coroutine")) {
+            delay(1000)
+            log("Computing v2")
+            2222
+        }
+        val result = select<String> {
+            deferred1.onAwait { "deferred1 result:$it" }
+            deferred2.onAwait { "deferred2 result:$it" }
+        }
+
+        log("result: $result")
     }
 
 }
