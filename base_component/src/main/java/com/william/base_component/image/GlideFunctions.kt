@@ -71,6 +71,7 @@ import jp.wasabeef.glide.transformations.RoundedCornersTransformation.CornerType
  * @param onResourceReady 加载就绪的回调函数
  * @param onLoadFailed 加载失败的回调函数
  */
+@JvmOverloads
 fun loadImage(
     context: Any?,
     url: Any?,

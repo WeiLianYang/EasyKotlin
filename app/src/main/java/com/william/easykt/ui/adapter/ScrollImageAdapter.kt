@@ -19,6 +19,7 @@ package com.william.easykt.ui.adapter
 
 import com.william.base_component.adapter.BaseRvAdapter
 import com.william.base_component.adapter.BaseRvViewHolder
+import com.william.base_component.image.loadImage
 import com.william.easykt.R
 
 /**
@@ -35,6 +36,7 @@ class ScrollImageAdapter : BaseRvAdapter<Any>() {
 
     override fun onBindViewHolder(holder: BaseRvViewHolder, position: Int, bean: Any?) {
         val imageRes = R.drawable.scroll_image
-        holder.setImageResource(R.id.ivScrollImage, imageRes)
+        loadImage(mActivity, imageRes, holder.getView(R.id.ivScrollImage))
+//        holder.setImageResource(R.id.ivScrollImage, imageRes)
     }
 }
