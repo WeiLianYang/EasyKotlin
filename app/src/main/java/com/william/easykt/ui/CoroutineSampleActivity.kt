@@ -27,6 +27,11 @@ import com.william.easykt.viewmodel.SampleViewModel
 import com.zyyoona7.itemdecoration.RecyclerViewDivider
 import kotlinx.coroutines.*
 import kotlinx.coroutines.selects.select
+import kotlinx.coroutines.sync.Mutex
+import kotlinx.coroutines.sync.Semaphore
+import kotlinx.coroutines.sync.withLock
+import kotlinx.coroutines.sync.withPermit
+import java.util.concurrent.atomic.AtomicInteger
 import kotlin.coroutines.*
 import kotlin.system.measureTimeMillis
 
@@ -90,6 +95,9 @@ class CoroutineSampleActivity : BaseActivity() {
                 22 -> sample22()
                 23 -> sample23()
                 24 -> sample24()
+                25 -> sample25()
+                26 -> sample26()
+                27 -> sample27()
                 else -> {
                 }
             }
@@ -631,6 +639,66 @@ class CoroutineSampleActivity : BaseActivity() {
         }
 
         log("result: $result")
+    }
+
+    /**
+     * 并发访问
+     */
+    private fun sample25() = runBlocking {
+        // 不安全的并发访问
+        var count1 = 0
+        List(1000) {
+            GlobalScope.launch {
+                // ++ 不是原子操作，不会立即刷新到内存，导致读写不一致
+                count1++
+            }
+        }.joinAll()
+        println(count1)
+
+        // 安全的并发访问
+        val count2 = AtomicInteger(0)
+        List(1000) {
+            GlobalScope.launch { count2.incrementAndGet() }
+        }.joinAll()
+        println(count2.get())
+    }
+
+    /**
+     * 并发访问：轻量级锁 Mutex
+     * 之所以轻量是因为在获取不到锁时，不会阻塞线程而只是挂起等待锁的释放
+     */
+    private fun sample26() = runBlocking {
+        // 安全的并发访问
+        var count = 0
+        val mutex = Mutex()
+        List(1000) {
+            GlobalScope.launch {
+                // 在此互斥锁的锁定下执行给定的操作
+                mutex.withLock {
+                    count++
+                }
+            }
+        }.joinAll()
+        println(count)
+    }
+
+    /**
+     * 并发访问：轻量级锁 Semaphore ，信号量可以有多个，协程在获取信号量后即可执行并发操作
+     * 之所以轻量是因为在获取不到锁时，不会阻塞线程而只是挂起等待锁的释放
+     */
+    private fun sample27() = runBlocking {
+        // 安全的并发访问
+        var count = 0
+        val semaphore = Semaphore(1)
+        List(1000) {
+            GlobalScope.launch {
+                // 执行给定的动作，在开始时从这个信号量中获取一个许可，并在动作完成后释放它。
+                semaphore.withPermit {
+                    count++
+                }
+            }
+        }.joinAll()
+        println(count)
     }
 
 }

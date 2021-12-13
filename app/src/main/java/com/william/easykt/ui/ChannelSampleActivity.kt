@@ -30,6 +30,8 @@ import com.william.easykt.viewmodel.SampleViewModel
 import com.zyyoona7.itemdecoration.RecyclerViewDivider
 import kotlinx.coroutines.*
 import kotlinx.coroutines.channels.*
+import kotlinx.coroutines.selects.select
+import kotlin.random.Random
 
 /**
  * author : WilliamYang
@@ -73,6 +75,7 @@ class ChannelSampleActivity : BaseActivity() {
                 8 -> sample9()
                 9 -> sample10()
                 10 -> sample11()
+                11 -> sample12()
                 else -> {
                 }
             }
@@ -407,6 +410,29 @@ class ChannelSampleActivity : BaseActivity() {
                 }
             }
         }.joinAll()
+    }
+
+    /**
+     * 复用多个 Channel
+     */
+    private fun sample12() = runBlocking {
+        val channelList = List(10) { Channel<Int>() }
+
+        GlobalScope.launch {
+            delay(100)
+            val index = Random.nextInt(10)
+            channelList[index].send(index * 10)
+        }
+
+        val result = select<Int?> {
+            channelList.forEach { channel ->
+                // 如果 channel 被关闭，select 会直接抛异常
+//                channel.onReceive { it }
+                // 如果 channel 被关闭，不会抛异常
+                channel.onReceiveCatching { it.getOrNull() }
+            }
+        }
+        println(result)
     }
 
 }
