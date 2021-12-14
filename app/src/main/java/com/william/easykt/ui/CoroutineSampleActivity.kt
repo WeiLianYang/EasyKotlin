@@ -25,7 +25,11 @@ import com.william.easykt.databinding.ActivityCoroutinesSampleBinding
 import com.william.easykt.ui.adapter.UsageAdapter
 import com.william.easykt.viewmodel.SampleViewModel
 import com.zyyoona7.itemdecoration.RecyclerViewDivider
+import io.reactivex.BackpressureStrategy
+import io.reactivex.Flowable
 import kotlinx.coroutines.*
+import kotlinx.coroutines.reactive.asFlow
+import kotlinx.coroutines.rx2.rxFlowable
 import kotlinx.coroutines.selects.select
 import kotlinx.coroutines.sync.Mutex
 import kotlinx.coroutines.sync.Semaphore
@@ -699,6 +703,28 @@ class CoroutineSampleActivity : BaseActivity() {
             }
         }.joinAll()
         println(count)
+    }
+
+    /**
+     * 将 RxJava 的 Flowable 转为 kotlin 的 Flow
+     */
+    private fun sample28() {
+        val ktFlow = Flowable.create<Int>({ emitter ->
+            emitter.onNext(101)
+        }, BackpressureStrategy.LATEST).asFlow()
+    }
+
+    /**
+     * 将 kotlin 的 Flow 转为 RxJava 的 Flowable 或者 Observable 的扩展函数
+     */
+    private fun sample29() {
+        val flowable = rxFlowable {
+            repeat(10) {
+                send(it)
+            }
+        }.subscribe {
+            println(it)
+        }
     }
 
 }
