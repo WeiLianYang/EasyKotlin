@@ -28,6 +28,7 @@ import com.orhanobut.logger.Logger
 import com.orhanobut.logger.PrettyFormatStrategy
 import com.william.base_component.manager.ActivityStackManager
 import com.william.base_component.manager.KVStoreManager
+import timber.log.Timber
 import kotlin.properties.Delegates
 
 
@@ -36,7 +37,7 @@ import kotlin.properties.Delegates
  * @date 2020/4/16 17:24
  * Class Comment：Application context
  */
-class BaseApp : Application() {
+open class BaseApp : Application() {
 
     companion object {
 
@@ -51,6 +52,8 @@ class BaseApp : Application() {
     override fun onCreate() {
         super.onCreate()
         instance = applicationContext
+
+        Timber.plant(Timber.DebugTree())
 
         initFlurryAnalytics()
 

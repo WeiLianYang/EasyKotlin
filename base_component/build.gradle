@@ -151,4 +151,6 @@ dependencies {
     // https://github.com/Blankj/AndroidUtilCode/blob/master/lib/utilcode/README-CN.md
     api 'com.blankj:utilcodex:1.30.6'
 
+    api 'com.jakewharton.timber:timber:4.7.1'
+
 }
