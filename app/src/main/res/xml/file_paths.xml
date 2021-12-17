@@ -2,11 +2,19 @@
 <paths>
 
     <external-files-path
-        name="my_file"
-        path="/" />
+        name="external_file"
+        path="." />
 
     <external-cache-path
-        name="my_cache"
-        path="/" />
+        name="external_cache"
+        path="." />
+
+    <files-path
+        name="internal_file"
+        path="." />
+
+    <cache-path
+        name="internal_cache"
+        path="." />
 
 </paths>

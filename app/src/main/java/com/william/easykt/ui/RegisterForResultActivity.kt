@@ -16,18 +16,23 @@
 
 package com.william.easykt.ui
 
+import android.content.Context
 import android.content.pm.PackageManager
 import android.net.Uri
+import android.os.Build
+import android.os.Environment
+import androidx.core.content.FileProvider
+import androidx.lifecycle.lifecycleScope
 import com.william.base_component.BaseApp
 import com.william.base_component.activity.BaseActivity
 import com.william.base_component.extension.bindingView
 import com.william.base_component.extension.toast
+import com.william.base_component.utils.logE
+import com.william.base_component.utils.logV
 import com.william.easykt.databinding.ActivityRegisterForResultBinding
-import com.william.easykt.utils.CropParams
-import com.william.easykt.utils.CropPhotoContract
-import com.william.easykt.utils.SelectPhotoContract
-import com.william.easykt.utils.TakePhotoContract
+import com.william.easykt.utils.*
 import kotlinx.coroutines.*
+import java.io.*
 
 /**
  * author：William
@@ -40,13 +45,10 @@ class RegisterForResultActivity : BaseActivity() {
 
     override val viewBinding: ActivityRegisterForResultBinding by bindingView()
 
-    //    private val viewModel by viewModels<SampleViewModel>()
     private var needCrop = false
 
     override fun initView() {
         super.initView()
-
-//        startActivityForResult()
 
         val cropPhoto = registerForActivityResult(CropPhotoContract()) { uri: Uri? ->
             if (uri != null) {
@@ -56,7 +58,20 @@ class RegisterForResultActivity : BaseActivity() {
         val selectPhoto = registerForActivityResult(SelectPhotoContract()) { uri: Uri? ->
             if (uri != null) {
                 if (needCrop) {
-                    cropPhoto.launch(CropParams(uri))
+                    lifecycleScope.launch {
+                        val googlePrefix =
+                            "content://com.google.android.apps.photos.contentprovider"
+                        val newUri = if (uri.toString().startsWith(googlePrefix, true)) {
+                            // 处理谷歌相册返回的图片
+                            saveImageToCache(this@RegisterForResultActivity, uri)
+                        } else uri
+                        // 剪裁图片
+                        kotlin.runCatching {
+                            cropPhoto.launch(CropParams(newUri))
+                        }.onFailure {
+                            "crop failed: $it".logE()
+                        }
+                    }
                 } else {
                     viewBinding.ivImage.setImageURI(uri)
                 }
@@ -115,6 +130,66 @@ class RegisterForResultActivity : BaseActivity() {
 
     override fun initAction() {
 
+    }
+
+    /**
+     * 将谷歌相册图片保存到外置存储目录，然后返回 uri
+     */
+    private suspend fun saveImageToCache(context: Context, uri: Uri): Uri {
+        val imageName = "${System.currentTimeMillis()}.jpg"
+        val parent = if (Environment.MEDIA_MOUNTED == Environment.getExternalStorageState()) {
+            context.externalCacheDir?.absolutePath
+        } else {
+            context.cacheDir?.absolutePath
+        }
+        val path = parent + File.separator + imageName
+
+        withContext(Dispatchers.IO) {
+            copyInputStream(context, uri, path)
+        }
+
+        val result = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+            FileProvider.getUriForFile(
+                context, "${context.packageName}.fileprovider",
+                File(parent, imageName)
+            )
+        } else {
+            Uri.fromFile(File(path))
+        }
+        "uri: $result".logV()
+        return result
+    }
+
+    /**
+     * 字节流读写复制文件
+     * @param context 上下文
+     * @param uri 图片uri
+     * @param outputPath 输出地址
+     */
+    private fun copyInputStream(context: Context, uri: Uri, outputPath: String) {
+        "copy file begin...".logV()
+        var inputStream: InputStream? = null
+        var outputStream: FileOutputStream? = null
+        try {
+            inputStream = context.contentResolver.openInputStream(uri)
+            outputStream = FileOutputStream(outputPath)
+            val bytes = ByteArray(1024)
+            var num: Int
+            while (inputStream?.read(bytes).also { num = it ?: -1 } != -1) {
+                outputStream.write(bytes, 0, num)
+                outputStream.flush()
+            }
+        } catch (e: Exception) {
+            "exception: $e".logE()
+        } finally {
+            try {
+                outputStream?.close()
+                inputStream?.close()
+                "copy file end...".logV()
+            } catch (e: IOException) {
+                "exception: $e".logE()
+            }
+        }
     }
 
 }
