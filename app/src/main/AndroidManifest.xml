@@ -19,9 +19,80 @@
     xmlns:tools="http://schemas.android.com/tools"
     package="com.william.easykt">
 
-    <!-- Android 11 packageManager.queryIntentActivities()
-         管理软件包可见性 https://developer.android.com/training/basics/intents/package-visibility -->
+    <!-- Android 11
+         管理软件包可见性：https://developer.android.com/training/basics/intents/package-visibility
+         根据用例配置软件包可见性：https://developer.android.com/training/basics/intents/package-visibility-use-cases
+    -->
     <queries>
+
+        <!--检查是否有可用浏览器，例如打开外部浏览器时检查 -->
+        <intent>
+            <action android:name="android.intent.action.VIEW" />
+            <category android:name="android.intent.category.BROWSABLE" />
+            <data android:scheme="https" />
+        </intent>
+
+        <!-- 检查设备能否打开给定文件，如打开pdf，zip 时检查 -->
+        <intent>
+            <action android:name="android.intent.action.VIEW" />
+            <data android:mimeType="*/*" />
+        </intent>
+
+        <!-- 创建自定义共享表单，如分享图片，文件 -->
+        <intent>
+            <action android:name="android.intent.action.SEND" />
+            <data android:mimeType="*/*" />
+        </intent>
+
+        <!-- 显示自定义文字选择操作，如选中一段文字，进行复制，粘贴操作 -->
+        <intent>
+            <action android:name="android.intent.action.PROCESS_TEXT" />
+            <data android:mimeType="text/plain" />
+        </intent>
+
+        <!-- 连接到文字转语音引擎 -->
+        <intent>
+            <action android:name="android.intent.action.TTS_SERVICE" />
+        </intent>
+
+        <!-- 连接到语音识别服务 -->
+        <intent>
+            <action android:name="android.speech.RecognitionService" />
+        </intent>
+
+        <!-- 显示联系人的自定义数据行 -->
+        <!-- Allows the app to read the "contacts.xml" file from the other apps. -->
+        <intent>
+            <action android:name="android.accounts.AccountAuthenticator" />
+        </intent>
+        <!-- Allows the app to load an icon corresponding to the custom MIME type. -->
+        <intent>
+            <action android:name="android.intent.action.VIEW" />
+            <data
+                android:host="com.android.contacts"
+                android:mimeType="vnd.android.cursor.item/*"
+                android:scheme="content" />
+        </intent>
+
+        <!-- 连接到媒体浏览器服务 -->
+        <intent>
+            <action android:name="android.media.browse.MediaBrowserService" />
+        </intent>
+
+        <!--微信包名-->
+        <package android:name="com.tencent.mm" />
+
+        <!--支付宝包名-->
+        <package android:name="com.eg.android.AlipayGphone" />
+        <package android:name="hk.alipay.wallet" />
+
+        <!--QQ-->
+        <package android:name="com.tencent.qqlite" />
+        <package android:name="com.tencent.mobileqq" />
+
+        <!--新浪微博-->
+        <package android:name="com.sina.weibo" />
+
         <package android:name="com.tencent.mtt" />
         <package android:name="com.UCMobile" />
         <package android:name="sogou.mobile.explorer" />
@@ -36,32 +107,6 @@
     <uses-feature
         android:name="android.hardware.camera"
         android:required="false" />
-
-    <!--
-    <queries>
-        <intent>
-            <action android:name="android.intent.action.VIEW" />
-            <data android:mimeType="text/plain" />
-        </intent>
-
-         <intent>
-             <action android:name="android.intent.action.VIEW" />
-             <data android:mimeType="text/html" />
-         </intent>
-        <intent>
-             <action android:name="android.intent.action.VIEW" />
-             <data android:mimeType="http" />
-         </intent>
-         <intent>
-             <action android:name="android.intent.action.VIEW" />
-             <data android:mimeType="https" />
-         </intent>
-         <intent>
-             <action android:name="android.intent.action.VIEW" />
-             <data android:mimeType="application/xhtml+xml" />
-         </intent>
-    </queries>
-    -->
 
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
