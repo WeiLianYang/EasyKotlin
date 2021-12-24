@@ -19,10 +19,13 @@ package com.william.base_component.utils
 import android.app.Activity
 import android.content.Context
 import android.content.Intent
+import android.content.pm.PackageInfo
 import android.content.pm.PackageManager
+import android.content.pm.ResolveInfo
 import android.graphics.Outline
 import android.net.Uri
 import android.os.Build
+import android.os.Process
 import android.telephony.TelephonyManager
 import android.text.TextUtils
 import android.view.View
@@ -197,4 +200,60 @@ fun isCN(context: Context): Boolean {
         }
     }
     return isCN
+}
+
+/**
+ * 检索可以为给定意图执行的所有 activity
+ */
+fun queryIntent(context: Context, intent: Intent): Boolean {
+    val list: List<ResolveInfo>
+    context.packageManager.apply {
+
+        list = queryIntentActivities(intent, PackageManager.MATCH_ALL)
+
+        // 检索可以匹配给定意图的所有服务
+        queryIntentServices(intent, PackageManager.MATCH_ALL)
+
+        // 检索可以处理给定意图广播的所有接收器
+        queryBroadcastReceivers(intent, PackageManager.MATCH_ALL)
+
+        // 查询内容提供者
+        queryContentProviders("", Process.myUid(), PackageManager.MATCH_ALL)
+    }
+    list.forEach {
+        "queryIntent, item: ${it.activityInfo}".logD()
+    }
+    return list.isNotEmpty()
+}
+
+/**
+ * 获取当前用户安装的所有软件包的列表。
+ */
+fun getInstalledPackages(context: Context): Boolean {
+    val list: List<PackageInfo>
+    context.packageManager.apply {
+        list = getInstalledPackages(PackageManager.GET_META_DATA)
+
+        // 获取已安装的应用程序
+        getInstalledApplications(PackageManager.GET_META_DATA)
+    }
+    list.forEach {
+        "getInstalledPackages, item: ${it.applicationInfo.className}".logD()
+    }
+    return list.isNotEmpty()
+}
+
+/**
+ * 检索有关系统上安装的应用程序包的整体信息
+ */
+fun getPackageInfo(context: Context, packageName: String): Boolean {
+    var packageInfo: PackageInfo? = null
+    runCatching {
+        packageInfo =
+            context.packageManager.getPackageInfo(packageName, PackageManager.GET_ACTIVITIES)
+        "getPackageInfo: ${packageInfo?.applicationInfo?.className}".logD()
+    }.onFailure {
+        "getPackageInfo failed, $it".logE()
+    }
+    return packageInfo != null
 }

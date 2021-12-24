@@ -25,14 +25,14 @@
     -->
     <queries>
 
-        <!--检查是否有可用浏览器，例如打开外部浏览器时检查 -->
+        <!--检查是否有可用浏览器，例如需要打开外部浏览器 -->
         <intent>
             <action android:name="android.intent.action.VIEW" />
             <category android:name="android.intent.category.BROWSABLE" />
             <data android:scheme="https" />
         </intent>
 
-        <!-- 检查设备能否打开给定文件，如打开pdf，zip 时检查 -->
+        <!-- 检查设备能否打开给定文件，如需要打开pdf，zip -->
         <intent>
             <action android:name="android.intent.action.VIEW" />
             <data android:mimeType="*/*" />

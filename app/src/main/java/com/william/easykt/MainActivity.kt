@@ -128,6 +128,12 @@ class MainActivity : BaseActivity() {
                 17 -> openActivity<RegisterForResultActivity>(mActivity)
                 18 -> openActivity<FileActivity>(mActivity)
                 19 -> sendNotification()
+                20 -> {
+                    val intent = Intent(Intent.ACTION_VIEW)
+                    queryIntent(this, intent)
+                    getInstalledPackages(this)
+                    getPackageInfo(this, "com.android.chrome")
+                }
                 else -> {
                 }
             }
