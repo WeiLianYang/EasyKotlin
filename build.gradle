@@ -20,8 +20,11 @@ apply from: "config.gradle"
 
 buildscript {
 
-    ext.kotlin_version = "1.5.31"
-    ext.kotlin_coroutines = "1.5.0"
+    ext {
+        compose_version = '1.0.5'
+        kotlin_version = "1.5.31"
+        kotlin_coroutines = "1.5.0"
+    }
 
     repositories {
         google()

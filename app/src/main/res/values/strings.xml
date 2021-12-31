@@ -42,6 +42,7 @@
     <string name="test_file">File Write/Read/Delete</string>
     <string name="test_notification">Send Notification</string>
     <string name="test_package_visibility">Package Visibility</string>
+    <string name="test_jetpack_compose">Jetpack Compose</string>
 
     <string name="test_kotlin_flow1">1. 异步计算的值流</string>
     <string name="test_kotlin_flow2">2. 冷流</string>
@@ -124,5 +125,6 @@
 
     <string name="default_notification_channel_id">default_notification_channel_id</string>
     <string name="default_notification_channel_name">default_notification_channel_name</string>
+    <string name="title_activity_compose">ComposeActivity</string>
 
 </resources>

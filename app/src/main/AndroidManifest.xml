@@ -158,6 +158,12 @@
         android:theme="@style/AppTheme.NoActionBar">
 
         <activity
+            android:name=".ui.ComposeActivity"
+            android:exported="false"
+            android:label="@string/title_activity_compose"
+            android:theme="@style/AppTheme.NoActionBar" />
+
+        <activity
             android:name=".MainActivity"
             android:launchMode="singleTask"
             android:exported="true">

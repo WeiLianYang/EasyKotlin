@@ -134,6 +134,7 @@ class MainActivity : BaseActivity() {
                     getInstalledPackages(this)
                     getPackageInfo(this, "com.android.chrome")
                 }
+                21 -> openActivity<ComposeActivity>(mActivity)
                 else -> {
                 }
             }

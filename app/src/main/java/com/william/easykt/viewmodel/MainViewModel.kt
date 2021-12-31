@@ -53,6 +53,7 @@ class MainViewModel : ViewModel() {
             MainEntranceBean(R.string.test_file),
             MainEntranceBean(R.string.test_notification),
             MainEntranceBean(R.string.test_package_visibility),
+            MainEntranceBean(R.string.test_jetpack_compose),
         )
     )
 
