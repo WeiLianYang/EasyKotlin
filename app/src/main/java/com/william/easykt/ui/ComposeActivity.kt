@@ -30,6 +30,19 @@ import com.william.easykt.ui.ui.theme.EasyKotlinTheme
 
 /**
  * https://developer.android.com/jetpack/compose/tutorial
+ * 声明式界面的关键思想：
+ * 1. 开发者负责完全描述给定状态的界面外观
+ * 2. 框架负责在状态更改时更新界面
+ *
+ * 特点：
+ * 1. Compose 将状态转换为界面，如果状态发生变更，界面也将重新生成
+ * 2. Compose 会跳过状态未变更的操作，从而效率更高
+ * 3. Compose 将界面分解为可组合函数，函数不返回内容，而是生成界面
+ * 4. Compose 将数据作为函数参数并生成界面，只执行输入发生更改的，会跳过未更改的部分
+ * 5. Compose 尤其适用于采用单向数据流的应用架构
+ * 6. Compose 布局模型不允许多遍测量，从而使嵌套的布局更高效
+ * 7. Composable 是不可变的，开发者无法保留对它的引用，并在之后查询或更新其内容
+ * 8. 希望在重新执行 Composable 函数时保留变量值，可以使用 remember 函数记住先前执行中用到的值，这样重用该值，避免重新分配或保持某个状态
  */
 class ComposeActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
