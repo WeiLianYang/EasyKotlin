@@ -18,14 +18,14 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     package="com.william.easykt">
-
-    <!-- Android 11
+    <!--
+         Android 11
          管理软件包可见性：https://developer.android.com/training/basics/intents/package-visibility
          根据用例配置软件包可见性：https://developer.android.com/training/basics/intents/package-visibility-use-cases
     -->
     <queries>
 
-        <!--检查是否有可用浏览器，例如需要打开外部浏览器 -->
+        <!-- 检查是否有可用浏览器，例如需要打开外部浏览器 -->
         <intent>
             <action android:name="android.intent.action.VIEW" />
             <category android:name="android.intent.category.BROWSABLE" />
@@ -79,18 +79,18 @@
             <action android:name="android.media.browse.MediaBrowserService" />
         </intent>
 
-        <!--微信包名-->
+        <!-- 微信包名 -->
         <package android:name="com.tencent.mm" />
 
-        <!--支付宝包名-->
+        <!-- 支付宝包名 -->
         <package android:name="com.eg.android.AlipayGphone" />
         <package android:name="hk.alipay.wallet" />
 
-        <!--QQ-->
+        <!-- QQ -->
         <package android:name="com.tencent.qqlite" />
         <package android:name="com.tencent.mobileqq" />
 
-        <!--新浪微博-->
+        <!-- 新浪微博 -->
         <package android:name="com.sina.weibo" />
 
         <package android:name="com.tencent.mtt" />
@@ -156,6 +156,12 @@
         android:label="@string/app_name"
         android:supportsRtl="true"
         android:theme="@style/AppTheme.NoActionBar">
+
+        <activity
+            android:name=".ui.ComposeDemoActivity"
+            android:exported="false"
+            android:label="@string/title_activity_compose_demo"
+            android:theme="@style/AppTheme.NoActionBar" />
 
         <activity
             android:name=".ui.ComposeActivity"

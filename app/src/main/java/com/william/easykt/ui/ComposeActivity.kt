@@ -43,6 +43,7 @@ import com.william.easykt.ui.ui.theme.EasyKotlinTheme
  * 6. Compose 布局模型不允许多遍测量，从而使嵌套的布局更高效
  * 7. Composable 是不可变的，开发者无法保留对它的引用，并在之后查询或更新其内容
  * 8. 希望在重新执行 Composable 函数时保留变量值，可以使用 remember 函数记住先前执行中用到的值，这样重用该值，避免重新分配或保持某个状态
+ * 9. 重组是指在输入更改时再次调用可组合函数的过程。当函数的输入更改时，会发生这种情况。当 Compose 根据新输入重组时，它仅调用可能已更改的函数或 lambda，而跳过其余函数或 lambda。通过跳过所有未更改参数的函数或 lambda，Compose 可以高效地重组。
  */
 class ComposeActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
