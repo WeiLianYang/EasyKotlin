@@ -63,9 +63,9 @@ class MainActivity : BaseActivity() {
                 .build().addTo(this)
         }
 
-        viewModel.dataList.observe(this, {
+        viewModel.dataList.observe(this) {
             mAdapter.setList(it)
-        })
+        }
 
         mAdapter.setOnItemClickListener { _, position, _ ->
 
@@ -135,6 +135,7 @@ class MainActivity : BaseActivity() {
                     getPackageInfo(this, "com.android.chrome")
                 }
                 21 -> openActivity<ComposeActivity>(mActivity)
+                22 -> openActivity<ComposeDemoActivity>(mActivity)
                 else -> {
                 }
             }
@@ -191,8 +192,8 @@ class MainActivity : BaseActivity() {
 
         val builder = NotificationCompat.Builder(this, channelId)
             .setSmallIcon(R.drawable.notification)
-            .setContentTitle("test notification title")
-            .setContentText("test notification content")
+            .setContentTitle("Notification title")
+            .setContentText("Notification content")
             .setAutoCancel(true)
             .setSound(defaultSoundUri)
             .setContentIntent(pendingIntent)
