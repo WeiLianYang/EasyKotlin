@@ -26,7 +26,7 @@ import androidx.compose.ui.unit.dp
 import com.william.easykt.R
 import com.william.easykt.data.Message
 import com.william.easykt.data.SampleData
-import com.william.easykt.ui.ui.theme.EasyKotlinTheme
+import com.william.easykt.ui.theme.EasyKotlinTheme
 
 /**
  * https://developer.android.com/jetpack/compose/tutorial

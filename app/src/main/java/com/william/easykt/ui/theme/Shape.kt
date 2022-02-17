@@ -1,4 +1,4 @@
-package com.william.easykt.ui.ui.theme
+package com.william.easykt.ui.theme
 
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.Shapes
