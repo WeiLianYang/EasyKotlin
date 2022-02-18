@@ -128,5 +128,7 @@
     <string name="default_notification_channel_name">default_notification_channel_name</string>
     <string name="title_activity_compose">ComposeActivity</string>
     <string name="title_activity_compose_demo">ComposeDemoActivity</string>
+    <string name="show_less">show less</string>
+    <string name="show_more">show more</string>
 
 </resources>
