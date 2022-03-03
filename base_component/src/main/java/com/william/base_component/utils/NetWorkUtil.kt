@@ -16,10 +16,13 @@
 
 package com.william.base_component.utils
 
+import android.Manifest
 import android.content.Context
+import android.content.pm.PackageManager
 import android.net.ConnectivityManager
 import android.net.NetworkInfo
 import android.telephony.TelephonyManager
+import androidx.core.app.ActivityCompat
 import java.io.IOException
 import java.net.HttpURLConnection
 import java.net.NetworkInterface
@@ -127,7 +130,13 @@ fun isWifiEnabled(context: Context): Boolean {
         .getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
     val mgrTel = context
         .getSystemService(Context.TELEPHONY_SERVICE) as TelephonyManager
-    return mgrConn?.activeNetworkInfo != null && mgrConn.activeNetworkInfo?.state == NetworkInfo.State.CONNECTED || mgrTel
+    return if (ActivityCompat.checkSelfPermission(
+            context,
+            Manifest.permission.READ_PHONE_STATE
+        ) != PackageManager.PERMISSION_GRANTED
+    ) {
+        false
+    } else mgrConn?.activeNetworkInfo != null && mgrConn.activeNetworkInfo?.state == NetworkInfo.State.CONNECTED || mgrTel
         .networkType == TelephonyManager.NETWORK_TYPE_UMTS
 }
 
