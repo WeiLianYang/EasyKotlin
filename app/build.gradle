@@ -65,7 +65,7 @@ android {
     }
     composeOptions {
         kotlinCompilerExtensionVersion compose_version
-        kotlinCompilerVersion kotlin_version
+//        kotlinCompilerVersion kotlin_version
     }
     packagingOptions {
         resources {
@@ -79,6 +79,7 @@ dependencies {
 
     // Integration with activities
     implementation 'androidx.activity:activity-compose:1.4.0'
+    implementation "androidx.constraintlayout:constraintlayout-compose:1.0.0"
     // Compose Material Design
     implementation "androidx.compose.material:material:$compose_version"
     implementation "androidx.compose.material:material-icons-extended:$compose_version"
@@ -89,7 +90,7 @@ dependencies {
     // Tooling support (Previews, etc.)
     debugImplementation "androidx.compose.ui:ui-tooling:$compose_version"
     // Integration with ViewModels
-    implementation 'androidx.lifecycle:lifecycle-viewmodel-compose:2.4.0'
+    implementation 'androidx.lifecycle:lifecycle-viewmodel-compose:2.4.1'
     // UI Tests
     androidTestImplementation "androidx.compose.ui:ui-test-junit4:$compose_version"
 

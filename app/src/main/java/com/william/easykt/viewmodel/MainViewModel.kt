@@ -55,6 +55,7 @@ class MainViewModel : ViewModel() {
             MainEntranceBean(R.string.test_package_visibility),
             MainEntranceBean(R.string.test_jetpack_compose1),
             MainEntranceBean(R.string.test_jetpack_compose2),
+            MainEntranceBean(R.string.test_jetpack_compose3),
         )
     )
 

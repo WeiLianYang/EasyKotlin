@@ -66,11 +66,11 @@ class CoroutineSampleActivity : BaseActivity() {
         setTitleText("Coroutines Sample")
     }
 
-    @DelicateCoroutinesApi
+    @OptIn(DelicateCoroutinesApi::class)
     override fun initAction() {
-        viewModel.coroutinesSampleData.observe(this, {
+        viewModel.coroutinesSampleData.observe(this) {
             mAdapter.setList(it)
-        })
+        }
 
         mAdapter.setOnItemClickListener { _, position, _ ->
             when (position) {

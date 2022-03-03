@@ -136,6 +136,7 @@ class MainActivity : BaseActivity() {
                 }
                 21 -> openActivity<ComposeActivity>(mActivity)
                 22 -> openActivity<ComposeDemoActivity>(mActivity)
+                23 -> openActivity<ComposeLayoutActivity>(mActivity)
                 else -> {
                 }
             }
