@@ -20,6 +20,7 @@ import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.layout.Layout
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
@@ -31,14 +32,75 @@ import kotlinx.coroutines.launch
  * author：William
  * date：2022/3/3 21:52
  * description: 修饰符的顺序非常重要
+ *
+ * Compose 中的布局原则：
+ *
+ * 1. 某些可组合函数在被调用后会发出一部分界面，这部分界面会添加到将呈现到界面上的界面树中。
+ *    每次发送（或每个元素）都有一个父元素，还可能有多个子元素。此外，它在父元素中具有位置 (x, y) 和大小，即 width 和 height。
+ *    要求元素使用其应满足的约束条件进行自我测量。约束条件可限制元素的最小和最大 width 和 height。
+ *    如果某个元素有子元素，它可能会测量每个元素，以帮助确定它自己的大小。
+ *    Compose 界面不允许多遍测量。这意味着，布局元素不能为了尝试不同的测量配置而多次测量任何子元素。
+ *    单遍测量对性能有利，使 Compose 能够高效地处理较深的界面树。
+ *
+ * 2.
+ *
  */
 class ComposeLayoutActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContent {
             ComposeLayoutTheme {
-                ScrollingList()
+                CustomColumn()
             }
+        }
+    }
+}
+
+/**
+ * 自定义列表布局
+ */
+@Composable
+fun CustomColumn(
+    modifier: Modifier = Modifier,
+    content: @Composable () -> Unit
+) {
+    Layout(
+        modifier = modifier,
+        content = content
+    ) { measurables, constraints ->
+        // Don't constrain child views further, measure them with given constraints
+        // List of measured children
+        val placeables = measurables.map { measurable ->
+            // Measure each child
+            measurable.measure(constraints)
+        }
+
+        // Track the y co-ord we have placed children up to
+        var yPosition = 0
+
+        // Set the size of the layout as big as it can
+        layout(constraints.maxWidth, constraints.maxHeight) {
+            // Place children in the parent layout
+            placeables.forEach { placeable ->
+                // Position item on the screen
+                placeable.placeRelative(x = 0, y = yPosition)
+
+                // Record the y co-ord placed up to
+                yPosition += placeable.height
+            }
+        }
+    }
+}
+
+@Preview
+@Composable
+fun CustomColumn(modifier: Modifier = Modifier) {
+    ComposeLayoutTheme {
+        CustomColumn(modifier.padding(8.dp)) {
+            Text("Custom Column")
+            Text("places items")
+            Text("vertically.")
+            Text("We've done it by hand!")
         }
     }
 }
