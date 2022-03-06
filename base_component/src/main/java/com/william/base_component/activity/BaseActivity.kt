@@ -106,13 +106,13 @@ abstract class BaseActivity : AppCompatActivity(), IBaseView {
         onRegisterEvent()?.let {
             LiveEventBus
                 .get(it)
-                .observe(this, { data: Any? ->
+                .observe(this) { data: Any? ->
                     try {
                         onReceiveEvent(data)
                     } catch (e: Exception) {
                         e.printStackTrace()
                     }
-                })
+                }
         }
     }
 

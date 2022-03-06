@@ -44,9 +44,9 @@ class TestVmActivity : BaseActivity() {
     override fun initData() {
         setTitleText("TestVmActivity")
 
-        viewModel.testData.observe(this, {
+        viewModel.testData.observe(this) {
             viewBinding.tvText.text = it.toString()
-        })
+        }
         viewModel.requestData()
     }
 

@@ -115,13 +115,13 @@ abstract class BaseFragment : Fragment(), IBaseView {
         onRegisterEvent()?.let {
             LiveEventBus
                 .get(it, Any::class.java)
-                .observe(this, Observer { data: Any? ->
+                .observe(this) { data: Any? ->
                     try {
                         onReceiveEvent(data)
                     } catch (e: Exception) {
                         e.printStackTrace()
                     }
-                })
+                }
         }
     }
 

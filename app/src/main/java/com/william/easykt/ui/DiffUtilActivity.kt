@@ -41,9 +41,9 @@ class DiffUtilActivity : BaseActivity() {
     private lateinit var diffAdapter: DiffUtilAdapter
 
     override fun initAction() {
-        viewModel.listData.observe(this, {
+        viewModel.listData.observe(this) {
             diffAdapter.submitList(it)
-        })
+        }
 
         viewBinding.btnChange1.setOnClickListener {
             diffAdapter.submitList(viewModel.getList(1))

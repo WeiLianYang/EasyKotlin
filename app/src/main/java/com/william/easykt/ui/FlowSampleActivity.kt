@@ -58,9 +58,9 @@ class FlowSampleActivity : BaseActivity() {
                 .build().addTo(this)
         }
 
-        viewModel.flowSampleDataList.observe(this, {
+        viewModel.flowSampleDataList.observe(this) {
             mAdapter.setList(it)
-        })
+        }
         mAdapter.setOnItemClickListener { _, position, _ ->
             when (position) {
                 0 -> sample1()

@@ -59,9 +59,9 @@ class ChannelSampleActivity : BaseActivity() {
                 .build().addTo(this)
         }
 
-        viewModel.channelSampleDataList.observe(this, {
+        viewModel.channelSampleDataList.observe(this) {
             mAdapter.setList(it)
-        })
+        }
         mAdapter.setOnItemClickListener { _, position, _ ->
             when (position) {
                 0 -> sample1()
