@@ -45,6 +45,7 @@
     <string name="test_jetpack_compose1">Jetpack Compose 1</string>
     <string name="test_jetpack_compose2">Jetpack Compose 2</string>
     <string name="test_jetpack_compose3">Compose Layout</string>
+    <string name="test_window_insets">WindowInsetsAnimation</string>
 
     <string name="test_kotlin_flow1">1. 异步计算的值流</string>
     <string name="test_kotlin_flow2">2. 冷流</string>
@@ -131,5 +132,7 @@
     <string name="title_activity_compose_demo">ComposeDemoActivity</string>
     <string name="show_less">show less</string>
     <string name="show_more">show more</string>
+
+    <string name="edittext_input_hint">Type a message…</string>
 
 </resources>
