@@ -46,6 +46,7 @@
     <string name="test_jetpack_compose2">Jetpack Compose 2</string>
     <string name="test_jetpack_compose3">Compose Layout</string>
     <string name="test_window_insets">WindowInsetsAnimation</string>
+    <string name="test_aes_encrypt">Aes Encrypt</string>
 
     <string name="test_kotlin_flow1">1. 异步计算的值流</string>
     <string name="test_kotlin_flow2">2. 冷流</string>
@@ -134,5 +135,18 @@
     <string name="show_more">show more</string>
 
     <string name="edittext_input_hint">Type a message…</string>
+
+    <string name="prompt_plaintext">Message</string>
+    <string name="hint_plaintext">The secrecy and integrity of this message will be guaranteed.</string>
+    <string name="prompt_associated_data">Associated data</string>
+    <string name="hint_associated_data">Only the integrity of this associated data will be guaranteed. For successful decryption it must be the same as the associated data used during encryption.</string>
+    <string name="prompt_ciphertext">Ciphertext</string>
+    <string name="hint_ciphertext">The ciphertext is in Base64 encoding. Try to modify it and verify that the decryption will fail.</string>
+
+    <string name="action_encrypt">Encrypt</string>
+    <string name="action_decrypt">Decrypt</string>
+    <string name="error_cannot_encrypt">Cannot encrypt</string>
+    <string name="error_cannot_decrypt">Cannot decrypt</string>
+    <string name="error_field_required">This field is required</string>
 
 </resources>

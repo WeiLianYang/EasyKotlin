@@ -138,6 +138,7 @@ class MainActivity : BaseActivity() {
                 22 -> openActivity<ComposeDemoActivity>(mActivity)
                 23 -> openActivity<ComposeLayoutActivity>(mActivity)
                 24 -> openActivity<WindowInsetsActivity>(mActivity)
+                25 -> openActivity<AesEncryptActivity>(mActivity)
                 else -> {
                 }
             }

@@ -57,6 +57,7 @@ class MainViewModel : ViewModel() {
             MainEntranceBean(R.string.test_jetpack_compose2),
             MainEntranceBean(R.string.test_jetpack_compose3),
             MainEntranceBean(R.string.test_window_insets),
+            MainEntranceBean(R.string.test_aes_encrypt),
         )
     )
 

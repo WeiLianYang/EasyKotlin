@@ -195,6 +195,7 @@
         <activity android:name=".ui.RegisterForResultActivity" />
         <activity android:name=".ui.FileActivity" />
         <activity android:name=".ui.WindowInsetsActivity" />
+        <activity android:name=".ui.AesEncryptActivity" />
 
         <provider
             android:name="androidx.core.content.FileProvider"
