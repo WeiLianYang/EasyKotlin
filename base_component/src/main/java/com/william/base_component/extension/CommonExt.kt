@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package com.william.base_component.utils
+package com.william.base_component.extension
 
 import android.content.Context
 import androidx.datastore.core.DataStore

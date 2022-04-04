@@ -18,9 +18,9 @@ package com.william.easykt
 
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import androidx.test.filters.SmallTest
-import com.william.base_component.utils.logD
-import com.william.base_component.utils.logI
-import com.william.base_component.utils.logV
+import com.william.base_component.extension.logD
+import com.william.base_component.extension.logI
+import com.william.base_component.extension.logV
 import com.william.easykt.utils.RsaHelper
 import com.william.easykt.utils.bytesToBase64
 import org.junit.Assert

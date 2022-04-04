@@ -24,7 +24,7 @@ import androidx.core.view.NestedScrollingChild
 import androidx.core.view.NestedScrollingParent
 import androidx.core.view.ViewCompat
 import com.william.base_component.R
-import com.william.base_component.utils.logD
+import com.william.base_component.extension.logD
 import kotlin.math.abs
 
 /**

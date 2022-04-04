@@ -19,7 +19,7 @@ package com.william.easykt.ui.adapter
 
 import com.william.base_component.adapter.BaseRvAdapter
 import com.william.base_component.adapter.BaseRvViewHolder
-import com.william.base_component.utils.toText
+import com.william.base_component.extension.toText
 import com.william.easykt.R
 import com.william.easykt.data.MainEntranceBean
 

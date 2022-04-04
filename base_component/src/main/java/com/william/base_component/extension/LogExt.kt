@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package com.william.base_component.utils
+package com.william.base_component.extension
 
 import android.util.Log
 import com.william.base_component.BuildConfig

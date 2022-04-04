@@ -24,9 +24,9 @@ import androidx.core.view.WindowInsetsAnimationControllerCompat
 import androidx.core.view.WindowInsetsCompat
 import com.william.base_component.activity.BaseActivity
 import com.william.base_component.extension.bindingView
-import com.william.base_component.utils.logD
-import com.william.base_component.utils.logI
-import com.william.base_component.utils.logW
+import com.william.base_component.extension.logD
+import com.william.base_component.extension.logI
+import com.william.base_component.extension.logW
 import com.william.easykt.databinding.ActivityWindowInsetsBinding
 import com.william.easykt.ui.adapter.SimpleAdapter
 

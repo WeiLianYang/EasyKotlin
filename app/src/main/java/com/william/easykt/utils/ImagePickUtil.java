@@ -29,7 +29,7 @@ import android.webkit.MimeTypeMap;
 
 import androidx.core.content.FileProvider;
 
-import com.william.base_component.utils.LogExtKt;
+import com.william.base_component.extension.LogExtKt;
 
 import java.io.ByteArrayOutputStream;
 import java.io.File;

@@ -29,7 +29,7 @@ import androidx.core.app.NotificationCompat
 import androidx.core.content.getSystemService
 import com.flurry.android.FlurryAgent
 import com.william.base_component.activity.BaseActivity
-import com.william.base_component.extension.bindingView
+import com.william.base_component.extension.*
 import com.william.base_component.utils.*
 import com.william.easykt.databinding.ActivityMainBinding
 import com.william.easykt.test.TestVmActivity
@@ -67,6 +67,13 @@ class MainActivity : BaseActivity() {
             mAdapter.setList(it)
         }
 
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
+            // 获取近期任何进程终止的原因
+            val list = activityManager?.getHistoricalProcessExitReasons(packageName, 0, 1)
+            list?.forEach { info ->
+                info.toString().logE()
+            }
+        }
         mAdapter.setOnItemClickListener { _, position, _ ->
 
             when (position) {

@@ -26,13 +26,21 @@ import androidx.lifecycle.lifecycleScope
 import com.william.base_component.BaseApp
 import com.william.base_component.activity.BaseActivity
 import com.william.base_component.extension.bindingView
+import com.william.base_component.extension.logE
+import com.william.base_component.extension.logV
 import com.william.base_component.extension.toast
-import com.william.base_component.utils.logE
-import com.william.base_component.utils.logV
 import com.william.easykt.databinding.ActivityRegisterForResultBinding
-import com.william.easykt.utils.*
-import kotlinx.coroutines.*
-import java.io.*
+import com.william.easykt.utils.CropParams
+import com.william.easykt.utils.CropPhotoContract
+import com.william.easykt.utils.SelectPhotoContract
+import com.william.easykt.utils.TakePhotoContract
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
+import java.io.File
+import java.io.FileOutputStream
+import java.io.IOException
+import java.io.InputStream
 
 /**
  * author：William

@@ -29,7 +29,7 @@ import androidx.annotation.CallSuper
 import androidx.core.content.FileProvider
 import androidx.core.content.contentValuesOf
 import com.william.base_component.utils.isNotEmpty
-import com.william.base_component.utils.logD
+import com.william.base_component.extension.logD
 import java.io.File
 
 /**

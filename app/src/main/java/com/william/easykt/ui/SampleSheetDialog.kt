@@ -24,7 +24,7 @@ import androidx.fragment.app.FragmentManager
 import com.google.android.material.bottomsheet.BottomSheetBehavior
 import com.william.base_component.fragment.BaseBottomSheetDialogFragment
 import com.william.base_component.utils.getScreenHeight
-import com.william.base_component.utils.logD
+import com.william.base_component.extension.logD
 import com.william.easykt.databinding.DialogSampleSheetBinding
 
 

@@ -19,7 +19,7 @@ package com.william.base_component.manager
 import android.content.Context
 import android.os.Parcelable
 import com.tencent.mmkv.MMKV
-import com.william.base_component.utils.logD
+import com.william.base_component.extension.logD
 import java.util.*
 
 /**

@@ -18,12 +18,11 @@ package com.william.base_component.extension
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.william.base_component.utils.logD
-import com.william.base_component.utils.logE
-import com.william.base_component.utils.logI
-import com.william.base_component.utils.logW
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.flow.*
+import kotlinx.coroutines.flow.catch
+import kotlinx.coroutines.flow.flow
+import kotlinx.coroutines.flow.flowOn
+import kotlinx.coroutines.flow.onCompletion
 import kotlinx.coroutines.launch
 
 /**

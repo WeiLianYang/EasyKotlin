@@ -18,10 +18,10 @@ package com.william.easykt.utils
 
 import android.security.keystore.KeyGenParameterSpec
 import android.security.keystore.KeyProperties
-import com.william.base_component.utils.logD
-import com.william.base_component.utils.logE
-import com.william.base_component.utils.logI
-import com.william.base_component.utils.logV
+import com.william.base_component.extension.logD
+import com.william.base_component.extension.logE
+import com.william.base_component.extension.logI
+import com.william.base_component.extension.logV
 import java.nio.ByteBuffer
 import java.security.GeneralSecurityException
 import java.security.KeyStore

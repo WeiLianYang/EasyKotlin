@@ -18,7 +18,7 @@ package com.william.easykt.utils
 
 import android.os.Build
 import com.blankj.utilcode.util.RomUtils
-import com.william.base_component.utils.logI
+import com.william.base_component.extension.logI
 
 /**
  *  author : WilliamYang

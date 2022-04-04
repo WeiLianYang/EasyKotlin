@@ -18,7 +18,7 @@ package com.william.easykt
 
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import androidx.test.filters.SmallTest
-import com.william.base_component.utils.logV
+import com.william.base_component.extension.logV
 import com.william.easykt.utils.AesManager
 import org.junit.Assert
 import org.junit.Test

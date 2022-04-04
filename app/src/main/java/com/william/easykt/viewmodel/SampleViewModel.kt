@@ -18,7 +18,7 @@ package com.william.easykt.viewmodel
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.asLiveData
-import com.william.base_component.utils.toStringArray
+import com.william.base_component.extension.toStringArray
 import com.william.easykt.R
 import com.william.easykt.data.UsageBean
 import kotlinx.coroutines.flow.flow

@@ -19,7 +19,7 @@ package com.william.easykt.ui
 import androidx.activity.viewModels
 import com.william.base_component.activity.BaseActivity
 import com.william.base_component.extension.bindingView
-import com.william.base_component.utils.toPx
+import com.william.base_component.extension.toPx
 import com.william.easykt.R
 import com.william.easykt.databinding.ActivityCoroutinesSampleBinding
 import com.william.easykt.ui.adapter.UsageAdapter
@@ -761,7 +761,7 @@ private fun main() = runBlocking {
  */
 fun sample10() = runBlocking {
     withTimeout(1300L) {
-        repeat(1000) { i ->
+        repeat(10) { i ->
             println("I'm sleeping $i ...")
             delay(500L)
         }
@@ -783,7 +783,7 @@ fun sample10() = runBlocking {
  */
 private fun sample11() = runBlocking {
     val result = withTimeoutOrNull(1300L) {
-        repeat(1000) { i ->
+        repeat(10) { i ->
             println("I'm sleeping $i ...")
             delay(500L)
         }

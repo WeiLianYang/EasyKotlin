@@ -32,6 +32,8 @@ import android.view.View
 import android.view.ViewOutlineProvider
 import com.william.base_component.BaseApp
 import com.william.base_component.extension.dp
+import com.william.base_component.extension.logD
+import com.william.base_component.extension.logE
 import java.util.*
 
 /**

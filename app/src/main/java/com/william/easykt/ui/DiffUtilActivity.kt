@@ -19,7 +19,7 @@ package com.william.easykt.ui
 import androidx.activity.viewModels
 import com.william.base_component.activity.BaseActivity
 import com.william.base_component.extension.bindingView
-import com.william.base_component.utils.toPx
+import com.william.base_component.extension.toPx
 import com.william.easykt.R
 import com.william.easykt.databinding.ActivityDiffUtilBinding
 import com.william.easykt.ui.adapter.DiffUtilAdapter
