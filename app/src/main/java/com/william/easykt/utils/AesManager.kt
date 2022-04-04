@@ -18,7 +18,6 @@ package com.william.easykt.utils
 
 import android.security.keystore.KeyGenParameterSpec
 import android.security.keystore.KeyProperties
-import android.util.Base64
 import com.william.base_component.utils.logD
 import com.william.base_component.utils.logE
 import com.william.base_component.utils.logI
@@ -232,28 +231,6 @@ object AesManager {
         }, result: $result".logI(TAG)
 
         return result
-    }
-
-    /**
-     * 字节数组 转 base64
-     * @param data
-     * @return base64 of byte array
-     */
-    @JvmStatic
-    fun bytesToBase64(data: ByteArray?): String {
-        data ?: return ""
-        return Base64.encodeToString(data, Base64.DEFAULT)
-    }
-
-    /**
-     * base64 转 字节数组
-     * @param data
-     * @return byte array from base64
-     */
-    @JvmStatic
-    fun base64ToBytes(data: String?): ByteArray {
-        data ?: return byteArrayOf()
-        return Base64.decode(data, Base64.DEFAULT)
     }
 
 }
