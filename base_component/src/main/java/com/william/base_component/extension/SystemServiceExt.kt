@@ -4,6 +4,7 @@ import android.app.*
 import android.app.job.JobScheduler
 import android.content.ClipboardManager
 import android.content.Context
+import android.content.pm.ShortcutManager
 import android.hardware.SensorManager
 import android.location.LocationManager
 import android.media.AudioManager
@@ -57,4 +58,5 @@ val Context.downloadManager get() = getSystemService<DownloadManager>()
 val Context.batteryManager get() = getSystemService<BatteryManager>()
 val Context.jobScheduler get() = getSystemService<JobScheduler>()
 val Context.accessibilityManager get() = getSystemService<AccessibilityManager>()
+val Context.shortcutManager get() = getSystemService<ShortcutManager>()
 

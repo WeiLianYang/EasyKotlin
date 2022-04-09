@@ -47,6 +47,7 @@
     <string name="test_jetpack_compose3">Compose Layout</string>
     <string name="test_window_insets">WindowInsetsAnimation</string>
     <string name="test_aes_encrypt">Aes Encrypt</string>
+    <string name="test_bubble">Bubble</string>
 
     <string name="test_kotlin_flow1">1. 异步计算的值流</string>
     <string name="test_kotlin_flow2">2. 冷流</string>
@@ -148,5 +149,8 @@
     <string name="error_cannot_encrypt">Cannot encrypt</string>
     <string name="error_cannot_decrypt">Cannot decrypt</string>
     <string name="error_field_required">This field is required</string>
+    <string name="hint_bubble_page">This is bubble page</string>
+    <string name="channel_new_messages">New messages</string>
+    <string name="channel_new_messages_description">All new incoming messages.</string>
 
 </resources>

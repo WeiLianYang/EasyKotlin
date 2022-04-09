@@ -35,6 +35,7 @@ import com.william.easykt.databinding.ActivityMainBinding
 import com.william.easykt.test.TestVmActivity
 import com.william.easykt.ui.*
 import com.william.easykt.ui.adapter.MainAdapter
+import com.william.easykt.utils.createBubble
 import com.william.easykt.utils.getBuildInfo
 import com.william.easykt.viewmodel.MainViewModel
 import com.zyyoona7.itemdecoration.RecyclerViewDivider
@@ -146,6 +147,13 @@ class MainActivity : BaseActivity() {
                 23 -> openActivity<ComposeLayoutActivity>(mActivity)
                 24 -> openActivity<WindowInsetsActivity>(mActivity)
                 25 -> openActivity<AesEncryptActivity>(mActivity)
+                26 -> {
+                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
+                        createBubble(mActivity)
+                    } else {
+                        "The device 's android version is below API 30, can't create bubble".toast()
+                    }
+                }
                 else -> {
                 }
             }
@@ -179,6 +187,9 @@ class MainActivity : BaseActivity() {
                 map[key] = content.toString()
             }
             "map===> $map".logI()
+            if (map["ek_type"]?.toInt() == 1) {
+                openActivity<BubbleActivity>(this)
+            }
         } else {
             "intent = null".logW()
         }
