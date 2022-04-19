@@ -28,6 +28,7 @@ import androidx.activity.viewModels
 import androidx.core.app.NotificationCompat
 import androidx.core.content.getSystemService
 import com.flurry.android.FlurryAgent
+import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.william.base_component.activity.BaseActivity
 import com.william.base_component.extension.*
 import com.william.base_component.utils.*
@@ -154,10 +155,23 @@ class MainActivity : BaseActivity() {
                         "The device 's android version is below API 30, can't create bubble".toast()
                     }
                 }
+                27 -> openActivity<TouchImageActivity>(mActivity)
                 else -> {
                 }
             }
         }
+    }
+
+    private fun showDialog() {
+        val dialog = MaterialAlertDialogBuilder(this)
+            .setTitle("权限申请")
+            .setMessage("权限申请内容")
+            .setPositiveButton("去授权") { dialog, which ->
+                "去授权".toast()
+            }.setNegativeButton("暂不授权") { dialog, which ->
+                "暂不授权".toast()
+            }.create()
+        dialog.show()
     }
 
     override fun initData() {
