@@ -197,6 +197,7 @@
         <activity android:name=".ui.WindowInsetsActivity" />
         <activity android:name=".ui.AesEncryptActivity" />
         <activity android:name=".ui.TouchImageActivity" />
+        <activity android:name=".ui.RoundCornerLayoutActivity" />
 
         <activity
             android:name=".ui.BubbleActivity"

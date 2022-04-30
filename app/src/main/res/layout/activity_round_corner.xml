@@ -1,0 +1,338 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  ~ Copyright WeiLianYang
+  ~
+  ~ Licensed under the Apache License, Version 2.0 (the "License");
+  ~ you may not use this file except in compliance with the License.
+  ~ You may obtain a copy of the License at
+  ~
+  ~     http://www.apache.org/licenses/LICENSE-2.0
+  ~
+  ~ Unless required by applicable law or agreed to in writing, software
+  ~ distributed under the License is distributed on an "AS IS" BASIS,
+  ~ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  ~ See the License for the specific language governing permissions and
+  ~ limitations under the License.
+  -->
+<androidx.core.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/guideline"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            app:layout_constraintGuide_percent="0.5" />
+
+        <com.william.easykt.widget.RoundCornerLayout
+            android:id="@+id/rcl_custom1"
+            android:layout_width="130dp"
+            android:layout_height="100dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginEnd="10dp"
+            app:layout_constraintEnd_toStartOf="@+id/guideline"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:scaleType="centerCrop"
+                android:src="@drawable/scroll_image"
+                tools:ignore="ContentDescription" />
+
+            <TextView
+                android:id="@+id/tv_custom"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:gravity="center"
+                android:text="@string/rc_dynamic_setting"
+                android:textColor="@android:color/holo_red_dark" />
+
+        </com.william.easykt.widget.RoundCornerLayout>
+
+        <com.william.easykt.widget.RoundCornerLayout
+            android:id="@+id/rcl_custom2"
+            android:layout_width="130dp"
+            android:layout_height="100dp"
+            android:layout_marginStart="10dp"
+            app:layout_constraintStart_toEndOf="@+id/guideline"
+            app:layout_constraintTop_toTopOf="@id/rcl_custom1">
+
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:scaleType="centerCrop"
+                android:src="@drawable/scroll_image"
+                tools:ignore="ContentDescription" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:gravity="center"
+                android:text="@string/rc_dynamic_setting"
+                android:textColor="@android:color/holo_red_dark" />
+
+        </com.william.easykt.widget.RoundCornerLayout>
+
+        <com.william.easykt.widget.RoundCornerLayout
+            android:id="@+id/rcl1"
+            android:layout_width="130dp"
+            android:layout_height="100dp"
+            android:layout_marginTop="20dp"
+            android:layout_marginEnd="10dp"
+            app:layout_constraintEnd_toStartOf="@+id/guideline"
+            app:layout_constraintTop_toBottomOf="@+id/rcl_custom1"
+            app:topLeft_radius="20dp">
+
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:scaleType="centerCrop"
+                android:src="@drawable/scroll_image"
+                tools:ignore="ContentDescription" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:gravity="center"
+                android:text="@string/rc_top_left_text"
+                android:textColor="@android:color/holo_red_dark" />
+
+        </com.william.easykt.widget.RoundCornerLayout>
+
+        <com.william.easykt.widget.RoundCornerLayout
+            android:id="@+id/rcl2"
+            android:layout_width="130dp"
+            android:layout_height="100dp"
+            android:layout_marginStart="10dp"
+            app:layout_constraintStart_toEndOf="@+id/guideline"
+            app:layout_constraintTop_toTopOf="@+id/rcl1"
+            app:topRight_radius="20dp">
+
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:scaleType="centerCrop"
+                android:src="@drawable/scroll_image"
+                tools:ignore="ContentDescription" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:gravity="center"
+                android:text="@string/rc_top_right_text"
+                android:textColor="@android:color/holo_red_dark" />
+
+        </com.william.easykt.widget.RoundCornerLayout>
+
+        <com.william.easykt.widget.RoundCornerLayout
+            android:id="@+id/rcl3"
+            android:layout_width="130dp"
+            android:layout_height="100dp"
+            android:layout_marginTop="20dp"
+            app:bottomLeft_radius="20dp"
+            app:layout_constraintStart_toStartOf="@+id/rcl1"
+            app:layout_constraintTop_toBottomOf="@+id/rcl1">
+
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:scaleType="centerCrop"
+                android:src="@drawable/scroll_image"
+                tools:ignore="ContentDescription" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:gravity="center"
+                android:text="@string/rc_bottom_left_text"
+                android:textColor="@android:color/holo_red_dark" />
+
+        </com.william.easykt.widget.RoundCornerLayout>
+
+        <com.william.easykt.widget.RoundCornerLayout
+            android:id="@+id/rcl4"
+            android:layout_width="130dp"
+            android:layout_height="100dp"
+            android:layout_marginTop="20dp"
+            app:bottomRight_radius="20dp"
+            app:layout_constraintEnd_toEndOf="@+id/rcl2"
+            app:layout_constraintTop_toBottomOf="@+id/rcl2">
+
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:scaleType="centerCrop"
+                android:src="@drawable/scroll_image"
+                tools:ignore="ContentDescription" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:gravity="center"
+                android:text="@string/rc_bottom_right_text"
+                android:textColor="@android:color/holo_red_dark" />
+
+        </com.william.easykt.widget.RoundCornerLayout>
+
+        <com.william.easykt.widget.RoundCornerLayout
+            android:id="@+id/rcl5"
+            android:layout_width="130dp"
+            android:layout_height="100dp"
+            android:layout_marginTop="20dp"
+            app:corner_radius="20dp"
+            app:layout_constraintStart_toStartOf="@+id/rcl3"
+            app:layout_constraintTop_toBottomOf="@+id/rcl3">
+
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:scaleType="centerCrop"
+                android:src="@drawable/scroll_image"
+                tools:ignore="ContentDescription" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:gravity="center"
+                android:text="@string/rc_all_text"
+                android:textColor="@android:color/holo_red_dark" />
+
+        </com.william.easykt.widget.RoundCornerLayout>
+
+        <com.william.easykt.widget.RoundCornerLayout
+            android:id="@+id/rcl6"
+            android:layout_width="130dp"
+            android:layout_height="100dp"
+            app:layout_constraintEnd_toEndOf="@+id/rcl4"
+            app:layout_constraintTop_toTopOf="@id/rcl5">
+
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:scaleType="centerCrop"
+                android:src="@drawable/scroll_image"
+                tools:ignore="ContentDescription" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:gravity="center"
+                android:text="@string/rc_none_text"
+                android:textColor="@android:color/holo_red_dark" />
+
+        </com.william.easykt.widget.RoundCornerLayout>
+
+        <com.william.easykt.widget.RoundCornerLayout
+            android:id="@+id/rcl7"
+            android:layout_width="130dp"
+            android:layout_height="100dp"
+            android:layout_marginTop="20dp"
+            app:layout_constraintStart_toStartOf="@id/rcl5"
+            app:layout_constraintTop_toBottomOf="@id/rcl5"
+            app:topLeft_radius="20dp"
+            app:topRight_radius="20dp">
+
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:scaleType="centerCrop"
+                android:src="@drawable/scroll_image"
+                tools:ignore="ContentDescription" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:gravity="center"
+                android:text="@string/rc_top_all_text"
+                android:textColor="@android:color/holo_red_dark" />
+
+        </com.william.easykt.widget.RoundCornerLayout>
+
+        <com.william.easykt.widget.RoundCornerLayout
+            android:id="@+id/rcl8"
+            android:layout_width="130dp"
+            android:layout_height="100dp"
+            android:layout_marginStart="10dp"
+            app:bottomLeft_radius="20dp"
+            app:bottomRight_radius="20dp"
+            app:layout_constraintEnd_toEndOf="@+id/rcl6"
+            app:layout_constraintTop_toTopOf="@id/rcl7">
+
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:scaleType="centerCrop"
+                android:src="@drawable/scroll_image"
+                tools:ignore="ContentDescription" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:gravity="center"
+                android:text="@string/rc_bottom_all_text"
+                android:textColor="@android:color/holo_red_dark" />
+
+        </com.william.easykt.widget.RoundCornerLayout>
+
+        <com.william.easykt.widget.RoundCornerLayout
+            android:id="@+id/rcl9"
+            android:layout_width="130dp"
+            android:layout_height="100dp"
+            android:layout_marginTop="20dp"
+            app:bottomLeft_radius="20dp"
+            app:layout_constraintStart_toStartOf="@id/rcl7"
+            app:layout_constraintTop_toBottomOf="@id/rcl7"
+            app:topLeft_radius="20dp">
+
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:scaleType="centerCrop"
+                android:src="@drawable/scroll_image"
+                tools:ignore="ContentDescription" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:gravity="center"
+                android:text="@string/rc_left_all_text"
+                android:textColor="@android:color/holo_red_dark" />
+
+        </com.william.easykt.widget.RoundCornerLayout>
+
+        <com.william.easykt.widget.RoundCornerLayout
+            android:id="@+id/rcl10"
+            android:layout_width="130dp"
+            android:layout_height="100dp"
+            android:layout_marginStart="10dp"
+            app:bottomRight_radius="20dp"
+            app:layout_constraintEnd_toEndOf="@+id/rcl8"
+            app:layout_constraintTop_toTopOf="@id/rcl9"
+            app:topRight_radius="20dp">
+
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:scaleType="centerCrop"
+                android:src="@drawable/scroll_image"
+                tools:ignore="ContentDescription" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:gravity="center"
+                android:text="@string/rc_right_all_text"
+                android:textColor="@android:color/holo_red_dark" />
+
+        </com.william.easykt.widget.RoundCornerLayout>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</androidx.core.widget.NestedScrollView>

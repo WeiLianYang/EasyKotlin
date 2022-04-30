@@ -49,6 +49,7 @@
     <string name="test_aes_encrypt">Aes Encrypt</string>
     <string name="test_bubble">Bubble</string>
     <string name="test_touch_scale_image">Touch Scale Image</string>
+    <string name="test_round_rect">Round Corner Layout</string>
 
     <string name="test_kotlin_flow1">1. 异步计算的值流</string>
     <string name="test_kotlin_flow2">2. 冷流</string>
@@ -153,5 +154,18 @@
     <string name="hint_bubble_page">This is bubble page</string>
     <string name="channel_new_messages">New messages</string>
     <string name="channel_new_messages_description">All new incoming messages.</string>
+
+    <string name="rc_top_left_text">设置左上角圆角</string>
+    <string name="rc_top_right_text">设置右上角圆角</string>
+    <string name="rc_bottom_left_text">设置左下角圆角</string>
+    <string name="rc_bottom_right_text">设置右下角圆角</string>
+    <string name="rc_none_text">全直角</string>
+    <string name="rc_all_text">全圆角</string>
+    <string name="rc_top_all_text">上全圆角</string>
+    <string name="rc_bottom_all_text">下全圆角</string>
+    <string name="rc_left_all_text">左全圆角</string>
+    <string name="rc_right_all_text">右全圆角</string>
+
+    <string name="rc_dynamic_setting">动态设置圆角</string>
 
 </resources>

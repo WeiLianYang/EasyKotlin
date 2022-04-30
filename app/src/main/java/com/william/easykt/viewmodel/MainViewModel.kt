@@ -60,6 +60,7 @@ class MainViewModel : ViewModel() {
             MainEntranceBean(R.string.test_aes_encrypt),
             MainEntranceBean(R.string.test_bubble),
             MainEntranceBean(R.string.test_touch_scale_image),
+            MainEntranceBean(R.string.test_round_rect),
         )
     )
 
