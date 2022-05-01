@@ -99,7 +99,7 @@ class RoundCornerLayout : ConstraintLayout {
         )
 
         path.reset()
-        path.addRoundRect(0f, 0f, width, height, radii, Path.Direction.CW)
+        path.addRoundRect(paddingLeft.toFloat(), paddingTop.toFloat(), width - paddingRight, height - paddingBottom, radii, Path.Direction.CW)
 
         canvas.save()
         canvas.clipPath(path)
