@@ -157,6 +157,7 @@ class MainActivity : BaseActivity() {
                 }
                 27 -> openActivity<TouchImageActivity>(mActivity)
                 28 -> openActivity<RoundCornerLayoutActivity>(mActivity)
+                29 -> openActivity<MotionLayoutActivity>(mActivity)
                 else -> {
                 }
             }

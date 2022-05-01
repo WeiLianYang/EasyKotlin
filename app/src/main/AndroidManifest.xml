@@ -198,6 +198,7 @@
         <activity android:name=".ui.AesEncryptActivity" />
         <activity android:name=".ui.TouchImageActivity" />
         <activity android:name=".ui.RoundCornerLayoutActivity" />
+        <activity android:name=".ui.MotionLayoutActivity" />
 
         <activity
             android:name=".ui.BubbleActivity"
@@ -209,7 +210,9 @@
             tools:ignore="AppLinkUrlError">
             <intent-filter>
                 <action android:name="android.intent.action.VIEW" />
+
                 <category android:name="android.intent.category.BROWSABLE" />
+
                 <data
                     android:host="ek.example.com"
                     android:pathPattern="/bubble/*"

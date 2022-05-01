@@ -61,6 +61,7 @@ class MainViewModel : ViewModel() {
             MainEntranceBean(R.string.test_bubble),
             MainEntranceBean(R.string.test_touch_scale_image),
             MainEntranceBean(R.string.test_round_rect),
+            MainEntranceBean(R.string.test_motion_layout),
         )
     )
 
