@@ -47,6 +47,12 @@
                 android:src="@drawable/scroll_image"
                 tools:ignore="ContentDescription" />
 
+            <com.github.mmin18.widget.RealtimeBlurView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                app:realtimeBlurRadius="35dp"
+                app:realtimeOverlayColor="#80000000" />
+
             <TextView
                 android:id="@+id/tv_custom"
                 android:layout_width="match_parent"

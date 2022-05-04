@@ -26,3 +26,7 @@
 -keep class com.jeremyliao.liveeventbus.** { *; }
 -keep class androidx.lifecycle.** { *; }
 -keep class androidx.arch.core.** { *; }
+
+# RealtimeBlurView
+-keep class android.support.v8.renderscript.** { *; }
+-keep class androidx.renderscript.** { *; }
