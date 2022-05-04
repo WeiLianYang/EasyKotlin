@@ -18,6 +18,7 @@ package com.william.easykt.ui
 
 import com.william.base_component.activity.BaseActivity
 import com.william.base_component.extension.bindingView
+import com.william.easykt.R
 import com.william.easykt.databinding.ActivityMotionLayoutBinding
 
 /**
@@ -33,7 +34,7 @@ class MotionLayoutActivity : BaseActivity() {
     }
 
     override fun initData() {
-
+        setTitleText(R.string.test_motion_layout)
     }
 
 }

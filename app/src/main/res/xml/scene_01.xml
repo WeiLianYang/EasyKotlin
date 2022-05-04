@@ -24,13 +24,13 @@
         motion:duration="300">
         <OnSwipe
             motion:dragDirection="dragRight"
-            motion:touchAnchorId="@+id/target"
+            motion:touchAnchorId="@+id/target1"
             motion:touchAnchorSide="right" />
     </Transition>
 
     <ConstraintSet android:id="@+id/start">
         <Constraint
-            android:id="@+id/target"
+            android:id="@+id/target1"
             android:layout_width="60dp"
             android:layout_height="60dp"
             android:layout_marginStart="10dp"
@@ -47,7 +47,7 @@
 
     <ConstraintSet android:id="@+id/end">
         <Constraint
-            android:id="@+id/target"
+            android:id="@+id/target1"
             android:layout_width="60dp"
             android:layout_height="60dp"
             android:layout_marginEnd="10dp"

@@ -14,21 +14,79 @@
   ~ See the License for the specific language governing permissions and
   ~ limitations under the License.
   -->
-
-<androidx.constraintlayout.motion.widget.MotionLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/motionLayout"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    app:applyMotionScene="true"
-    app:layoutDescription="@xml/scene_01"
-    tools:showPaths="true">
+    android:layout_height="match_parent">
 
-    <View
-        android:id="@+id/target"
-        android:layout_width="60dp"
-        android:layout_height="60dp"
-        android:background="#ff0000" />
+    <androidx.constraintlayout.motion.widget.MotionLayout
+        android:id="@+id/motionLayout1"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        app:applyMotionScene="true"
+        app:layoutDescription="@xml/scene_01"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:showPaths="true">
 
-</androidx.constraintlayout.motion.widget.MotionLayout>
+        <View
+            android:id="@+id/target1"
+            android:layout_width="60dp"
+            android:layout_height="60dp"
+            android:background="#ff0000" />
+
+    </androidx.constraintlayout.motion.widget.MotionLayout>
+
+    <androidx.constraintlayout.motion.widget.MotionLayout
+        android:id="@+id/motionLayout2"
+        android:layout_width="match_parent"
+        android:layout_height="180dp"
+        app:applyMotionScene="true"
+        app:layoutDescription="@xml/scene_06"
+        app:layout_constraintTop_toBottomOf="@+id/motionLayout1"
+        tools:showPaths="true">
+
+        <View
+            android:id="@+id/target2"
+            android:layout_width="60dp"
+            android:layout_height="60dp"
+            android:background="#ff0000" />
+
+    </androidx.constraintlayout.motion.widget.MotionLayout>
+
+    <androidx.constraintlayout.motion.widget.MotionLayout
+        android:id="@+id/motionLayout3"
+        android:layout_width="match_parent"
+        android:layout_height="220dp"
+        app:applyMotionScene="true"
+        app:layoutDescription="@xml/scene_07"
+        app:layout_constraintTop_toBottomOf="@+id/motionLayout2"
+        tools:showPaths="true">
+
+        <View
+            android:id="@+id/target3"
+            android:layout_width="60dp"
+            android:layout_height="60dp"
+            android:background="#ff0000" />
+
+    </androidx.constraintlayout.motion.widget.MotionLayout>
+
+    <androidx.constraintlayout.motion.widget.MotionLayout
+        android:id="@+id/motionLayout4"
+        android:layout_width="match_parent"
+        android:layout_height="200dp"
+        app:applyMotionScene="true"
+        app:layoutDescription="@xml/scene_08"
+        app:layout_constraintTop_toBottomOf="@+id/motionLayout3"
+        tools:showPaths="true">
+
+        <View
+            android:id="@+id/target4"
+            android:layout_width="60dp"
+            android:layout_height="60dp"
+            android:background="#ff0000" />
+
+    </androidx.constraintlayout.motion.widget.MotionLayout>
+
+</androidx.constraintlayout.widget.ConstraintLayout>
