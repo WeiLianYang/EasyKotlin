@@ -51,6 +51,7 @@
     <string name="test_touch_scale_image">Touch Scale Image</string>
     <string name="test_round_rect">Round Corner Layout</string>
     <string name="test_motion_layout">Motion Layout</string>
+    <string name="test_camerax">Camerax</string>
 
     <string name="test_kotlin_flow1">1. 异步计算的值流</string>
     <string name="test_kotlin_flow2">2. 冷流</string>
@@ -168,5 +169,9 @@
     <string name="rc_right_all_text">右全圆角</string>
 
     <string name="rc_dynamic_setting">动态设置圆角</string>
+
+    <string name="take_photo">拍照</string>
+    <string name="start_capture">录像</string>
+    <string name="stop_capture">停止录像</string>
 
 </resources>
