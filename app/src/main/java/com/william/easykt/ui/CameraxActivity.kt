@@ -21,10 +21,7 @@ import android.content.ContentValues
 import android.content.pm.PackageManager
 import android.os.Build
 import android.provider.MediaStore
-import androidx.camera.core.CameraSelector
-import androidx.camera.core.ImageCapture
-import androidx.camera.core.ImageCaptureException
-import androidx.camera.core.Preview
+import androidx.camera.core.*
 import androidx.camera.lifecycle.ProcessCameraProvider
 import androidx.camera.video.Recorder
 import androidx.camera.video.Recording
@@ -39,6 +36,7 @@ import com.william.base_component.extension.toast
 import com.william.base_component.utils.showSnackbar
 import com.william.easykt.R
 import com.william.easykt.databinding.ActivityCameraxBinding
+import java.nio.ByteBuffer
 import java.text.SimpleDateFormat
 import java.util.*
 import java.util.concurrent.ExecutorService
@@ -139,6 +137,15 @@ class CameraxActivity : BaseActivity() {
 
             imageCapture = ImageCapture.Builder().build()
 
+            // 创建图片分析
+            val imageAnalyzer = ImageAnalysis.Builder()
+                .build()
+                .also {
+                    it.setAnalyzer(cameraExecutor, LuminosityAnalyzer { l ->
+                        "Average luminosity: $l".logD()
+                    })
+                }
+
             // 默认选择后置摄像头
             val cameraSelector = CameraSelector.DEFAULT_BACK_CAMERA
 
@@ -147,7 +154,9 @@ class CameraxActivity : BaseActivity() {
                 cameraProvider.unbindAll()
 
                 // 将用例绑定到相机
-                cameraProvider.bindToLifecycle(this, cameraSelector, preview, imageCapture)
+                cameraProvider.bindToLifecycle(
+                    this, cameraSelector, preview, imageCapture, imageAnalyzer
+                )
 
             } catch (e: Exception) {
                 "Use case binding failed, $e".logE()
@@ -188,4 +197,30 @@ class CameraxActivity : BaseActivity() {
                 }
             }.toTypedArray()
     }
+
+    /**
+     * 亮度分析
+     */
+    private class LuminosityAnalyzer(private val listener: (Double) -> Unit) :
+        ImageAnalysis.Analyzer {
+
+        private fun ByteBuffer.toByteArray(): ByteArray {
+            rewind()    // 将缓冲区倒回零
+            val data = ByteArray(remaining())
+            get(data)   // 将此缓冲区中的字节传输到给定的目标数组中
+            return data
+        }
+
+        override fun analyze(image: ImageProxy) {
+            val buffer = image.planes[0].buffer
+            val data = buffer.toByteArray()
+            val pixels = data.map { it.toInt() and 0xFF }
+            val l = pixels.average()
+
+            listener(l)
+
+            image.close()
+        }
+    }
+
 }
