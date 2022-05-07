@@ -17,10 +17,13 @@
 package com.william.easykt.ui
 
 import android.Manifest
+import android.content.ContentValues
 import android.content.pm.PackageManager
 import android.os.Build
+import android.provider.MediaStore
 import androidx.camera.core.CameraSelector
 import androidx.camera.core.ImageCapture
+import androidx.camera.core.ImageCaptureException
 import androidx.camera.core.Preview
 import androidx.camera.lifecycle.ProcessCameraProvider
 import androidx.camera.video.Recorder
@@ -30,10 +33,14 @@ import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import com.william.base_component.activity.BaseActivity
 import com.william.base_component.extension.bindingView
+import com.william.base_component.extension.logD
 import com.william.base_component.extension.logE
+import com.william.base_component.extension.toast
 import com.william.base_component.utils.showSnackbar
 import com.william.easykt.R
 import com.william.easykt.databinding.ActivityCameraxBinding
+import java.text.SimpleDateFormat
+import java.util.*
 import java.util.concurrent.ExecutorService
 import java.util.concurrent.Executors
 
@@ -73,10 +80,49 @@ class CameraxActivity : BaseActivity() {
         setTitleText(R.string.test_camerax)
     }
 
-    private fun takePhoto() {}
+    /**
+     * 拍照
+     */
+    private fun takePhoto() {
+        val imageCapture = imageCapture ?: return
+
+        val name =
+            SimpleDateFormat(FILENAME_FORMAT, Locale.CHINA).format(System.currentTimeMillis())
+        val contentValues = ContentValues().apply {
+            put(MediaStore.MediaColumns.DISPLAY_NAME, name)
+            put(MediaStore.MediaColumns.MIME_TYPE, "image/jpeg")
+            if (Build.VERSION.SDK_INT > Build.VERSION_CODES.P) {
+                put(MediaStore.Images.Media.RELATIVE_PATH, "Pictures/CameraXAlbum")
+            }
+        }
+
+        val outputOptions = ImageCapture.OutputFileOptions
+            .Builder(contentResolver, MediaStore.Images.Media.EXTERNAL_CONTENT_URI, contentValues)
+            .build()
+
+        // 拍照后回调事件
+        imageCapture.takePicture(
+            outputOptions,
+            ContextCompat.getMainExecutor(this),
+            object : ImageCapture.OnImageSavedCallback {
+                override fun onError(e: ImageCaptureException) {
+                    "Photo capture failed: $e".logE()
+                }
+
+                override fun onImageSaved(output: ImageCapture.OutputFileResults) {
+                    val msg = "Photo capture succeeded: ${output.savedUri}"
+                    msg.toast()
+                    msg.logD()
+                }
+            }
+        )
+    }
 
     private fun captureVideo() {}
 
+    /**
+     * 启动相机
+     */
     private fun startCamera() {
         val cameraProviderFuture = ProcessCameraProvider.getInstance(this)
 
@@ -91,6 +137,8 @@ class CameraxActivity : BaseActivity() {
                     it.setSurfaceProvider(viewBinding.viewFinder.surfaceProvider)
                 }
 
+            imageCapture = ImageCapture.Builder().build()
+
             // 默认选择后置摄像头
             val cameraSelector = CameraSelector.DEFAULT_BACK_CAMERA
 
@@ -99,7 +147,7 @@ class CameraxActivity : BaseActivity() {
                 cameraProvider.unbindAll()
 
                 // 将用例绑定到相机
-                cameraProvider.bindToLifecycle(this, cameraSelector, preview)
+                cameraProvider.bindToLifecycle(this, cameraSelector, preview, imageCapture)
 
             } catch (e: Exception) {
                 "Use case binding failed, $e".logE()
@@ -132,6 +180,7 @@ class CameraxActivity : BaseActivity() {
 
     companion object {
         private const val REQUEST_CODE = 1
+        private const val FILENAME_FORMAT = "yyyy-MM-dd-HH-mm-ss"
         private val REQUIRED_PERMISSIONS =
             mutableListOf(Manifest.permission.CAMERA, Manifest.permission.RECORD_AUDIO).apply {
                 if (Build.VERSION.SDK_INT <= Build.VERSION_CODES.P) {
