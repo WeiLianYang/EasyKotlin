@@ -209,7 +209,13 @@
         <activity android:name=".ui.TouchImageActivity" />
         <activity android:name=".ui.RoundCornerLayoutActivity" />
         <activity android:name=".ui.MotionLayoutActivity" />
-        <activity android:name=".ui.CameraxActivity" />
+        <activity
+            android:name=".ui.CameraxActivity"
+            android:configChanges="orientation|screenLayout|screenSize|smallestScreenSize"
+            android:resizeableActivity="true"
+            android:rotationAnimation="seamless"
+            android:screenOrientation="fullUser"
+            tools:targetApi="O" />
 
         <activity
             android:name=".ui.BubbleActivity"

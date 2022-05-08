@@ -27,8 +27,8 @@
 
     <Button
         android:id="@+id/btn_capture_image"
-        android:layout_width="100dp"
-        android:layout_height="100dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:layout_marginBottom="40dp"
         android:elevation="5dp"
         android:text="@string/take_photo"
@@ -37,10 +37,22 @@
         app:layout_constraintEnd_toStartOf="@id/vertical_centerLine"
         app:layout_constraintStart_toStartOf="parent" />
 
+    <ImageButton
+        android:id="@+id/btn_switch_LensFacing"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="35dp"
+        android:contentDescription="@null"
+        android:elevation="5dp"
+        android:src="@drawable/icon_change_lensfacing"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
     <Button
         android:id="@+id/btn_capture_video"
-        android:layout_width="100dp"
-        android:layout_height="100dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:elevation="5dp"
         android:text="@string/start_capture"
         android:textAllCaps="false"
