@@ -23,11 +23,11 @@ import android.os.Build
 import android.provider.MediaStore
 import androidx.camera.core.*
 import androidx.camera.lifecycle.ProcessCameraProvider
-import androidx.camera.video.Recorder
-import androidx.camera.video.Recording
+import androidx.camera.video.*
 import androidx.camera.video.VideoCapture
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
+import androidx.core.content.PermissionChecker
 import com.william.base_component.activity.BaseActivity
 import com.william.base_component.extension.bindingView
 import com.william.base_component.extension.logD
@@ -116,7 +116,77 @@ class CameraxActivity : BaseActivity() {
         )
     }
 
-    private fun captureVideo() {}
+    /**
+     * 录像
+     */
+    private fun captureVideo() {
+        val videoCapture = this.videoCapture ?: return
+
+        viewBinding.btnCaptureVideo.isEnabled = false
+
+        val curRecording = recording
+        if (curRecording != null) {
+            // 停止当前录制会话
+            curRecording.stop()
+            recording = null
+            return
+        }
+
+        // 创建并开始一个新的录制会话
+        val name =
+            SimpleDateFormat(FILENAME_FORMAT, Locale.CHINA).format(System.currentTimeMillis())
+        val contentValues = ContentValues().apply {
+            put(MediaStore.MediaColumns.DISPLAY_NAME, name)
+            put(MediaStore.MediaColumns.MIME_TYPE, "video/mp4")
+            if (Build.VERSION.SDK_INT > Build.VERSION_CODES.P) {
+                put(MediaStore.Video.Media.RELATIVE_PATH, "Movies/CameraXVideo")
+            }
+        }
+
+        val mediaStoreOutputOptions = MediaStoreOutputOptions
+            .Builder(contentResolver, MediaStore.Video.Media.EXTERNAL_CONTENT_URI)
+            .setContentValues(contentValues)
+            .build()
+
+        recording = videoCapture.output
+            .prepareRecording(this, mediaStoreOutputOptions)
+            .apply {
+                if (PermissionChecker.checkSelfPermission(
+                        this@CameraxActivity,
+                        Manifest.permission.RECORD_AUDIO
+                    ) == PermissionChecker.PERMISSION_GRANTED
+                ) {
+                    // 如果获取了权限，录制中开启音频
+                    withAudioEnabled()
+                }
+            }
+            .start(ContextCompat.getMainExecutor(this)) { recordEvent ->
+                when (recordEvent) {
+                    is VideoRecordEvent.Start -> {
+                        viewBinding.btnCaptureVideo.apply {
+                            text = getString(R.string.stop_capture)
+                            isEnabled = true
+                        }
+                    }
+                    is VideoRecordEvent.Finalize -> {
+                        if (!recordEvent.hasError()) {
+                            val msg =
+                                "Video capture succeeded: ${recordEvent.outputResults.outputUri}"
+                            msg.toast()
+                            msg.logD()
+                        } else {
+                            recording?.close()
+                            recording = null
+                            "Video capture ends with error: ${recordEvent.error}".logE()
+                        }
+                        viewBinding.btnCaptureVideo.apply {
+                            text = getString(R.string.start_capture)
+                            isEnabled = true
+                        }
+                    }
+                }
+            }
+    }
 
     /**
      * 启动相机
@@ -128,12 +198,19 @@ class CameraxActivity : BaseActivity() {
             // 绑定摄像机的生命周期
             val cameraProvider: ProcessCameraProvider = cameraProviderFuture.get()
 
-            // 预览
+            // 预览 相机取景器
             val preview = Preview.Builder()
                 .build()
                 .also {
                     it.setSurfaceProvider(viewBinding.viewFinder.surfaceProvider)
                 }
+
+            // 录制音视频
+            val recorder = Recorder.Builder()
+                .setQualitySelector(QualitySelector.from(Quality.HIGHEST))
+                .build()
+
+            videoCapture = VideoCapture.withOutput(recorder)
 
             imageCapture = ImageCapture.Builder().build()
 
@@ -154,8 +231,11 @@ class CameraxActivity : BaseActivity() {
                 cameraProvider.unbindAll()
 
                 // 将用例绑定到相机
+                // Preview + VideoCapture + ImageCapture： LIMITED设备及以上。
+                // Preview + VideoCapture + ImageAnalysis：（ LEVEL_3最高）设备添加到 Android 7(N)。
+                // 预览 + VideoCapture + ImageAnalysis + ImageCapture：不支持。
                 cameraProvider.bindToLifecycle(
-                    this, cameraSelector, preview, imageCapture, imageAnalyzer
+                    this, cameraSelector, preview, imageCapture, videoCapture
                 )
 
             } catch (e: Exception) {
