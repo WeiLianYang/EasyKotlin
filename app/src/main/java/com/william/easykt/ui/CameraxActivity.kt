@@ -29,6 +29,7 @@ import androidx.camera.core.*
 import androidx.camera.lifecycle.ProcessCameraProvider
 import androidx.camera.video.*
 import androidx.camera.video.VideoCapture
+import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.core.content.PermissionChecker
@@ -40,6 +41,7 @@ import com.william.base_component.extension.toast
 import com.william.base_component.utils.showSnackbar
 import com.william.easykt.R
 import com.william.easykt.databinding.ActivityCameraxBinding
+import com.william.easykt.databinding.CameraxPanelBinding
 import java.nio.ByteBuffer
 import java.text.SimpleDateFormat
 import java.util.*
@@ -55,6 +57,8 @@ import java.util.concurrent.Executors
 class CameraxActivity : BaseActivity() {
 
     override val viewBinding by bindingView<ActivityCameraxBinding>()
+
+    private lateinit var panelBinding: CameraxPanelBinding
 
     private var imageCapture: ImageCapture? = null
 
@@ -88,10 +92,38 @@ class CameraxActivity : BaseActivity() {
             ActivityCompat.requestPermissions(this, REQUIRED_PERMISSIONS, REQUEST_CODE)
         }
 
-        viewBinding.btnCaptureImage.setOnClickListener { takePhoto() }
-        viewBinding.btnCaptureVideo.setOnClickListener { captureVideo() }
+        updatePanelUI()
+    }
 
-        viewBinding.btnSwitchLensFacing.setOnClickListener {
+    override fun initData() {
+        setTitleText(R.string.test_camerax)
+    }
+
+    private fun updatePanelUI() {
+        if (this::panelBinding.isInitialized) {
+            viewBinding.root.removeView(panelBinding.root)
+        }
+        panelBinding = CameraxPanelBinding.inflate(layoutInflater)
+
+        val params = ConstraintLayout.LayoutParams(
+            ConstraintLayout.LayoutParams.WRAP_CONTENT,
+            ConstraintLayout.LayoutParams.WRAP_CONTENT
+        )
+        if (resources.configuration.orientation == Configuration.ORIENTATION_PORTRAIT) {
+            // 竖屏
+            params.width = ConstraintLayout.LayoutParams.MATCH_PARENT
+            params.bottomToBottom = ConstraintLayout.LayoutParams.PARENT_ID
+        } else {
+            // 横屏
+            params.height = ConstraintLayout.LayoutParams.MATCH_PARENT
+            params.endToEnd = ConstraintLayout.LayoutParams.PARENT_ID
+        }
+        viewBinding.root.addView(panelBinding.root, params)
+
+        panelBinding.btnCaptureImage.setOnClickListener { takePhoto() }
+        panelBinding.btnCaptureVideo.setOnClickListener { captureVideo() }
+
+        panelBinding.btnSwitchLensFacing.setOnClickListener {
             lensFacing = if (CameraSelector.LENS_FACING_FRONT == lensFacing) {
                 CameraSelector.LENS_FACING_BACK
             } else {
@@ -100,10 +132,6 @@ class CameraxActivity : BaseActivity() {
             // 重新绑定相机用例
             bindCameraUseCases()
         }
-    }
-
-    override fun initData() {
-        setTitleText(R.string.test_camerax)
     }
 
     /**
@@ -156,7 +184,7 @@ class CameraxActivity : BaseActivity() {
     private fun captureVideo() {
         val videoCapture = this.videoCapture ?: return
 
-        viewBinding.btnCaptureVideo.isEnabled = false
+        panelBinding.btnCaptureVideo.isEnabled = false
 
         val curRecording = recording
         if (curRecording != null) {
@@ -197,7 +225,7 @@ class CameraxActivity : BaseActivity() {
             .start(ContextCompat.getMainExecutor(this)) { recordEvent ->
                 when (recordEvent) {
                     is VideoRecordEvent.Start -> {
-                        viewBinding.btnCaptureVideo.apply {
+                        panelBinding.btnCaptureVideo.apply {
                             text = getString(R.string.stop_capture)
                             isEnabled = true
                         }
@@ -213,7 +241,7 @@ class CameraxActivity : BaseActivity() {
                             recording = null
                             "Video capture ends with error: ${recordEvent.error}".logE()
                         }
-                        viewBinding.btnCaptureVideo.apply {
+                        panelBinding.btnCaptureVideo.apply {
                             text = getString(R.string.start_capture)
                             isEnabled = true
                         }
@@ -409,6 +437,8 @@ class CameraxActivity : BaseActivity() {
         super.onConfigurationChanged(newConfig)
 
         bindCameraUseCases()
+
+        updatePanelUI()
     }
 
     /**
