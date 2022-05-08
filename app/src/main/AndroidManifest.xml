@@ -183,7 +183,9 @@
         <activity
             android:name=".MainActivity"
             android:exported="true"
-            android:launchMode="singleTask">
+            android:launchMode="singleTask"
+            android:screenOrientation="portrait"
+            tools:ignore="LockedOrientationActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -224,7 +226,8 @@
             android:exported="false"
             android:launchMode="singleTask"
             android:resizeableActivity="true"
-            tools:ignore="AppLinkUrlError">
+            tools:ignore="AppLinkUrlError"
+            tools:targetApi="n">
             <intent-filter>
                 <action android:name="android.intent.action.VIEW" />
 
