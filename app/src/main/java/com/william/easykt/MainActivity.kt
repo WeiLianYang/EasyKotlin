@@ -159,6 +159,7 @@ class MainActivity : BaseActivity() {
                 28 -> openActivity<RoundCornerLayoutActivity>(mActivity)
                 29 -> openActivity<MotionLayoutActivity>(mActivity)
                 30 -> openActivity<CameraxActivity>(mActivity)
+                31 -> openActivity<SideSlipActivity>(mActivity)
                 else -> {
                 }
             }

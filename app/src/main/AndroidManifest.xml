@@ -211,6 +211,7 @@
         <activity android:name=".ui.TouchImageActivity" />
         <activity android:name=".ui.RoundCornerLayoutActivity" />
         <activity android:name=".ui.MotionLayoutActivity" />
+        <activity android:name=".ui.SideSlipActivity" />
         <activity
             android:name=".ui.CameraxActivity"
             android:configChanges="orientation|screenLayout|screenSize|smallestScreenSize"
