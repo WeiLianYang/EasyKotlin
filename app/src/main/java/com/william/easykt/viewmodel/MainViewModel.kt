@@ -64,6 +64,7 @@ class MainViewModel : ViewModel() {
             MainEntranceBean(R.string.test_motion_layout),
             MainEntranceBean(R.string.test_camerax),
             MainEntranceBean(R.string.test_side_slip),
+            MainEntranceBean(R.string.test_drawer),
         )
     )
 

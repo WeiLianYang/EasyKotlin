@@ -1,20 +1,4 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!--
-  ~ Copyright WeiLianYang
-  ~
-  ~ Licensed under the Apache License, Version 2.0 (the "License");
-  ~ you may not use this file except in compliance with the License.
-  ~ You may obtain a copy of the License at
-  ~
-  ~     http://www.apache.org/licenses/LICENSE-2.0
-  ~
-  ~ Unless required by applicable law or agreed to in writing, software
-  ~ distributed under the License is distributed on an "AS IS" BASIS,
-  ~ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-  ~ See the License for the specific language governing permissions and
-  ~ limitations under the License.
-  -->
-
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     package="com.william.easykt">
@@ -107,13 +91,12 @@
         <package android:name="com.android.chrome" />
         <package android:name="org.mozilla.firefox" />
     </queries>
-
-    <!-- 不需要强制依赖相机
+    <!--
+ 不需要强制依赖相机
     <uses-feature
         android:name="android.hardware.camera"
         android:required="false" />
-        -->
-
+    -->
     <!-- 添加android.hardware.camera.any确保设备有摄像头。指定.any意味着它可以是前置摄像头或后置摄像头。 -->
     <uses-feature android:name="android.hardware.camera.any" />
 
@@ -122,7 +105,6 @@
     <uses-permission
         android:name="android.permission.WRITE_EXTERNAL_STORAGE"
         android:maxSdkVersion="28" />
-
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
@@ -167,6 +149,9 @@
         android:label="@string/app_name"
         android:supportsRtl="true"
         android:theme="@style/AppTheme.NoActionBar">
+        <activity
+            android:name=".ui.DrawerActivity"
+            android:exported="false" />
         <activity
             android:name=".ui.ComposeLayoutActivity"
             android:exported="false" />
@@ -219,7 +204,6 @@
             android:rotationAnimation="seamless"
             android:screenOrientation="fullUser"
             tools:targetApi="O" />
-
         <activity
             android:name=".ui.BubbleActivity"
             android:allowEmbedded="true"

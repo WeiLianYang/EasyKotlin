@@ -160,6 +160,7 @@ class MainActivity : BaseActivity() {
                 29 -> openActivity<MotionLayoutActivity>(mActivity)
                 30 -> openActivity<CameraxActivity>(mActivity)
                 31 -> openActivity<SideSlipActivity>(mActivity)
+                32 -> openActivity<DrawerActivity>(mActivity)
                 else -> {
                 }
             }

@@ -53,6 +53,7 @@
     <string name="test_motion_layout">Motion Layout</string>
     <string name="test_camerax">Camerax</string>
     <string name="test_side_slip">Side slip Layout</string>
+    <string name="test_drawer">Drawer Layout</string>
 
     <string name="test_kotlin_flow1">1. 异步计算的值流</string>
     <string name="test_kotlin_flow2">2. 冷流</string>
@@ -179,5 +180,16 @@
     <string name="slide_side2">side 2</string>
     <string name="slide_side3">side 3</string>
     <string name="slide_content">Content View</string>
+    <string name="title_activity_drawer">DrawerActivity</string>
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
+    <string name="nav_header_title">Android Studio</string>
+    <string name="nav_header_subtitle">android.studio@android.com</string>
+    <string name="nav_header_desc">Navigation header</string>
+    <string name="action_settings">Settings</string>
+
+    <string name="menu_home">Home</string>
+    <string name="menu_gallery">Gallery</string>
+    <string name="menu_slideshow">Slideshow</string>
 
 </resources>

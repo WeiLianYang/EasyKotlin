@@ -158,4 +158,8 @@ dependencies {
     // https://github.com/mmin18/RealtimeBlurView
     api 'com.github.mmin18:realtimeblurview:1.2.1'
 
+    // navigation
+    api 'androidx.navigation:navigation-ui-ktx:2.4.2'
+    api 'androidx.navigation:navigation-fragment-ktx:2.4.2'
+
 }
