@@ -16,7 +16,7 @@
 
 plugins {
     id 'com.android.application'
-    id 'kotlin-android'
+    id 'org.jetbrains.kotlin.android'
     id 'kotlin-parcelize'
     id 'kotlin-kapt'
     id "com.google.protobuf" version "0.8.12"
@@ -29,9 +29,12 @@ android {
     buildToolsVersion androidConfig.buildToolsVersion
 
     defaultConfig {
+
         applicationId androidConfig.applicationId
-        minSdkVersion androidConfig.minSdkVersion
-        targetSdkVersion androidConfig.targetSdkVersion
+
+        minSdk androidConfig.minSdkVersion
+        targetSdk androidConfig.targetSdkVersion
+
         versionCode androidConfig.versionCode
         versionName androidConfig.versionName
 
