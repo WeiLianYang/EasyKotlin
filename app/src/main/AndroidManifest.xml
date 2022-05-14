@@ -144,10 +144,14 @@
     <application
         android:name=".App"
         android:allowBackup="true"
+        android:dataExtractionRules="@xml/data_extraction_rules"
+        android:fullBackupContent="@xml/backup_rules"
+        android:fullBackupOnly="true"
         android:icon="@drawable/app_logo"
         android:label="@string/app_name"
         android:supportsRtl="true"
-        android:theme="@style/AppTheme.NoActionBar">
+        android:theme="@style/AppTheme.NoActionBar"
+        tools:targetApi="s">
         <activity
             android:name=".ui.DrawerActivity"
             android:exported="false" />

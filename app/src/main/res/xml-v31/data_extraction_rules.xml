@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  ~ Copyright WeiLianYang
+  ~
+  ~ Licensed under the Apache License, Version 2.0 (the "License");
+  ~ you may not use this file except in compliance with the License.
+  ~ You may obtain a copy of the License at
+  ~
+  ~     http://www.apache.org/licenses/LICENSE-2.0
+  ~
+  ~ Unless required by applicable law or agreed to in writing, software
+  ~ distributed under the License is distributed on an "AS IS" BASIS,
+  ~ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  ~ See the License for the specific language governing permissions and
+  ~ limitations under the License.
+  -->
+
+<!--
+
+https://developer.android.com/guide/topics/data/autobackup
+
+<data-extraction-rules>
+  <cloud-backup [disableIfNoEncryptionCapabilities="true|false"]>
+    ...
+    <include domain=["file" | "database" | "sharedpref" | "external" |
+                        "root"] path="string"/>
+    ...
+    <exclude domain=["file" | "database" | "sharedpref" | "external" |
+                        "root"] path="string"/>
+    ...
+  </cloud-backup>
+  <device-transfer>
+    ...
+    <include domain=["file" | "database" | "sharedpref" | "external" |
+                        "root"] path="string"/>
+    ...
+    <exclude domain=["file" | "database" | "sharedpref" | "external" |
+                        "root"] path="string"/>
+    ...
+  </device-transfer>
+</data-extraction-rules>
+
+-->
+
+
+<data-extraction-rules>
+
+    <!--
+    备份除 device.xml 之外的所有共享偏好设置。
+    确保只有在可以加密时（例如，当用户具有锁定屏幕时）备份操作才会发生
+    -->
+    <cloud-backup disableIfNoEncryptionCapabilities="true">
+        <include
+            domain="sharedpref"
+            path="." />
+        <exclude
+            domain="sharedpref"
+            path="device.xml" />
+    </cloud-backup>
+</data-extraction-rules>
