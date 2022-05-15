@@ -14,19 +14,27 @@
  * limitations under the License.
  */
 
-package com.william.easykt
+package com.william.easykt.startup
 
-import com.william.base_component.BaseApp
+import android.content.Context
+import androidx.startup.Initializer
+import com.william.base_component.extension.logD
+import com.william.easykt.exception.GlobalCrashHandler
+
 
 /**
- *  author : WilliamYang
- *  date : 2021/12/14 15:23
- *  description :
+ * @author William
+ * @date 2022/5/15 14:58
+ * Class Comment：全局异常处理初始化器
  */
-class App : BaseApp() {
+class CrashHandlerInitializer : Initializer<Unit> {
 
-    override fun onCreate() {
-        super.onCreate()
+    override fun create(context: Context) {
+        GlobalCrashHandler.init(context)
+        "GlobalCrashHandler init".logD()
+    }
 
+    override fun dependencies(): List<Class<out Initializer<*>>> {
+        return emptyList()
     }
 }

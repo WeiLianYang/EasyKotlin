@@ -270,6 +270,10 @@
                 android:name="com.william.base_component.startup.TimberInitializer"
                 android:value="androidx.startup" />
 
+            <meta-data
+                android:name="com.william.easykt.startup.CrashHandlerInitializer"
+                android:value="androidx.startup" />
+
         </provider>
 
     </application>

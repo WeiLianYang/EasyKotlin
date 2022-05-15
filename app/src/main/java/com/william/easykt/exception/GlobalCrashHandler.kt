@@ -16,14 +16,12 @@
 
 package com.william.easykt.exception
 
-import android.app.Application
 import android.content.Context
 import android.content.pm.PackageManager
 import android.os.Build
 import android.os.Environment
 import timber.log.Timber
 import java.io.*
-import java.util.*
 import kotlin.concurrent.thread
 import kotlin.system.exitProcess
 
@@ -35,12 +33,12 @@ import kotlin.system.exitProcess
 object GlobalCrashHandler : Thread.UncaughtExceptionHandler {
 
     private var defaultHandler: Thread.UncaughtExceptionHandler? = null
-    private lateinit var application: Application
+    private lateinit var application: Context
     private val paramsMap: MutableMap<String, String> = HashMap()
 
     private val TAG = this.javaClass.simpleName
 
-    fun init(context: Application) {
+    fun init(context: Context) {
         application = context
         defaultHandler = Thread.getDefaultUncaughtExceptionHandler()
         Thread.setDefaultUncaughtExceptionHandler(this)
