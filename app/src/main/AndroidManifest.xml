@@ -243,6 +243,35 @@
                 android:name="android.support.FILE_PROVIDER_PATHS"
                 android:resource="@xml/file_paths" />
         </provider>
+
+        <provider
+            android:name="androidx.startup.InitializationProvider"
+            android:authorities="${applicationId}.androidx-startup"
+            android:exported="false"
+            tools:node="merge">
+
+            <meta-data
+                android:name="com.william.base_component.startup.FlurryAgentInitializer"
+                android:value="androidx.startup" />
+
+            <meta-data
+                android:name="com.william.base_component.startup.LiveEventInitializer"
+                android:value="androidx.startup" />
+
+            <meta-data
+                android:name="com.william.base_component.startup.LoggerInitializer"
+                android:value="androidx.startup" />
+
+            <meta-data
+                android:name="com.william.base_component.startup.MMKVInitializer"
+                android:value="androidx.startup" />
+
+            <meta-data
+                android:name="com.william.base_component.startup.TimberInitializer"
+                android:value="androidx.startup" />
+
+        </provider>
+
     </application>
 
 </manifest>

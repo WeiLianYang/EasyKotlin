@@ -22,13 +22,8 @@ import android.content.Context
 import android.os.Bundle
 import androidx.multidex.MultiDex
 import com.flurry.android.FlurryAgent
-import com.jeremyliao.liveeventbus.LiveEventBus
-import com.orhanobut.logger.AndroidLogAdapter
-import com.orhanobut.logger.Logger
-import com.orhanobut.logger.PrettyFormatStrategy
+import com.william.base_component.extension.logD
 import com.william.base_component.manager.ActivityStackManager
-import com.william.base_component.manager.KVStoreManager
-import timber.log.Timber
 import kotlin.properties.Delegates
 
 
@@ -53,30 +48,8 @@ open class BaseApp : Application() {
         super.onCreate()
         instance = applicationContext
 
-        Timber.plant(Timber.DebugTree())
-
-        initFlurryAnalytics()
-
-        KVStoreManager.init(this)
-
-        initLoggerConfig()
-        initLiveEventConfig()
+        "Application onCreate() has been invoked".logD()
         registerLifecycleCallbacks()
-    }
-
-    private fun initFlurryAnalytics() {
-        FlurryAgent.Builder()
-            .withLogEnabled(BuildConfig.DEBUG)
-            .withCaptureUncaughtExceptions(true)
-            .build(this, FLURRY_KEY)
-    }
-
-    private fun initLiveEventConfig() {
-        // 配置LifecycleObserver（如Activity）接收消息的模式（默认值true）：
-        // true：整个生命周期（从onCreate到onDestroy）都可以实时收到消息
-        // false：激活状态（Started）可以实时收到消息，非激活状态（Stoped）无法实时收到消息，需等到Activity重新变成激活状态，方可收到消息
-        // 更多配置参照 https://github.com/JeremyLiao/LiveEventBus/blob/master/docs/config.md
-        LiveEventBus.config().lifecycleObserverAlwaysActive(false)
     }
 
     private fun registerLifecycleCallbacks() {
@@ -111,20 +84,4 @@ open class BaseApp : Application() {
         MultiDex.install(this)
     }
 
-    /**
-     * 初始化配置
-     */
-    private fun initLoggerConfig() {
-        val formatStrategy = PrettyFormatStrategy.newBuilder()
-            .showThreadInfo(false)  // 隐藏线程信息 默认：显示
-            .methodCount(1)         // 决定打印多少行（每一行代表一个方法）默认：2
-            .methodOffset(7)        // (Optional) Hides internal method calls up to offset. Default 5
-            .tag(TAG)   // (Optional) Global tag for every log. Default PRETTY_LOGGER
-            .build()
-        Logger.addLogAdapter(object : AndroidLogAdapter(formatStrategy) {
-            override fun isLoggable(priority: Int, tag: String?): Boolean {
-                return BuildConfig.DEBUG
-            }
-        })
-    }
 }
