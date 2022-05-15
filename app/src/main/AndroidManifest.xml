@@ -144,6 +144,7 @@
     <application
         android:name=".App"
         android:allowBackup="true"
+        android:backupAgent=".data.backup.CustomBackupAgent"
         android:dataExtractionRules="@xml/data_extraction_rules"
         android:fullBackupContent="@xml/backup_rules"
         android:fullBackupOnly="true"
@@ -152,6 +153,11 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme.NoActionBar"
         tools:targetApi="s">
+
+        <meta-data
+            android:name="com.google.android.backup.api_key"
+            android:value="unused" />
+
         <activity
             android:name=".ui.DrawerActivity"
             android:exported="false" />
