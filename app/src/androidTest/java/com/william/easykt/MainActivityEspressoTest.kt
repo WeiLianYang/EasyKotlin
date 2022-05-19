@@ -28,6 +28,7 @@ import androidx.test.espresso.contrib.RecyclerViewActions
 import androidx.test.espresso.matcher.ViewMatchers
 import androidx.test.espresso.matcher.ViewMatchers.isDisplayed
 import androidx.test.espresso.matcher.ViewMatchers.withText
+import androidx.test.ext.junit.rules.ActivityScenarioRule
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import androidx.test.filters.LargeTest
 import androidx.test.rule.ActivityTestRule
@@ -52,7 +53,8 @@ class MainActivityEspressoTest {
     @get:Rule
     val activityRule = ActivityTestRule(MainActivity::class.java)
 
-//    @Rule
+    // 部分手机上会出现错误提示：Activity never becomes requested state "[RESUMED, STARTED, DESTROYED, CREATED]" (last lifecycle transition = "PRE_ON_CREATE")
+//    @get:Rule
 //    var activityScenarioRule = ActivityScenarioRule(
 //        MainActivity::class.java
 //    )

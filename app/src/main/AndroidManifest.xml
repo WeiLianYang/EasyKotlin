@@ -1,6 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools">
+
+    <instrumentation
+        android:name="androidx.test.runner.AndroidJUnitRunner"
+        android:targetPackage="${applicationId}"
+        android:targetProcesses="*"
+        tools:targetApi="o">
+        <meta-data
+            android:name="remoteMethod"
+            android:value="androidx.test.espresso.remote.EspressoRemote#remoteInit" />
+    </instrumentation>
+
     <!--
          Android 11
          管理软件包可见性：https://developer.android.com/training/basics/intents/package-visibility
