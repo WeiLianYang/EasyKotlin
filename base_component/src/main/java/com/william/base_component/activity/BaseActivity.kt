@@ -18,7 +18,6 @@ package com.william.base_component.activity
 
 
 import android.os.Bundle
-import android.view.LayoutInflater
 import android.view.View
 import androidx.annotation.StringRes
 import androidx.appcompat.app.AppCompatActivity
@@ -98,7 +97,7 @@ abstract class BaseActivity : AppCompatActivity(), IBaseView {
 
     open fun initView() {}
 
-    abstract fun initAction()
+    open fun initAction() {}
 
     abstract fun initData()
 
