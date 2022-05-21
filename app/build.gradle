@@ -122,6 +122,9 @@ dependencies {
     // Test Accessibility
     androidTestImplementation 'androidx.test.espresso:espresso-accessibility:3.4.0'
 
+    // UiAutomator Testing
+    androidTestImplementation 'androidx.test.uiautomator:uiautomator:2.2.0'
+
 
     implementation project(':base_component')
 
