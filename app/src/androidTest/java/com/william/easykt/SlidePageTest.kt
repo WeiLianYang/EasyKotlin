@@ -72,13 +72,12 @@ class SlidePageTest {
     @Test
     fun testContentText() {
         // 首先滚动到需要匹配的位置，然后点击。
-        device?.findObject(By.res(APP_PACKAGE, "recyclerView"))?.scroll(Direction.DOWN, 0.5f, 500)
+        device?.findObject(By.res(APP_PACKAGE, "recyclerView"))?.scroll(Direction.DOWN, 0.5f, 1000)
         device?.findObject(By.text("Side slip Layout"))?.click()
 
-        // 侧滑
-//        device?.findObject(By.res(APP_PACKAGE, "slideLayout"))?.drag(Point(500, 0), 500)
-//        device?.findObject(By.res(APP_PACKAGE, "slideLayout"))?.swipe(Direction.RIGHT, 0.5f, 500)
-//        device?.findObject(By.res(APP_PACKAGE, "slideLayout"))?.scroll(Direction.RIGHT, 0.5f, 500)
+        /** 侧滑拖拽，如果当前 系统手势 设置的 不是 底部3建导航方式，会导致后续的检测会失败 */
+        val obj = device?.wait(Until.findObject(By.res(APP_PACKAGE, "slideLayout")), 500)
+        obj?.swipe(Direction.RIGHT, 0.5f, 500)
 
         val text = device?.wait(Until.findObject(By.res(APP_PACKAGE, "slide_content")), 500)
         assertThat(text?.text, `is`(equalTo("Content View")))
