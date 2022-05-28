@@ -1,0 +1,115 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  ~ Copyright WeiLianYang
+  ~
+  ~ Licensed under the Apache License, Version 2.0 (the "License");
+  ~ you may not use this file except in compliance with the License.
+  ~ You may obtain a copy of the License at
+  ~
+  ~     http://www.apache.org/licenses/LICENSE-2.0
+  ~
+  ~ Unless required by applicable law or agreed to in writing, software
+  ~ distributed under the License is distributed on an "AS IS" BASIS,
+  ~ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  ~ See the License for the specific language governing permissions and
+  ~ limitations under the License.
+  -->
+
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".ui.Camera3DActivity">
+
+    <RadioGroup
+        android:id="@+id/radioGroup"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:orientation="horizontal"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <RadioButton
+            android:id="@+id/rb_translate"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:checked="true"
+            android:text="@string/camera2d_translate" />
+
+        <RadioButton
+            android:id="@+id/rb_rotate"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="20dp"
+            android:text="@string/camera2d_rotate" />
+    </RadioGroup>
+
+    <SeekBar
+        android:id="@+id/seekBarX"
+        android:layout_width="220dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:max="360"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/radioGroup" />
+
+    <SeekBar
+        android:id="@+id/seekBarY"
+        android:layout_width="220dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="30dp"
+        android:max="360"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/seekBarX" />
+
+    <SeekBar
+        android:id="@+id/seekBarZ"
+        android:layout_width="220dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="30dp"
+        android:max="360"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/seekBarY" />
+
+    <TextView
+        android:id="@+id/tv_valueX"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="X : 0"
+        app:layout_constraintEnd_toStartOf="@+id/seekBarX"
+        app:layout_constraintTop_toTopOf="@+id/seekBarX"
+        tools:ignore="HardcodedText" />
+
+    <TextView
+        android:id="@+id/tv_valueY"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Y : 0"
+        app:layout_constraintEnd_toStartOf="@+id/seekBarY"
+        app:layout_constraintTop_toTopOf="@+id/seekBarY"
+        tools:ignore="HardcodedText" />
+
+    <TextView
+        android:id="@+id/tv_valueZ"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Z : 0"
+        app:layout_constraintEnd_toStartOf="@+id/seekBarZ"
+        app:layout_constraintTop_toTopOf="@+id/seekBarZ"
+        tools:ignore="HardcodedText" />
+
+    <com.william.easykt.widget.Camera2DImageView
+        android:id="@+id/iv_camera2d"
+        android:layout_width="220dp"
+        android:layout_height="220dp"
+        android:layout_marginTop="80dp"
+        android:src="@drawable/chick"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/seekBarZ" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

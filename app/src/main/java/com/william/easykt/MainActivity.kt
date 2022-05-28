@@ -162,6 +162,7 @@ class MainActivity : BaseActivity() {
                 31 -> openActivity<SideSlipActivity>(mActivity)
                 32 -> openActivity<DrawerActivity>(mActivity)
                 33 -> openActivity<WebActivity>(mActivity)
+                34 -> openActivity<Camera3DActivity>(mActivity)
                 else -> {
                 }
             }

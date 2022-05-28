@@ -55,6 +55,7 @@
     <string name="test_side_slip">Side slip Layout</string>
     <string name="test_drawer">Drawer Layout</string>
     <string name="test_web">Web Page</string>
+    <string name="test_camera3d">Camera 3D</string>
 
     <string name="test_kotlin_flow1">1. 异步计算的值流</string>
     <string name="test_kotlin_flow2">2. 冷流</string>
@@ -192,5 +193,8 @@
     <string name="menu_home">Home</string>
     <string name="menu_gallery">Gallery</string>
     <string name="menu_slideshow">Slideshow</string>
+
+    <string name="camera2d_translate">Translate</string>
+    <string name="camera2d_rotate">Rotate</string>
 
 </resources>
