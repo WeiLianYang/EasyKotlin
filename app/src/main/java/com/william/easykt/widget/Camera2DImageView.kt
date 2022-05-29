@@ -52,9 +52,12 @@ class Camera2DImageView @JvmOverloads constructor(
             camera.rotate(progressX, progressY, progressZ)
         }
 
+        camera.getMatrix(mMatrix)
+
         // 调节中心点
         val centerX = width / 2f
         val centerY = height / 2f
+        "centerX: $centerX, centerY: $centerY".logD()
         mMatrix.preTranslate(-centerX, -centerY)
         mMatrix.postTranslate(centerX, centerY)
 
@@ -65,7 +68,6 @@ class Camera2DImageView @JvmOverloads constructor(
         camera.setLocation(centerX, -centerY, camera.locationZ)
         */
 
-        camera.getMatrix(mMatrix)
         canvas.setMatrix(mMatrix)
         camera.restore()
 
