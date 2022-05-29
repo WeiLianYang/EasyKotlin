@@ -52,7 +52,7 @@
         android:layout_marginTop="20dp"
         android:max="360"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/tv_valueX"
         app:layout_constraintTop_toBottomOf="@+id/radioGroup" />
 
     <SeekBar
@@ -62,7 +62,7 @@
         android:layout_marginTop="30dp"
         android:max="360"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/tv_valueY"
         app:layout_constraintTop_toBottomOf="@+id/seekBarX" />
 
     <SeekBar
@@ -72,40 +72,49 @@
         android:layout_marginTop="30dp"
         android:max="360"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/tv_valueZ"
         app:layout_constraintTop_toBottomOf="@+id/seekBarY" />
 
     <TextView
         android:id="@+id/tv_valueX"
-        android:layout_width="wrap_content"
+        android:layout_width="50dp"
         android:layout_height="wrap_content"
         android:text="X : 0"
+        android:textSize="12sp"
         app:layout_constraintEnd_toStartOf="@+id/seekBarX"
+        app:layout_constraintHorizontal_chainStyle="packed"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="@+id/seekBarX"
         tools:ignore="HardcodedText" />
 
     <TextView
         android:id="@+id/tv_valueY"
-        android:layout_width="wrap_content"
+        android:layout_width="50dp"
         android:layout_height="wrap_content"
         android:text="Y : 0"
+        android:textSize="12sp"
         app:layout_constraintEnd_toStartOf="@+id/seekBarY"
+        app:layout_constraintHorizontal_chainStyle="packed"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="@+id/seekBarY"
         tools:ignore="HardcodedText" />
 
     <TextView
         android:id="@+id/tv_valueZ"
-        android:layout_width="wrap_content"
+        android:layout_width="50dp"
         android:layout_height="wrap_content"
         android:text="Z : 0"
+        android:textSize="12sp"
         app:layout_constraintEnd_toStartOf="@+id/seekBarZ"
+        app:layout_constraintHorizontal_chainStyle="packed"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="@+id/seekBarZ"
         tools:ignore="HardcodedText" />
 
     <com.william.easykt.widget.Camera2DImageView
         android:id="@+id/iv_camera2d"
-        android:layout_width="220dp"
-        android:layout_height="220dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:layout_marginTop="80dp"
         android:src="@drawable/chick"
         app:layout_constraintEnd_toEndOf="parent"

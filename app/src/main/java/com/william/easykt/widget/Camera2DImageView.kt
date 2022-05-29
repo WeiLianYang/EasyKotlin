@@ -45,8 +45,10 @@ class Camera2DImageView @JvmOverloads constructor(
         canvas.save()
 
         if (action == 0) {
+            camera.rotate(0f, 0f, 0f)
             camera.translate(progressX, progressY, progressZ)
         } else {
+            camera.translate(0f, 0f, 0f)
             camera.rotate(progressX, progressY, progressZ)
         }
 
