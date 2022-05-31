@@ -36,6 +36,7 @@ import com.william.easykt.databinding.ActivityMainBinding
 import com.william.easykt.test.TestVmActivity
 import com.william.easykt.ui.*
 import com.william.easykt.ui.adapter.MainAdapter
+import com.william.easykt.ui.camera.CameraActivity
 import com.william.easykt.utils.createBubble
 import com.william.easykt.utils.getBuildInfo
 import com.william.easykt.viewmodel.MainViewModel
@@ -162,7 +163,7 @@ class MainActivity : BaseActivity() {
                 31 -> openActivity<SideSlipActivity>(mActivity)
                 32 -> openActivity<DrawerActivity>(mActivity)
                 33 -> openActivity<WebActivity>(mActivity)
-                34 -> openActivity<Camera3DActivity>(mActivity)
+                34 -> openActivity<CameraActivity>(mActivity)
                 else -> {
                 }
             }

@@ -14,26 +14,24 @@
  * limitations under the License.
  */
 
-package com.william.easykt.ui
+package com.william.easykt.ui.camera
 
 import android.annotation.SuppressLint
 import android.widget.SeekBar
-import com.william.base_component.activity.BaseActivity
 import com.william.base_component.extension.bindingView
+import com.william.base_component.fragment.BaseFragment
 import com.william.easykt.R
-import com.william.easykt.databinding.ActivityCamera3dBinding
+import com.william.easykt.databinding.FragmentCamera2dBinding
+
 
 /**
- * author：William
- * date：2022/5/28 22:16
- * description：Camera 2d & 3d demo @see[android.graphics.Camera]
+ * @author William
+ * @date 2022/5/29 22:32
+ * Class Comment：Camera 2d transformations
  */
-class Camera3DActivity : BaseActivity() {
-    override val viewBinding: ActivityCamera3dBinding by bindingView()
+class Camera2DFragment : BaseFragment() {
 
-    override fun initData() {
-        setTitleText(R.string.test_motion_layout)
-    }
+    override val viewBinding by bindingView<FragmentCamera2dBinding>()
 
     override fun initAction() {
         viewBinding.radioGroup.setOnCheckedChangeListener { _, checkedId ->
@@ -87,6 +85,9 @@ class Camera3DActivity : BaseActivity() {
             viewBinding.seekBarY.progress,
             viewBinding.seekBarZ.progress
         )
+    }
+
+    override fun sendRequest() {
     }
 
 }

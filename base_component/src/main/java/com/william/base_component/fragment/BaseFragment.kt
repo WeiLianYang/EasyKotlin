@@ -26,7 +26,6 @@ import androidx.annotation.LayoutRes
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentActivity
-import androidx.lifecycle.Observer
 import androidx.viewbinding.ViewBinding
 import com.jeremyliao.liveeventbus.LiveEventBus
 import com.william.base_component.databinding.BaseFragmentBinding
@@ -90,22 +89,17 @@ abstract class BaseFragment : Fragment(), IBaseView {
     }
 
     private fun initLayout() {
-        if (getLayoutId() != 0) {
-            val params = ConstraintLayout.LayoutParams(
-                ConstraintLayout.LayoutParams.MATCH_PARENT,
-                ConstraintLayout.LayoutParams.MATCH_PARENT
-            )
-            viewBinding.root.parent?.let {
-                // 因为mViewBinding只被初始化一次，下次访问时还是上次的值，所以需要将它的父View和其解除关系，避免被重新addView时崩溃
-                // 如果设置了ViewPager.offscreenPageLimits = adapter.count时这里不会走的，如果没有设置，这里就是一道保险
-                (it as ViewGroup).removeAllViews()
-            }
-            baseBinding.mClBaseContent.addView(viewBinding.root, params)
+        val params = ConstraintLayout.LayoutParams(
+            ConstraintLayout.LayoutParams.MATCH_PARENT,
+            ConstraintLayout.LayoutParams.MATCH_PARENT
+        )
+        viewBinding.root.parent?.let {
+            // 因为mViewBinding只被初始化一次，下次访问时还是上次的值，所以需要将它的父View和其解除关系，避免被重新addView时崩溃
+            // 如果设置了ViewPager.offscreenPageLimits = adapter.count时这里不会走的，如果没有设置，这里就是一道保险
+            (it as ViewGroup).removeAllViews()
         }
+        baseBinding.mClBaseContent.addView(viewBinding.root, params)
     }
-
-    @LayoutRes
-    protected abstract fun getLayoutId(): Int
 
     open fun initView(rootView: View) {}
 

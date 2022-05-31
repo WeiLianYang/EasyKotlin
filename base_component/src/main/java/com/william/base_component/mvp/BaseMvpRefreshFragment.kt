@@ -22,7 +22,6 @@ import androidx.viewbinding.ViewBinding
 import com.scwang.smartrefresh.header.MaterialHeader
 import com.scwang.smartrefresh.layout.SmartRefreshLayout
 import com.scwang.smartrefresh.layout.api.RefreshLayout
-import com.william.base_component.R
 import com.william.base_component.databinding.BaseFragmentRefreshBinding
 import com.william.base_component.mvp.base.BasePresenter
 import com.william.base_component.mvp.base.IBaseModel
@@ -62,8 +61,6 @@ abstract class BaseMvpRefreshFragment<P : BasePresenter<out IBaseView, out IBase
         super.initView(rootView)
         initRefreshSetting()
     }
-
-    override fun getLayoutId(): Int = R.layout.base_fragment_refresh
 
     @LayoutRes
     abstract fun getContentLayoutId(): Int

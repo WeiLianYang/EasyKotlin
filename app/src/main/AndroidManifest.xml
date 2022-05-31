@@ -11,7 +11,6 @@
             android:name="remoteMethod"
             android:value="androidx.test.espresso.remote.EspressoRemote#remoteInit" />
     </instrumentation>
-
     <!--
          Android 11
          管理软件包可见性：https://developer.android.com/training/basics/intents/package-visibility
@@ -164,9 +163,8 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme.NoActionBar"
         tools:targetApi="s">
-
         <activity
-            android:name=".ui.Camera3DActivity"
+            android:name=".ui.camera.CameraActivity"
             android:exported="false" />
 
         <meta-data
@@ -259,39 +257,30 @@
                 android:name="android.support.FILE_PROVIDER_PATHS"
                 android:resource="@xml/file_paths" />
         </provider>
-
         <provider
             android:name="androidx.startup.InitializationProvider"
             android:authorities="${applicationId}.androidx-startup"
             android:exported="false"
             tools:node="merge">
-
             <meta-data
                 android:name="com.william.base_component.startup.FlurryAgentInitializer"
                 android:value="androidx.startup" />
-
             <meta-data
                 android:name="com.william.base_component.startup.LiveEventInitializer"
                 android:value="androidx.startup" />
-
             <meta-data
                 android:name="com.william.base_component.startup.LoggerInitializer"
                 android:value="androidx.startup" />
-
             <meta-data
                 android:name="com.william.base_component.startup.MMKVInitializer"
                 android:value="androidx.startup" />
-
             <meta-data
                 android:name="com.william.base_component.startup.TimberInitializer"
                 android:value="androidx.startup" />
-
             <meta-data
                 android:name="com.william.easykt.startup.CrashHandlerInitializer"
                 android:value="androidx.startup" />
-
         </provider>
-
     </application>
 
 </manifest>

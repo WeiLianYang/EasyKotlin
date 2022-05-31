@@ -55,7 +55,7 @@
     <string name="test_side_slip">Side slip Layout</string>
     <string name="test_drawer">Drawer Layout</string>
     <string name="test_web">Web Page</string>
-    <string name="test_camera3d">Camera 3D</string>
+    <string name="test_camera_demo">Camera Demo</string>
 
     <string name="test_kotlin_flow1">1. 异步计算的值流</string>
     <string name="test_kotlin_flow2">2. 冷流</string>
@@ -196,5 +196,10 @@
 
     <string name="camera2d_translate">Translate</string>
     <string name="camera2d_rotate">Rotate</string>
+    <string name="camera3d_reverse">Reverse</string>
+    <string name="title_activity_camera">CameraActivity</string>
+    <string name="title_camera2d">Camera 2D</string>
+    <string name="title_camera3d">Camera 3D</string>
+    <string name="title_camera3d_clock">Clock</string>
 
 </resources>
