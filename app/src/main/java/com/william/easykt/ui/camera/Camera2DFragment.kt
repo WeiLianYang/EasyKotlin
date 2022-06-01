@@ -48,7 +48,7 @@ class Camera2DFragment : BaseFragment() {
         viewBinding.seekBarX.setOnSeekBarChangeListener(object : SeekBar.OnSeekBarChangeListener {
             @SuppressLint("SetTextI18n")
             override fun onProgressChanged(seekBar: SeekBar?, progress: Int, fromUser: Boolean) {
-                viewBinding.tvValueX.text = "X: ${viewBinding.seekBarX.progress}"
+                viewBinding.tvValueX.text = "X : ${viewBinding.seekBarX.progress}"
                 update()
             }
 
@@ -59,7 +59,7 @@ class Camera2DFragment : BaseFragment() {
         viewBinding.seekBarY.setOnSeekBarChangeListener(object : SeekBar.OnSeekBarChangeListener {
             @SuppressLint("SetTextI18n")
             override fun onProgressChanged(seekBar: SeekBar?, progress: Int, fromUser: Boolean) {
-                viewBinding.tvValueY.text = "Y: ${viewBinding.seekBarY.progress}"
+                viewBinding.tvValueY.text = "Y : ${viewBinding.seekBarY.progress}"
                 update()
             }
 
@@ -70,7 +70,7 @@ class Camera2DFragment : BaseFragment() {
         viewBinding.seekBarZ.setOnSeekBarChangeListener(object : SeekBar.OnSeekBarChangeListener {
             @SuppressLint("SetTextI18n")
             override fun onProgressChanged(seekBar: SeekBar?, progress: Int, fromUser: Boolean) {
-                viewBinding.tvValueZ.text = "Z: ${viewBinding.seekBarZ.progress}"
+                viewBinding.tvValueZ.text = "Z : ${viewBinding.seekBarZ.progress}"
                 update()
             }
 
