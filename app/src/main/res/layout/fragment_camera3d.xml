@@ -23,9 +23,8 @@
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/cl_content"
-        android:layout_width="300dp"
-        android:layout_height="200dp"
-        android:layout_below="@id/btn_open"
+        android:layout_width="320dp"
+        android:layout_height="235dp"
         android:layout_marginTop="100dp"
         android:gravity="center_horizontal"
         android:orientation="vertical"
@@ -38,7 +37,7 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:scaleType="centerCrop"
-            android:src="@drawable/chick"
+            android:src="@drawable/temple"
             tools:ignore="ContentDescription" />
 
         <ImageView
@@ -46,13 +45,13 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:scaleType="centerCrop"
-            android:src="@drawable/chick"
+            android:src="@drawable/fish"
             android:visibility="gone"
             tools:ignore="ContentDescription" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 
     <Button
-        android:id="@+id/btn_open"
+        android:id="@+id/btn_reverse"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="50dp"
