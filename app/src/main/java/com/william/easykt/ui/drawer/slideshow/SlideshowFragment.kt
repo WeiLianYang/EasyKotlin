@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package com.william.easykt.ui.ui.slideshow
+package com.william.easykt.ui.drawer.slideshow
 
 import android.os.Bundle
 import android.view.LayoutInflater

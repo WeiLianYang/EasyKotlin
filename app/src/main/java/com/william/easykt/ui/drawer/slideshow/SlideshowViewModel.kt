@@ -1,4 +1,4 @@
-package com.william.easykt.ui.ui.slideshow
+package com.william.easykt.ui.drawer.slideshow
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData

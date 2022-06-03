@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package com.william.easykt.ui.ui.home
+package com.william.easykt.ui.drawer.home
 
 import android.os.Bundle
 import android.view.LayoutInflater

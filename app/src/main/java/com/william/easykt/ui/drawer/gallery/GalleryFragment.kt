@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package com.william.easykt.ui.ui.gallery
+package com.william.easykt.ui.drawer.gallery
 
 import android.os.Bundle
 import android.view.LayoutInflater
