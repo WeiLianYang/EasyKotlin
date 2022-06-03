@@ -28,8 +28,8 @@
         android:title="@string/title_camera3d" />
 
     <item
-        android:id="@+id/navigation_clock"
+        android:id="@+id/navigation_steady"
         android:icon="@drawable/ic_notifications_black_24dp"
-        android:title="@string/title_camera3d_clock" />
+        android:title="@string/title_camera3d_steady" />
 
 </menu>

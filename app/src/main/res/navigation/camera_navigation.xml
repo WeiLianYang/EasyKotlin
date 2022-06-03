@@ -34,8 +34,8 @@
         tools:layout="@layout/fragment_camera3d" />
 
     <fragment
-        android:id="@+id/navigation_clock"
-        android:name="com.william.easykt.ui.camera.CameraClockFragment"
-        android:label="@string/title_camera3d_clock"
-        tools:layout="@layout/fragment_camera3d_clock" />
+        android:id="@+id/navigation_steady"
+        android:name="com.william.easykt.ui.camera.CameraSteadyFragment"
+        android:label="@string/title_camera3d_steady"
+        tools:layout="@layout/fragment_camera3d_steady" />
 </navigation>

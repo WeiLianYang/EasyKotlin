@@ -18,7 +18,7 @@ package com.william.easykt.ui.camera
 
 import com.william.base_component.extension.bindingView
 import com.william.base_component.fragment.BaseFragment
-import com.william.easykt.databinding.FragmentCamera3dClockBinding
+import com.william.easykt.databinding.FragmentCamera3dSteadyBinding
 
 
 /**
@@ -26,13 +26,12 @@ import com.william.easykt.databinding.FragmentCamera3dClockBinding
  * @date 2022/5/29 22:32
  * Class Comment：clock demo use camera
  */
-class CameraClockFragment : BaseFragment() {
+class CameraSteadyFragment : BaseFragment() {
 
-    override val viewBinding by bindingView<FragmentCamera3dClockBinding>()
+    override val viewBinding by bindingView<FragmentCamera3dSteadyBinding>()
 
     override fun initAction() {
+
     }
 
-    override fun sendRequest() {
-    }
 }

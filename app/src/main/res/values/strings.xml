@@ -200,6 +200,6 @@
     <string name="title_activity_camera">CameraActivity</string>
     <string name="title_camera2d">Camera 2D</string>
     <string name="title_camera3d">Camera 3D</string>
-    <string name="title_camera3d_clock">Clock</string>
+    <string name="title_camera3d_steady">Steady</string>
 
 </resources>
