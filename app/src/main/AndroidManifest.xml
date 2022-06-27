@@ -220,6 +220,7 @@
         <activity android:name=".ui.MotionLayoutActivity" />
         <activity android:name=".ui.SideSlipActivity" />
         <activity android:name=".ui.WebActivity" />
+        <activity android:name=".ui.ClockViewActivity" />
         <activity
             android:name=".ui.CameraxActivity"
             android:configChanges="orientation|screenLayout|screenSize|smallestScreenSize"

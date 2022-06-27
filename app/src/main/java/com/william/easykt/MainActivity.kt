@@ -164,6 +164,7 @@ class MainActivity : BaseActivity() {
                 32 -> openActivity<DrawerActivity>(mActivity)
                 33 -> openActivity<WebActivity>(mActivity)
                 34 -> openActivity<CameraActivity>(mActivity)
+                35 -> openActivity<ClockViewActivity>(mActivity)
                 else -> {
                 }
             }

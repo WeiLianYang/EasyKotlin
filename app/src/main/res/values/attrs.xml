@@ -36,4 +36,14 @@
 
     </declare-styleable>
 
+    <declare-styleable name="ClockView">
+
+        <!--闹钟字体大小-->
+        <attr name="clockTextSize" format="dimension" />
+
+        <!--闹钟字体颜色-->
+        <attr name="clockTextColor" format="color" />
+
+    </declare-styleable>
+
 </resources>

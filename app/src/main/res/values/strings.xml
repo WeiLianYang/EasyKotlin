@@ -56,6 +56,7 @@
     <string name="test_drawer">Drawer Layout</string>
     <string name="test_web">Web Page</string>
     <string name="test_camera_demo">Camera Demo</string>
+    <string name="test_clock_view">Clock View</string>
 
     <string name="test_kotlin_flow1">1. 异步计算的值流</string>
     <string name="test_kotlin_flow2">2. 冷流</string>

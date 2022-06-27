@@ -67,6 +67,7 @@ class MainViewModel : ViewModel() {
             MainEntranceBean(R.string.test_drawer),
             MainEntranceBean(R.string.test_web),
             MainEntranceBean(R.string.test_camera_demo),
+            MainEntranceBean(R.string.test_clock_view),
         )
     )
 
