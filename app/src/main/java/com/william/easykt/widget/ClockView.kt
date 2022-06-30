@@ -11,6 +11,7 @@ import android.view.View
 import android.view.animation.Animation
 import android.view.animation.LinearInterpolator
 import com.william.base_component.extension.logD
+import com.william.base_component.extension.logV
 import com.william.easykt.R
 import java.util.*
 
@@ -175,5 +176,11 @@ class ClockView @JvmOverloads constructor(
 
     companion object {
         const val MINUTE = 60 * 1000
+    }
+
+    override fun onDetachedFromWindow() {
+        super.onDetachedFromWindow()
+        animator?.cancel()
+        "clock view detached from window".logV()
     }
 }

@@ -165,6 +165,7 @@ class MainActivity : BaseActivity() {
                 33 -> openActivity<WebActivity>(mActivity)
                 34 -> openActivity<CameraActivity>(mActivity)
                 35 -> openActivity<ClockViewActivity>(mActivity)
+                36 -> openActivity<SectorViewActivity>(mActivity)
                 else -> {
                 }
             }
@@ -175,9 +176,9 @@ class MainActivity : BaseActivity() {
         val dialog = MaterialAlertDialogBuilder(this)
             .setTitle("权限申请")
             .setMessage("权限申请内容")
-            .setPositiveButton("去授权") { dialog, which ->
+            .setPositiveButton("去授权") { _, _ ->
                 "去授权".toast()
-            }.setNegativeButton("暂不授权") { dialog, which ->
+            }.setNegativeButton("暂不授权") { _, _ ->
                 "暂不授权".toast()
             }.create()
         dialog.show()

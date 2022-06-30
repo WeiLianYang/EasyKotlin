@@ -18,6 +18,7 @@ package com.william.easykt.ui
 
 import com.william.base_component.activity.BaseActivity
 import com.william.base_component.extension.bindingView
+import com.william.easykt.R
 import com.william.easykt.databinding.ActivityClockViewBinding
 
 
@@ -31,6 +32,8 @@ class ClockViewActivity : BaseActivity() {
     override val viewBinding: ActivityClockViewBinding by bindingView()
 
     override fun initData() {
+        setTitleText(R.string.test_clock_view)
+
         viewBinding.clock1.performAnimation()
 
         viewBinding.clock2.performAnimation()
