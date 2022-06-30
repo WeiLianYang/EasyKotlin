@@ -27,7 +27,6 @@ import android.os.storage.StorageManager
 import androidx.activity.viewModels
 import androidx.core.app.NotificationCompat
 import androidx.core.content.getSystemService
-import com.flurry.android.FlurryAgent
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.william.base_component.activity.BaseActivity
 import com.william.base_component.extension.*
@@ -113,15 +112,15 @@ class MainActivity : BaseActivity() {
                 }
                 8 -> {
                     // param keys and values have to be of String type
-                    val map = hashMapOf("user" to "Jack", "age" to "18")
+//                    val map = hashMapOf("user" to "Jack", "age" to "18")
                     // up to 10 params can be logged with each event
-                    FlurryAgent.logEvent("userEvent", map)
+//                    FlurryAgent.logEvent("userEvent", map)
                 }
                 9 -> {
                     kotlin.runCatching {
                         throw NullPointerException()
                     }.onFailure {
-                        FlurryAgent.onError("errorId", "message", it)
+//                        FlurryAgent.onError("errorId", "message", it)
                     }
                 }
                 10 -> openActivity<NestedScrollingActivity>(mActivity)

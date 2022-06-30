@@ -39,7 +39,7 @@ object ActivityStackManager {
     /**
      * pop out
      */
-    private fun removeActivity(activity: Activity) {
+    fun removeActivity(activity: Activity) {
         mActivityStack.remove(activity)
     }
 

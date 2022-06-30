@@ -265,9 +265,6 @@
             android:exported="false"
             tools:node="merge">
             <meta-data
-                android:name="com.william.base_component.startup.FlurryAgentInitializer"
-                android:value="androidx.startup" />
-            <meta-data
                 android:name="com.william.base_component.startup.LiveEventInitializer"
                 android:value="androidx.startup" />
             <meta-data

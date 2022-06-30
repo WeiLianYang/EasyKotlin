@@ -21,7 +21,6 @@ import android.app.Application
 import android.content.Context
 import android.os.Bundle
 import androidx.multidex.MultiDex
-import com.flurry.android.FlurryAgent
 import com.william.base_component.extension.logD
 import com.william.base_component.manager.ActivityStackManager
 import kotlin.properties.Delegates
@@ -60,7 +59,6 @@ open class BaseApp : Application() {
             }
 
             override fun onActivityStarted(activity: Activity) {
-                FlurryAgent.onStartSession(activity)
             }
 
             override fun onActivityResumed(activity: Activity) {}
@@ -68,13 +66,12 @@ open class BaseApp : Application() {
             override fun onActivityPaused(activity: Activity) {}
 
             override fun onActivityStopped(activity: Activity) {
-                FlurryAgent.onEndSession(activity)
             }
 
             override fun onActivitySaveInstanceState(activity: Activity, outState: Bundle) {}
 
             override fun onActivityDestroyed(activity: Activity) {
-                ActivityStackManager.endActivity(activity)
+                ActivityStackManager.removeActivity(activity)
             }
         })
     }

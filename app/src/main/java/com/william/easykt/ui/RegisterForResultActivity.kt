@@ -16,6 +16,7 @@
 
 package com.william.easykt.ui
 
+import android.Manifest
 import android.content.Context
 import android.content.pm.PackageManager
 import android.net.Uri
@@ -29,6 +30,7 @@ import com.william.base_component.extension.bindingView
 import com.william.base_component.extension.logE
 import com.william.base_component.extension.logV
 import com.william.base_component.extension.toast
+import com.william.base_component.utils.requestPermission
 import com.william.easykt.databinding.ActivityRegisterForResultBinding
 import com.william.easykt.utils.CropParams
 import com.william.easykt.utils.CropPhotoContract
@@ -115,8 +117,15 @@ class RegisterForResultActivity : BaseActivity() {
                 "设备未安装相机应用，无法拍照".toast()
                 return@setOnClickListener
             }
-            needCrop = false
-            takePhoto.launch(null)
+            requestPermission(
+                this,
+                mutableListOf(Manifest.permission.CAMERA)
+            ) { allGranted, _, _ ->
+                if (allGranted) {
+                    needCrop = false
+                    takePhoto.launch(null)
+                }
+            }
         }
         viewBinding.btnTakePhotoWithCrop.setOnClickListener {
             // 拍照并剪裁图片
@@ -124,8 +133,15 @@ class RegisterForResultActivity : BaseActivity() {
                 "设备未安装相机应用，无法拍照".toast()
                 return@setOnClickListener
             }
-            needCrop = true
-            takePhoto.launch(null)
+            requestPermission(
+                this,
+                mutableListOf(Manifest.permission.CAMERA)
+            ) { allGranted, _, _ ->
+                if (allGranted) {
+                    needCrop = true
+                    takePhoto.launch(null)
+                }
+            }
         }
         viewBinding.btnClearPhoto.setOnClickListener {
             viewBinding.ivImage.setImageBitmap(null)
