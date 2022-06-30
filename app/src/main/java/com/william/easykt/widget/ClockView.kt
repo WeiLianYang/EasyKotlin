@@ -10,6 +10,7 @@ import android.util.AttributeSet
 import android.view.View
 import android.view.animation.Animation
 import android.view.animation.LinearInterpolator
+import com.william.base_component.extension.logD
 import com.william.easykt.R
 import java.util.*
 
@@ -87,8 +88,9 @@ class ClockView @JvmOverloads constructor(
         val timeTextRect = Rect()
         paint?.textSize = textSize.toFloat()
         paint?.getTextBounds(defaultText, 0, defaultText.length, timeTextRect)
-        timeTextStartX = (clockBitmap?.width ?: 0) / 2 - timeTextRect.width() / 2
-        timeTextStartY = (clockBitmap?.height ?: 0) / 2
+        "timeTextRect: $timeTextRect".logD()
+        timeTextStartX = (clockBitmap?.width ?: 0) / 2
+        timeTextStartY = (clockBitmap?.height ?: 0) / 2 - timeTextRect.centerY()
 
         calendar = Calendar.getInstance()
     }
