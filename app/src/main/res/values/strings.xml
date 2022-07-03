@@ -205,5 +205,8 @@
     <string name="title_camera3d_steady">Steady</string>
 
     <string name="action_start">Start</string>
+    <string name="title_volume">Volume</string>
+    <string name="action_volume_up">Volume +</string>
+    <string name="action_volume_down">Volume -</string>
 
 </resources>

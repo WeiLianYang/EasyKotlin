@@ -58,6 +58,14 @@ class SectorViewActivity : BaseActivity() {
         viewBinding.button2.setOnClickListener {
             play2(list)
         }
+
+        viewBinding.btnVolumeUp.setOnClickListener {
+            viewBinding.volumeLayout.volumeUp()
+        }
+
+        viewBinding.btnVolumeDown.setOnClickListener {
+            viewBinding.volumeLayout.volumeDown()
+        }
     }
 
     private fun play1(list: List<SectorBean>) {
