@@ -78,7 +78,7 @@ fun createBubble(context: Context) {
     val target = Intent(context, BubbleActivity::class.java).setAction(Intent.ACTION_VIEW)
         .setData(contentUri)
     val bubbleIntent =
-        PendingIntent.getActivity(context, 2, target, PendingIntent.FLAG_UPDATE_CURRENT)
+        PendingIntent.getActivity(context, 2, target, PendingIntent.FLAG_MUTABLE)
 
     val person = Person.Builder()
         .setName("William")
@@ -102,7 +102,7 @@ fun createBubble(context: Context) {
                     context,
                     1,
                     Intent(context, MainActivity::class.java).putExtra("ek_type", 1),
-                    PendingIntent.FLAG_UPDATE_CURRENT
+                    PendingIntent.FLAG_MUTABLE
                 )
             )
             .setCategory(Notification.CATEGORY_MESSAGE)
