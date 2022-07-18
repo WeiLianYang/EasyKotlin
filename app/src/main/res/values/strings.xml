@@ -26,7 +26,7 @@
     <string name="test_request_permission">申请权限</string>
     <string name="test_open_target_page">打开指定页面</string>
     <string name="test_available_space">查询可用空间</string>
-    <string name="test_flurry_analytics">测试Flurry分析</string>
+    <string name="test_flurry_analytics">Android Id</string>
     <string name="test_flurry_crash">Test Flurry Crash</string>
     <string name="test_nested_scrolling">Nested Scrolling</string>
     <string name="test_kotlin_flow">Test Kotlin Flow</string>

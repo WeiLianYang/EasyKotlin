@@ -16,14 +16,13 @@
 
 package com.william.easykt
 
-import android.app.NotificationChannel
-import android.app.NotificationManager
-import android.app.PendingIntent
+import android.app.*
 import android.content.Context
 import android.content.Intent
 import android.media.RingtoneManager
 import android.os.Build
 import android.os.storage.StorageManager
+import android.provider.Settings
 import androidx.activity.viewModels
 import androidx.core.app.NotificationCompat
 import androidx.core.content.getSystemService
@@ -111,17 +110,11 @@ class MainActivity : BaseActivity() {
                     }
                 }
                 8 -> {
-                    // param keys and values have to be of String type
-//                    val map = hashMapOf("user" to "Jack", "age" to "18")
-                    // up to 10 params can be logged with each event
-//                    FlurryAgent.logEvent("userEvent", map)
+                    val androidId =
+                        Settings.Secure.getString(contentResolver, Settings.Secure.ANDROID_ID)
+                    "androidId: $androidId".logI()
                 }
                 9 -> {
-                    kotlin.runCatching {
-                        throw NullPointerException()
-                    }.onFailure {
-//                        FlurryAgent.onError("errorId", "message", it)
-                    }
                 }
                 10 -> openActivity<NestedScrollingActivity>(mActivity)
                 11 -> openActivity<FlowSampleActivity>(mActivity)
@@ -169,6 +162,31 @@ class MainActivity : BaseActivity() {
                 }
             }
         }
+
+        createOpNotedCallback()
+    }
+
+    private fun createOpNotedCallback() {
+        val appOpsCallback = object : AppOpsManager.OnOpNotedCallback() {
+            private fun logPrivateDataAccess(opCode: String, trace: String) {
+                "Private data accessed. Operation: $opCode\nStack Trace:\n$trace".logD()
+            }
+
+            override fun onNoted(syncNotedAppOp: SyncNotedAppOp) {
+                logPrivateDataAccess(syncNotedAppOp.op, Throwable().stackTrace.toString())
+            }
+
+            override fun onSelfNoted(syncNotedAppOp: SyncNotedAppOp) {
+                logPrivateDataAccess(syncNotedAppOp.op, Throwable().stackTrace.toString())
+            }
+
+            override fun onAsyncNoted(asyncNotedAppOp: AsyncNotedAppOp) {
+                logPrivateDataAccess(asyncNotedAppOp.op, asyncNotedAppOp.message)
+            }
+        }
+
+        val appOpsManager = getSystemService(AppOpsManager::class.java) as AppOpsManager
+        appOpsManager.setOnOpNotedCallback(mainExecutor, appOpsCallback)
     }
 
     private fun showDialog() {
