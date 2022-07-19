@@ -146,6 +146,8 @@ dependencies {
     implementation "androidx.camera:camera-view:${camerax_version}"
     implementation "androidx.camera:camera-extensions:${camerax_version}"
 
+    implementation 'androidx.core:core-splashscreen:1.0.0-beta02'
+
 }
 
 protobuf {

@@ -16,16 +16,22 @@
 
 package com.william.easykt
 
+import android.animation.ObjectAnimator
 import android.app.*
 import android.content.Context
 import android.content.Intent
 import android.media.RingtoneManager
 import android.os.Build
+import android.os.Bundle
 import android.os.storage.StorageManager
 import android.provider.Settings
+import android.view.View
+import android.view.animation.AnticipateInterpolator
 import androidx.activity.viewModels
+import androidx.core.animation.doOnEnd
 import androidx.core.app.NotificationCompat
 import androidx.core.content.getSystemService
+import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.william.base_component.activity.BaseActivity
 import com.william.base_component.extension.*
@@ -52,6 +58,28 @@ class MainActivity : BaseActivity() {
 
     private val viewModel by viewModels<MainViewModel>()
     private lateinit var mAdapter: MainAdapter
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+
+        val splashScreen = installSplashScreen()
+
+        super.onCreate(savedInstanceState)
+
+        // Add a callback that's called when the splash screen is animating to the app content.
+        splashScreen.setOnExitAnimationListener { splashScreenViewProvider ->
+            val splashScreenView = splashScreenViewProvider.view
+            // Create your custom animation.
+            val slideUp = ObjectAnimator.ofFloat(
+                splashScreenView, View.TRANSLATION_Y, 0f, -splashScreenView.height.toFloat()
+            )
+            slideUp.interpolator = AnticipateInterpolator()
+            slideUp.duration = 200L
+            // Call SplashScreenView.remove at the end of your custom animation.
+            slideUp.doOnEnd { splashScreenViewProvider.remove() }
+            // Run your animation.
+            slideUp.start()
+        }
+    }
 
     override fun initAction() {
         viewBinding.recyclerView.apply {
