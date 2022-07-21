@@ -85,6 +85,20 @@ android {
         }
     }
     namespace 'com.william.easykt'
+
+    applicationVariants.all { variant ->
+        variant.outputs.all {
+            outputFileName = "ek_v${defaultConfig.versionName}_${defaultConfig.versionCode}_${buildType.name}.apk"
+            tasks.named("assemble${variant.name.capitalize()}").configure {
+                doLast {
+                    copy {
+                        from outputFile
+                        into "apks"
+                    }
+                }
+            }
+        }
+    }
 }
 
 dependencies {
