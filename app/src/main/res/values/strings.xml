@@ -58,6 +58,7 @@
     <string name="test_camera_demo">Camera Demo</string>
     <string name="test_clock_view">Clock View</string>
     <string name="test_sector_view">Sector View</string>
+    <string name="test_alarm">Alarm Manager</string>
 
     <string name="test_kotlin_flow1">1. 异步计算的值流</string>
     <string name="test_kotlin_flow2">2. 冷流</string>
@@ -208,5 +209,15 @@
     <string name="title_volume">Volume</string>
     <string name="action_volume_up">Volume +</string>
     <string name="action_volume_down">Volume -</string>
+
+    <string name="alarm_exact1">setExact(@AlarmType int type, long triggerAtMillis, PendingIntent operation)</string>
+    <string name="alarm_exact2">setExact(@AlarmType int type, long triggerAtMillis, PendingIntent operation)</string>
+    <string name="alarm_exact3">setExact(@AlarmType int type, long triggerAtMillis, String tag, OnAlarmListener listener, Handler targetHandler)</string>
+
+    <string name="alarm1">set(int type, long triggerAtMillis, PendingIntent operation)</string>
+    <string name="alarm2">set(int type, long triggerAtMillis, String tag, AlarmManager.OnAlarmListener listener, Handler targetHandler)</string>
+    <string name="alarm3">setAlarmClock(AlarmManager.AlarmClockInfo info, PendingIntent operation)</string>
+
+    <string name="alarm_cancel">cancel()</string>
 
 </resources>

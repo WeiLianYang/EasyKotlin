@@ -186,6 +186,7 @@ class MainActivity : BaseActivity() {
                 34 -> openActivity<CameraActivity>(mActivity)
                 35 -> openActivity<ClockViewActivity>(mActivity)
                 36 -> openActivity<SectorViewActivity>(mActivity)
+                37 -> openActivity<AlarmManagerActivity>(mActivity)
                 else -> {
                 }
             }

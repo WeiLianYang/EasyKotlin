@@ -160,6 +160,7 @@
     <uses-permission android:name="android.permission.RECEIVE_WAP_PUSH" />
     <uses-permission android:name="android.permission.RECEIVE_MMS" />
     <uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW" />
+    <uses-permission android:name="android.permission.SCHEDULE_EXACT_ALARM" />
     <uses-permission
         android:name="android.permission.WRITE_SETTINGS"
         tools:ignore="ProtectedPermissions" />
@@ -239,6 +240,7 @@
         <activity android:name=".ui.WebActivity" />
         <activity android:name=".ui.ClockViewActivity" />
         <activity android:name=".ui.SectorViewActivity" />
+        <activity android:name=".ui.AlarmManagerActivity" />
         <activity
             android:name=".ui.CameraxActivity"
             android:configChanges="orientation|screenLayout|screenSize|smallestScreenSize"
@@ -297,6 +299,8 @@
                 android:name="com.william.easykt.startup.CrashHandlerInitializer"
                 android:value="androidx.startup" />
         </provider>
+
+        <receiver android:name=".receiver.AlarmReceiver" />
     </application>
 
 </manifest>
