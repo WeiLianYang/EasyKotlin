@@ -1,5 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
-<!--
+<?xml version="1.0" encoding="utf-8"?><!--
   ~ Copyright WeiLianYang
   ~
   ~ Licensed under the Apache License, Version 2.0 (the "License");
@@ -22,13 +21,31 @@
     android:padding="20dp">
 
     <Button
+        android:id="@+id/btn_setAlarm1"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:lineSpacingExtra="3dp"
+        android:text="@string/alarm1"
+        android:textAllCaps="false"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <Button
+        android:id="@+id/btn_setAlarm2"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:lineSpacingExtra="3dp"
+        android:text="@string/alarm2"
+        android:textAllCaps="false"
+        app:layout_constraintTop_toBottomOf="@+id/btn_setAlarm1" />
+
+    <Button
         android:id="@+id/btn_setExactAlarm1"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:lineSpacingExtra="3dp"
         android:text="@string/alarm_exact1"
         android:textAllCaps="false"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toBottomOf="@+id/btn_setAlarm2" />
 
     <Button
         android:id="@+id/btn_setExactAlarm2"
@@ -49,31 +66,13 @@
         app:layout_constraintTop_toBottomOf="@+id/btn_setExactAlarm2" />
 
     <Button
-        android:id="@+id/btn_setAlarm1"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:lineSpacingExtra="3dp"
-        android:text="@string/alarm1"
-        android:textAllCaps="false"
-        app:layout_constraintTop_toBottomOf="@+id/btn_setExactAlarm3" />
-
-    <Button
-        android:id="@+id/btn_setAlarm2"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:lineSpacingExtra="3dp"
-        android:text="@string/alarm2"
-        android:textAllCaps="false"
-        app:layout_constraintTop_toBottomOf="@+id/btn_setAlarm1" />
-
-    <Button
-        android:id="@+id/btn_setAlarm3"
+        android:id="@+id/btn_setAlarmClock"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:lineSpacingExtra="3dp"
         android:text="@string/alarm3"
         android:textAllCaps="false"
-        app:layout_constraintTop_toBottomOf="@+id/btn_setAlarm2" />
+        app:layout_constraintTop_toBottomOf="@+id/btn_setExactAlarm3" />
 
     <Button
         android:id="@+id/btn_cancelAlarm"
@@ -82,6 +81,6 @@
         android:lineSpacingExtra="3dp"
         android:text="@string/alarm_cancel"
         android:textAllCaps="false"
-        app:layout_constraintTop_toBottomOf="@+id/btn_setAlarm3" />
+        app:layout_constraintTop_toBottomOf="@+id/btn_setAlarmClock" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

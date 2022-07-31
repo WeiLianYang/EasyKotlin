@@ -20,6 +20,7 @@ import android.content.BroadcastReceiver
 import android.content.Context
 import android.content.Intent
 import com.william.base_component.extension.logI
+import com.william.easykt.ui.AlarmManagerActivity
 
 /**
  *  author : WilliamYang
@@ -29,7 +30,9 @@ import com.william.base_component.extension.logI
 class AlarmReceiver : BroadcastReceiver() {
 
     override fun onReceive(context: Context?, intent: Intent?) {
-        "alarm receive".logI()
+        val key1 = intent?.getIntExtra(AlarmManagerActivity.KEY1, -1)
+        val key2 = intent?.getBooleanExtra(AlarmManagerActivity.KEY2, false)
+        "alarm receive, key1: $key1, key2: $key2".logI()
     }
 
 }

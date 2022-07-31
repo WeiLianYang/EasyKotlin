@@ -208,8 +208,8 @@
             android:name=".MainActivity"
             android:exported="true"
             android:launchMode="singleTask"
-            android:theme="@style/Theme.App.Starting"
             android:screenOrientation="portrait"
+            android:theme="@style/Theme.App.Starting"
             tools:ignore="LockedOrientationActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -241,6 +241,7 @@
         <activity android:name=".ui.ClockViewActivity" />
         <activity android:name=".ui.SectorViewActivity" />
         <activity android:name=".ui.AlarmManagerActivity" />
+        <activity android:name=".ui.AlarmNoticeActivity" />
         <activity
             android:name=".ui.CameraxActivity"
             android:configChanges="orientation|screenLayout|screenSize|smallestScreenSize"
