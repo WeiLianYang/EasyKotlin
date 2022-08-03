@@ -23,11 +23,9 @@ import android.content.Intent
 import android.os.Build
 import android.os.Handler
 import android.os.Looper
+import androidx.core.app.AlarmManagerCompat
 import com.william.base_component.activity.BaseActivity
-import com.william.base_component.extension.bindingView
-import com.william.base_component.extension.logI
-import com.william.base_component.extension.logV
-import com.william.base_component.extension.logW
+import com.william.base_component.extension.*
 import com.william.base_component.utils.showSnackbar
 import com.william.easykt.databinding.ActivityAlarmManagerBinding
 import com.william.easykt.receiver.AlarmReceiver
@@ -45,6 +43,8 @@ import java.util.*
 class AlarmManagerActivity : BaseActivity() {
 
     override val viewBinding: ActivityAlarmManagerBinding by bindingView()
+
+    private val fixedTime by lazy { System.currentTimeMillis() }
 
     override fun initData() {
         setTitleText("Alarm Manager")
@@ -72,7 +72,7 @@ class AlarmManagerActivity : BaseActivity() {
         }
 
         viewBinding.btnSetAlarmClock.setOnClickListener {
-
+            setAlarmClock(it.context)
         }
 
         viewBinding.btnCancelAlarm.setOnClickListener {
@@ -129,6 +129,25 @@ class AlarmManagerActivity : BaseActivity() {
             "set exact alarm success 3".logV()
         } else {
             showSnackbar(viewBinding.root, "请在设置中为应用开启闹钟权限")
+        }
+    }
+
+    private fun setAlarmClock(context: Context) {
+        val intent = Intent(context, AlarmNoticeActivity::class.java)
+        // 5秒后
+        val triggerAtMillis = fixedTime + 5 * 1000
+        val manager = context.getSystemService(Context.ALARM_SERVICE) as? AlarmManager
+
+        val nextAlarmTriggerTime = manager?.nextAlarmClock?.triggerTime
+        "nextAlarmTriggerTime: $nextAlarmTriggerTime".logD()
+
+        if (nextAlarmTriggerTime != triggerAtMillis) {
+            val pendingIntent = getPendingIntent(intent, 1)
+            val alarmClockInfo = AlarmManager.AlarmClockInfo(triggerAtMillis, pendingIntent)
+            manager?.setAlarmClock(alarmClockInfo, pendingIntent)
+            "set alarm clock success".logV()
+        } else {
+            "The same alarm clock has been set".logW()
         }
     }
 
