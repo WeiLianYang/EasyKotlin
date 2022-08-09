@@ -17,16 +17,12 @@
 package com.william.easykt
 
 import com.william.base_component.BaseApp
+import dagger.hilt.android.HiltAndroidApp
 
 /**
  *  author : WilliamYang
  *  date : 2021/12/14 15:23
  *  description :
  */
-class App : BaseApp() {
-
-    override fun onCreate() {
-        super.onCreate()
-
-    }
-}
+@HiltAndroidApp
+class App : BaseApp()

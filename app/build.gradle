@@ -20,6 +20,7 @@ plugins {
     id 'kotlin-parcelize'
     id 'kotlin-kapt'
     id "com.google.protobuf" version "0.8.12"
+    id 'dagger.hilt.android.plugin'
 }
 
 def androidConfig = rootProject.ext.android
@@ -161,6 +162,15 @@ dependencies {
     implementation "androidx.camera:camera-extensions:${camerax_version}"
 
     implementation 'androidx.core:core-splashscreen:1.0.0-beta02'
+
+    // Hilt dependencies
+    implementation "com.google.dagger:hilt-android:$hilt_version"
+    kapt "com.google.dagger:hilt-android-compiler:$hilt_version"
+
+    // Hilt testing dependency
+    androidTestImplementation "com.google.dagger:hilt-android-testing:$hilt_version"
+    // Make Hilt generate code in the androidTest folder
+    kaptAndroidTest "com.google.dagger:hilt-android-compiler:$hilt_version"
 
 }
 

@@ -45,7 +45,9 @@ import com.william.easykt.utils.createBubble
 import com.william.easykt.utils.getBuildInfo
 import com.william.easykt.viewmodel.MainViewModel
 import com.zyyoona7.itemdecoration.RecyclerViewDivider
+import dagger.hilt.android.AndroidEntryPoint
 import java.util.*
+import javax.inject.Inject
 
 
 /**
@@ -53,11 +55,14 @@ import java.util.*
  * @date 4/10/21 7:23 PM
  * Class Comment：主入口
  */
+@AndroidEntryPoint
 class MainActivity : BaseActivity() {
     override val viewBinding: ActivityMainBinding by bindingView()
 
     private val viewModel by viewModels<MainViewModel>()
-    private lateinit var mAdapter: MainAdapter
+
+    @Inject
+    lateinit var mAdapter: MainAdapter
 
     override fun onCreate(savedInstanceState: Bundle?) {
 
@@ -83,9 +88,7 @@ class MainActivity : BaseActivity() {
 
     override fun initAction() {
         viewBinding.recyclerView.apply {
-            adapter = MainAdapter().also {
-                mAdapter = it
-            }
+            adapter = mAdapter
             RecyclerViewDivider.staggeredGrid()
                 .includeStartEdge()
                 .includeEdge().spacingSize(R.dimen.dp_10.toPx())

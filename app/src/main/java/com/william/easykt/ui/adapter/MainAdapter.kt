@@ -22,13 +22,16 @@ import com.william.base_component.adapter.BaseRvViewHolder
 import com.william.base_component.extension.toText
 import com.william.easykt.R
 import com.william.easykt.data.MainEntranceBean
+import dagger.hilt.android.scopes.ActivityScoped
+import javax.inject.Inject
 
 /**
  * author：William
  * date：2021/8/27 22:43
  * description：首页入口适配器
  */
-class MainAdapter : BaseRvAdapter<MainEntranceBean>() {
+@ActivityScoped
+class MainAdapter @Inject constructor() : BaseRvAdapter<MainEntranceBean>() {
 
     override val layoutResourceId: Int
         get() = R.layout.item_main_entrance
