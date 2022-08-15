@@ -19,7 +19,7 @@ plugins {
     id 'org.jetbrains.kotlin.android'
     id 'kotlin-parcelize'
     id 'kotlin-kapt'
-    id "com.google.protobuf" version "0.8.12"
+    id "com.google.protobuf" version "0.8.17"
     id 'dagger.hilt.android.plugin'
 }
 
@@ -106,7 +106,7 @@ dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar', '*.aar'])
 
     // Integration with activities
-    implementation 'androidx.activity:activity-compose:1.4.0'
+    implementation 'androidx.activity:activity-compose:1.5.1'
     implementation "androidx.constraintlayout:constraintlayout-compose:1.0.1"
     // Compose Material Design
     implementation "androidx.compose.material:material:$compose_version"
@@ -118,7 +118,7 @@ dependencies {
     // Tooling support (Previews, etc.)
     debugImplementation "androidx.compose.ui:ui-tooling:$compose_version"
     // Integration with ViewModels
-    implementation 'androidx.lifecycle:lifecycle-viewmodel-compose:2.4.1'
+    implementation 'androidx.lifecycle:lifecycle-viewmodel-compose:2.5.1'
     // UI Tests
     androidTestImplementation "androidx.compose.ui:ui-test-junit4:$compose_version"
 
@@ -152,7 +152,7 @@ dependencies {
 
     implementation project(':base_component')
 
-    def camerax_version = "1.2.0-alpha01"
+    def camerax_version = "1.2.0-alpha04"
     implementation "androidx.camera:camera-core:${camerax_version}"
     implementation "androidx.camera:camera-camera2:${camerax_version}"
     implementation "androidx.camera:camera-lifecycle:${camerax_version}"
@@ -161,7 +161,7 @@ dependencies {
     implementation "androidx.camera:camera-view:${camerax_version}"
     implementation "androidx.camera:camera-extensions:${camerax_version}"
 
-    implementation 'androidx.core:core-splashscreen:1.0.0-beta02'
+    implementation 'androidx.core:core-splashscreen:1.0.0'
 
     // Hilt dependencies
     implementation "com.google.dagger:hilt-android:$hilt_version"
@@ -176,7 +176,7 @@ dependencies {
 
 protobuf {
     protoc {
-        artifact = "com.google.protobuf:protoc:3.10.0"
+        artifact = "com.google.protobuf:protoc:3.14.0"
     }
 
     // Generates the java Protobuf-lite code for the Protobufs in this project. See
