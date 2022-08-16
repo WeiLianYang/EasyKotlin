@@ -199,6 +199,9 @@ class MainActivity : BaseActivity() {
     }
 
     private fun createOpNotedCallback() {
+        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.R) {
+            return
+        }
         val appOpsCallback = object : AppOpsManager.OnOpNotedCallback() {
             private fun logPrivateDataAccess(opCode: String, trace: String) {
                 "Private data accessed. Operation: $opCode\nStack Trace:\n$trace".logD()
