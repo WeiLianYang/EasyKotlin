@@ -64,7 +64,7 @@ interface ILoaderInterface {
         imageView: ImageView?,
         @TransformationType transType: Int = DEFAULT_TRANSFORMATION,
         radius: Int = 2,
-        borderWith: Float = 0f,
+        borderWith: Int = 0,
         @ColorRes borderColor: Int = R.color.color_e6e6e6,
         cornerType: CornerType = CornerType.ALL,
         @IntRange(from = 1, to = 25) blurred: Int = 10,

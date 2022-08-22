@@ -31,7 +31,7 @@ open class BaseLoader : ILoaderInterface {
         imageView: ImageView?,
         transType: Int,
         radius: Int,
-        borderWith: Float,
+        borderWith: Int,
         @ColorRes borderColor: Int,
         cornerType: CornerType,
         blurred: Int,

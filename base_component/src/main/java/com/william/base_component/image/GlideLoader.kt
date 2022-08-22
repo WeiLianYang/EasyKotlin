@@ -44,6 +44,7 @@ import com.william.base_component.alias.OnGlideLoadFailed
 import com.william.base_component.alias.OnGlideResourceReady
 import com.william.base_component.extension.dp
 import jp.wasabeef.glide.transformations.BlurTransformation
+import jp.wasabeef.glide.transformations.CropCircleWithBorderTransformation
 import jp.wasabeef.glide.transformations.RoundedCornersTransformation
 import jp.wasabeef.glide.transformations.RoundedCornersTransformation.CornerType
 
@@ -55,7 +56,7 @@ class GlideLoader : BaseLoader() {
         imageView: ImageView?,
         transType: Int,
         radius: Int,
-        borderWith: Float,
+        borderWith: Int,
         borderColor: Int,
         cornerType: CornerType,
         blurred: Int,
@@ -149,7 +150,7 @@ class GlideLoader : BaseLoader() {
     private fun createOptions(
         transType: Int,
         radius: Int,
-        borderWith: Float,
+        borderWith: Int,
         @ColorRes borderColor: Int,
         cornerType: CornerType,
         blurred: Int,
@@ -186,7 +187,7 @@ class GlideLoader : BaseLoader() {
     private fun getMultiTransformation(
         transformationType: Int,
         radius: Int,
-        borderWith: Float,
+        borderWith: Int,
         @ColorRes borderColor: Int,
         cornerType: CornerType,
         blurred: Int,
@@ -200,7 +201,7 @@ class GlideLoader : BaseLoader() {
                 list.apply {
                     add(CircleCrop())
                     add(
-                        GlideCircleBorderTransform(
+                        CropCircleWithBorderTransformation(
                             borderWith,
                             BaseApp.instance.getColor(borderColor)
                         )

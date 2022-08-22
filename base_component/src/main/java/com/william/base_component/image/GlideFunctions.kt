@@ -54,6 +54,7 @@ import com.william.base_component.alias.OnGlideResourceReady
 import com.william.base_component.annotations.TransformationType
 import com.william.base_component.extension.dp
 import jp.wasabeef.glide.transformations.BlurTransformation
+import jp.wasabeef.glide.transformations.CropCircleWithBorderTransformation
 import jp.wasabeef.glide.transformations.RoundedCornersTransformation
 import jp.wasabeef.glide.transformations.RoundedCornersTransformation.CornerType
 import java.io.File
@@ -86,7 +87,7 @@ fun loadImage(
     imageView: ImageView?,
     @TransformationType transType: Int = DEFAULT_TRANSFORMATION,
     @Px radius: Int = 8.dp,
-    @Px borderWith: Float = 0f,
+    @Px borderWith: Int = 0,
     @ColorRes borderColor: Int = R.color.color_e6e6e6,
     cornerType: CornerType = CornerType.ALL,
     @IntRange(from = 1, to = 25) blurred: Int = 10,
@@ -194,7 +195,7 @@ private fun createOptions(
     transformations: ArrayList<Transformation<Bitmap>>?,
     transType: Int,
     radius: Int,
-    borderWith: Float,
+    borderWith: Int,
     @ColorRes borderColor: Int,
     cornerType: CornerType,
     blurred: Int,
@@ -237,7 +238,7 @@ private fun getMultiTransformation(
     transformations: ArrayList<Transformation<Bitmap>>?,
     transformationType: Int,
     radius: Int,
-    borderWith: Float,
+    borderWith: Int,
     @ColorRes borderColor: Int,
     cornerType: CornerType,
     blurred: Int,
@@ -248,15 +249,11 @@ private fun getMultiTransformation(
     when (transformationType) {
         TYPE_CIRCLE -> list.add(CircleCrop())
         TYPE_CIRCLE_BORDER -> {
-            list.apply {
-                add(CircleCrop())
-                add(
-                    GlideCircleBorderTransform(
-                        borderWith,
-                        BaseApp.instance.getColor(borderColor)
-                    )
+            list.add(
+                CropCircleWithBorderTransformation(
+                    borderWith, ContextCompat.getColor(BaseApp.instance, borderColor)
                 )
-            }
+            )
         }
         TYPE_ROUND_RECT -> {
             list.apply {

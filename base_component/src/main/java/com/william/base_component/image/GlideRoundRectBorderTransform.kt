@@ -29,7 +29,7 @@ import java.security.MessageDigest
  * Class Comment：
  */
 class GlideRoundRectBorderTransform internal constructor(
-    borderWidth: Float,
+    borderWidth: Int,
     borderColor: Int,
     radius: Int
 ) : BitmapTransformation() {
@@ -115,7 +115,7 @@ class GlideRoundRectBorderTransform internal constructor(
 
     init {
         mRadius = radius.toFloat()
-        mBorderWidth = BORDER_WIDTH_MINIMUM.coerceAtLeast(borderWidth)
+        mBorderWidth = BORDER_WIDTH_MINIMUM.coerceAtLeast(borderWidth.toFloat())
         mBorderPaint = Paint()
         mBorderPaint.isDither = true
         mBorderPaint.isAntiAlias = true

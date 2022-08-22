@@ -34,7 +34,7 @@ object ImageManager : ILoaderInterface {
         imageView: ImageView?,
         transType: Int,
         radius: Int,
-        borderWith: Float,
+        borderWith: Int,
         borderColor: Int,
         cornerType: CornerType,
         blurred: Int,
