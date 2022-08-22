@@ -243,6 +243,7 @@
         <activity android:name=".ui.AlarmManagerActivity" />
         <activity android:name=".ui.AlarmNoticeActivity" />
         <activity android:name=".ui.GlideActivity" />
+        <activity android:name=".ui.ProfilerActivity" />
 
         <activity
             android:name=".ui.CameraxActivity"

@@ -191,6 +191,7 @@ class MainActivity : BaseActivity() {
                 36 -> openActivity<SectorViewActivity>(mActivity)
                 37 -> openActivity<AlarmManagerActivity>(mActivity)
                 38 -> openActivity<GlideActivity>(mActivity)
+                39 -> openActivity<ProfilerActivity>(mActivity)
                 else -> {
                 }
             }

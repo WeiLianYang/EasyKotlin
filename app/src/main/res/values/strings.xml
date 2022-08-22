@@ -60,6 +60,7 @@
     <string name="test_sector_view">Sector View</string>
     <string name="test_alarm">Alarm Manager</string>
     <string name="test_glide">Glide Demo</string>
+    <string name="test_profiler">Profiler Demo</string>
 
     <string name="test_kotlin_flow1">1. 异步计算的值流</string>
     <string name="test_kotlin_flow2">2. 冷流</string>
@@ -222,5 +223,7 @@
     <string name="alarm_notice">时间到。。。</string>
 
     <string name="alarm_cancel">Cancel Alarm</string>
+
+    <string name="profiler_record">Start Record</string>
 
 </resources>

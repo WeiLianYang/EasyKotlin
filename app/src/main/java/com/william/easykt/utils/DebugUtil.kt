@@ -20,11 +20,13 @@ import android.content.Context
 import android.content.pm.ApplicationInfo
 import android.os.Debug
 import android.os.Process
+import com.william.base_component.extension.logD
 import com.william.easykt.BuildConfig
 import java.io.BufferedReader
 import java.io.File
 import java.io.FileReader
 import java.util.*
+import kotlin.concurrent.thread
 import kotlin.system.exitProcess
 
 /**
@@ -98,4 +100,32 @@ fun isUnderTraced(): Boolean {
         e.printStackTrace()
     }
     return false
+}
+
+/**
+ * 开始跟踪
+ * @param context 使用指定的上下文生成跟踪文件目录和名称
+ */
+fun startTrack(context: Context) {
+    val name = context.javaClass.simpleName
+    val path: String = context.filesDir.path + "/track-${System.currentTimeMillis()}-$name.trace"
+    "path====> $path".logD()
+    Debug.startMethodTracing(path)
+}
+
+/**
+ * 结束跟踪
+ */
+fun stopTrack() {
+    Debug.stopMethodTracing()
+}
+
+/**
+ * 在后台线程中调用
+ * @param func 需要调用的耗时方法
+ */
+fun executeInBackground(func: () -> Unit) {
+    thread {
+        func.invoke()
+    }
 }
