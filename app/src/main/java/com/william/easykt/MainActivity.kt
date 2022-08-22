@@ -190,6 +190,7 @@ class MainActivity : BaseActivity() {
                 35 -> openActivity<ClockViewActivity>(mActivity)
                 36 -> openActivity<SectorViewActivity>(mActivity)
                 37 -> openActivity<AlarmManagerActivity>(mActivity)
+                38 -> openActivity<GlideActivity>(mActivity)
                 else -> {
                 }
             }

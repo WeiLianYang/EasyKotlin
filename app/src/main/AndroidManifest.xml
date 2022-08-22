@@ -242,6 +242,8 @@
         <activity android:name=".ui.SectorViewActivity" />
         <activity android:name=".ui.AlarmManagerActivity" />
         <activity android:name=".ui.AlarmNoticeActivity" />
+        <activity android:name=".ui.GlideActivity" />
+
         <activity
             android:name=".ui.CameraxActivity"
             android:configChanges="orientation|screenLayout|screenSize|smallestScreenSize"

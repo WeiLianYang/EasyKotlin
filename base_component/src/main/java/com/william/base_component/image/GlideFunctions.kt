@@ -279,7 +279,7 @@ private fun getMultiTransformation(
         TYPE_BLURRED -> list.add(BlurTransformation(blurred, scale))
         TYPE_BLURRED_RADIUS -> {
             list.apply {
-                add(CenterCrop())
+//                add(CenterCrop())
                 add(RoundedCornersTransformation(radius, 0, cornerType))
                 add(BlurTransformation(blurred, scale))
             }

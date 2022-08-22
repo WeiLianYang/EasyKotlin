@@ -70,6 +70,7 @@ class MainViewModel : ViewModel() {
             MainEntranceBean(R.string.test_clock_view),
             MainEntranceBean(R.string.test_sector_view),
             MainEntranceBean(R.string.test_alarm),
+            MainEntranceBean(R.string.test_glide),
         )
     )
 
