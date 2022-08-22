@@ -16,7 +16,6 @@
 
 package com.william.base_component.image
 
-import android.content.res.Resources
 import android.graphics.*
 import com.bumptech.glide.load.Key
 import com.bumptech.glide.load.engine.bitmap_recycle.BitmapPool
@@ -115,10 +114,8 @@ class GlideRoundRectBorderTransform internal constructor(
     }
 
     init {
-        val density =
-            Resources.getSystem().displayMetrics.density
-        mRadius = density * radius
-        mBorderWidth = BORDER_WIDTH_MINIMUM.coerceAtLeast(density * borderWidth)
+        mRadius = radius.toFloat()
+        mBorderWidth = BORDER_WIDTH_MINIMUM.coerceAtLeast(borderWidth)
         mBorderPaint = Paint()
         mBorderPaint.isDither = true
         mBorderPaint.isAntiAlias = true

@@ -16,15 +16,20 @@
 
 package com.william.base_component.image
 
+
+import android.annotation.SuppressLint
 import android.app.Activity
 import android.content.Context
 import android.graphics.Bitmap
 import android.graphics.drawable.Drawable
+import android.net.Uri
 import android.view.View
 import android.widget.ImageView
 import androidx.annotation.ColorRes
 import androidx.annotation.DrawableRes
 import androidx.annotation.IntRange
+import androidx.annotation.Px
+import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import com.bumptech.glide.Glide
 import com.bumptech.glide.RequestBuilder
@@ -34,6 +39,7 @@ import com.bumptech.glide.load.MultiTransformation
 import com.bumptech.glide.load.Transformation
 import com.bumptech.glide.load.engine.DiskCacheStrategy
 import com.bumptech.glide.load.engine.GlideException
+import com.bumptech.glide.load.model.GlideUrl
 import com.bumptech.glide.load.resource.bitmap.CenterCrop
 import com.bumptech.glide.load.resource.bitmap.CircleCrop
 import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions
@@ -50,7 +56,8 @@ import com.william.base_component.extension.dp
 import jp.wasabeef.glide.transformations.BlurTransformation
 import jp.wasabeef.glide.transformations.RoundedCornersTransformation
 import jp.wasabeef.glide.transformations.RoundedCornersTransformation.CornerType
-
+import java.io.File
+import java.net.URL
 
 /**
  * 加载图片
@@ -58,12 +65,13 @@ import jp.wasabeef.glide.transformations.RoundedCornersTransformation.CornerType
  * @param url 图片资源
  * @param imageView  目标ImageView
  * @param transType 转换类型
- * @param radius 半径，默认2
+ * @param radius 半径，默认8
  * @param borderWith 外框宽度，默认0f，如果为0，底层设置会取1px（仅对api >= 25 有效）
  * @param borderColor 外框颜色，默认#e6e6e6（仅对api >= 25 有效）
  * @param cornerType 圆角类型，默认CornerType.ALL
  * @param blurred 模糊度,[1,25]，默认10
  * @param scale 缩放度，默认1即不缩放
+ * @param placeholderId 预占位图片id，默认无，推荐传入与想填充的ImageView宽高规格相符的资源引用，否则可能会影响图片转换效果
  * @param errorResId 错误图片id，默认base_icon_loading
  * @param skipMemoryCache 跳过缓存，默认false
  * @param width The width in pixels to use to load the resource.
@@ -77,16 +85,18 @@ fun loadImage(
     url: Any?,
     imageView: ImageView?,
     @TransformationType transType: Int = DEFAULT_TRANSFORMATION,
-    radius: Int = 2,
-    borderWith: Float = 0f,
+    @Px radius: Int = 8.dp,
+    @Px borderWith: Float = 0f,
     @ColorRes borderColor: Int = R.color.color_e6e6e6,
     cornerType: CornerType = CornerType.ALL,
     @IntRange(from = 1, to = 25) blurred: Int = 10,
     scale: Int = 1,
+    @DrawableRes placeholderId: Int = 0,
     @DrawableRes errorResId: Int = R.drawable.base_icon_loading,
     skipMemoryCache: Boolean = false,
     width: Int? = null,
     height: Int? = width,
+    transformations: ArrayList<Transformation<Bitmap>>? = null,
     onResourceReady: OnGlideResourceReady? = null,
     onLoadFailed: OnGlideLoadFailed? = null
 ) {
@@ -94,6 +104,12 @@ fun loadImage(
         is String -> url
         is Int -> url
         is ByteArray -> url
+        is GlideUrl -> url
+        is Bitmap -> url
+        is Drawable -> url
+        is File -> url
+        is URL -> url
+        is Uri -> url
         else -> null
     }
 
@@ -103,8 +119,9 @@ fun loadImage(
         ?.load(recourse)
         ?.apply(
             createOptions(
+                transformations,
                 transType, radius, borderWith, borderColor, cornerType,
-                blurred, scale, errorResId, skipMemoryCache, width, height
+                blurred, scale, placeholderId, errorResId, skipMemoryCache, width, height
             )
         )
         ?.transition(DrawableTransitionOptions.withCrossFade())
@@ -158,6 +175,7 @@ private fun getRequestManager(param: Any?): RequestManager? {
                 Glide.with(it)
             }
             is View -> {
+                // param尽可能使用Activity或者Fragment类型
                 Glide.with(it)
             }
             is Context -> {
@@ -171,7 +189,9 @@ private fun getRequestManager(param: Any?): RequestManager? {
 /**
  * 创建RequestOptions
  */
+@SuppressLint("CheckResult")
 private fun createOptions(
+    transformations: ArrayList<Transformation<Bitmap>>?,
     transType: Int,
     radius: Int,
     borderWith: Float,
@@ -179,18 +199,24 @@ private fun createOptions(
     cornerType: CornerType,
     blurred: Int,
     scale: Int,
+    placeholderId: Int,
     errorResId: Int,
     skipMemoryCache: Boolean,
     width: Int?,
     height: Int?
 ): BaseRequestOptions<*> {
-    val options = RequestOptions()
-        .diskCacheStrategy(DiskCacheStrategy.RESOURCE)
-        .skipMemoryCache(skipMemoryCache)
-        .error(errorResId)
+    val options = RequestOptions().apply {
+        diskCacheStrategy(DiskCacheStrategy.RESOURCE)
+        skipMemoryCache(skipMemoryCache)
+        error(errorResId)
+        if (placeholderId != 0) {
+            placeholder(placeholderId)
+        }
+    }
 
-    if (transType != TYPE_NORMAL) {
+    if (transType != TYPE_NORMAL || !transformations.isNullOrEmpty()) {
         val transformation = getMultiTransformation(
+            transformations,
             transType, radius, borderWith,
             borderColor, cornerType, blurred, scale
         )
@@ -208,6 +234,7 @@ private fun createOptions(
  * 创建MultiTransformation<Bitmap>，用于各种自定义效果
  */
 private fun getMultiTransformation(
+    transformations: ArrayList<Transformation<Bitmap>>?,
     transformationType: Int,
     radius: Int,
     borderWith: Float,
@@ -216,7 +243,7 @@ private fun getMultiTransformation(
     blurred: Int,
     scale: Int
 ): MultiTransformation<Bitmap>? {
-    val list = mutableListOf<Transformation<Bitmap>>()
+    val list = transformations ?: mutableListOf()
 
     when (transformationType) {
         TYPE_CIRCLE -> list.add(CircleCrop())
@@ -237,7 +264,7 @@ private fun getMultiTransformation(
                 add(
                     GlideRoundRectBorderTransform(
                         borderWith,
-                        BaseApp.instance.getColor(borderColor),
+                        ContextCompat.getColor(BaseApp.instance, borderColor),
                         radius
                     )
                 )
@@ -246,18 +273,17 @@ private fun getMultiTransformation(
         TYPE_RADIUS -> {
             list.apply {
                 add(CenterCrop())
-                add(RoundedCornersTransformation(radius.dp, 0, cornerType))
+                add(RoundedCornersTransformation(radius, 0, cornerType))
             }
         }
         TYPE_RADIUS_NOT_CROP -> {
-            list.add(RoundedCornersTransformation(radius.dp, 0, cornerType))
+            list.add(RoundedCornersTransformation(radius, 0, cornerType))
         }
         TYPE_BLURRED -> list.add(BlurTransformation(blurred, scale))
         TYPE_BLURRED_RADIUS -> {
-            // TODO: William 2020/5/24 17:11 这种模式下四周会留下小黑点，原因待查
             list.apply {
                 add(CenterCrop())
-                add(RoundedCornersTransformation(radius.dp, 0, cornerType))
+                add(RoundedCornersTransformation(radius, 0, cornerType))
                 add(BlurTransformation(blurred, scale))
             }
         }
@@ -283,3 +309,11 @@ fun pauseRequests(context: Any?) {
     getRequestManager(context)?.pauseRequests()
 }
 
+/**
+ * @param context 尽量使用activity 或者 fragment的引用
+ */
+fun ImageView?.clear(context: Any?) {
+    this?.let {
+        getRequestManager(context)?.clear(it)
+    }
+}

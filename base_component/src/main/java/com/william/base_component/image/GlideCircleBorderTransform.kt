@@ -16,7 +16,6 @@
 
 package com.william.base_component.image
 
-import android.content.res.Resources
 import android.graphics.*
 import com.bumptech.glide.load.Key
 import com.bumptech.glide.load.engine.bitmap_recycle.BitmapPool
@@ -30,9 +29,7 @@ class GlideCircleBorderTransform internal constructor(borderWidth: Float, border
     private var mBorderWidth = 0f
 
     init {
-        val density =
-            Resources.getSystem().displayMetrics.density
-        mBorderWidth = BORDER_WIDTH_MINIMUM.coerceAtLeast(density * borderWidth)
+        mBorderWidth = BORDER_WIDTH_MINIMUM.coerceAtLeast(borderWidth)
         mBorderPaint = Paint()
         mBorderPaint.isDither = true
         mBorderPaint.isAntiAlias = true
