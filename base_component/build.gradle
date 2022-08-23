@@ -75,7 +75,10 @@ dependencies {
 
     // datastore
     api 'androidx.datastore:datastore-preferences:1.0.0'
-    api 'com.google.protobuf:protobuf-javalite:3.19.4'
+    api 'com.google.protobuf:protobuf-javalite:3.21.5'
+
+    // kotlin-reflect
+    api "org.jetbrains.kotlin:kotlin-reflect:$kotlin_version"
 
     // coroutine
     api "org.jetbrains.kotlinx:kotlinx-coroutines-core:$kotlin_coroutines"
@@ -101,8 +104,8 @@ dependencies {
     api 'com.squareup.retrofit2:retrofit:2.9.0'
     api 'com.squareup.retrofit2:converter-gson:2.9.0'
     api 'com.squareup.retrofit2:adapter-rxjava2:2.9.0'
-    api 'com.squareup.okhttp3:okhttp:4.9.3'
-    api 'com.squareup.okhttp3:logging-interceptor:4.9.3'
+    api 'com.squareup.okhttp3:okhttp:4.10.0'
+    api 'com.squareup.okhttp3:logging-interceptor:4.10.0'
 
     api 'com.jakewharton.rxbinding3:rxbinding:3.1.0'
 
@@ -111,7 +114,7 @@ dependencies {
 
     api 'com.williamyang.debugtools:debugtoolslib:1.0.0'
 
-    api 'com.github.zhpanvip:BannerViewPager:3.5.0'
+    api 'com.github.zhpanvip:BannerViewPager:3.5.6'
 
     api 'com.jeremyliao:live-event-bus-x:1.7.3'
 

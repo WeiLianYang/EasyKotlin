@@ -192,6 +192,7 @@ class MainActivity : BaseActivity() {
                 37 -> openActivity<AlarmManagerActivity>(mActivity)
                 38 -> openActivity<GlideActivity>(mActivity)
                 39 -> openActivity<ProfilerActivity>(mActivity)
+                40 -> openActivity<DataStoreActivity>(mActivity)
                 else -> {
                 }
             }
