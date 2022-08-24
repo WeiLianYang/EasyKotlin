@@ -226,9 +226,7 @@
     <string name="alarm_cancel">Cancel Alarm</string>
 
     <string name="profiler_record">Start Record</string>
-    <string name="datastore_save_preferences">Save Preferences Data</string>
-    <string name="datastore_read_preferences">Read Preferences Data</string>
+    <string name="datastore_save_preferences">Save Random Preferences Data</string>
     <string name="datastore_save_proto">Save Proto Data</string>
-    <string name="datastore_read_proto">Read Proto Data</string>
 
 </resources>

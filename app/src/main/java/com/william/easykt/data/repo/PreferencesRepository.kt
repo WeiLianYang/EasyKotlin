@@ -18,8 +18,12 @@ package com.william.easykt.data.repo
 
 import androidx.datastore.core.DataStore
 import androidx.datastore.preferences.core.*
+import com.william.base_component.extension.get
+import com.william.base_component.extension.logD
 import com.william.base_component.extension.logW
 import com.william.base_component.extension.put
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.combine
 
 
 /**
@@ -43,6 +47,41 @@ class PreferencesRepository(private val dataStore: DataStore<Preferences>) {
 
     private val stringSetKey = stringSetPreferencesKey("key_pref_string_set")
 
+    private val intFlow = dataStore.get(intKey, 0)
+
+    private val longFlow = dataStore.get(longKey, 0L)
+
+    private val floatFlow = dataStore.get(floatKey, .0f)
+
+    private val doubleFlow = dataStore.get(doubleKey, .0)
+
+    private val boolFlow = dataStore.get(boolKey, false)
+
+    private val stringFlow = dataStore.get(stringKey, "")
+
+    private val stringSetFlow = dataStore.get(stringSetKey, setOf())
+
+    val combineFlow: Flow<String> = combine(
+        intFlow, longFlow, floatFlow, doubleFlow,
+        boolFlow, stringFlow, stringSetFlow
+    ) { array ->
+        val builder = StringBuilder()
+        array.forEach { item ->
+            when (item) {
+                is Int -> builder.append("Int value: ")
+                is Long -> builder.append("Long value: ")
+                is Float -> builder.append("Float value: ")
+                is Double -> builder.append("Double value: ")
+                is Boolean -> builder.append("Boolean value: ")
+                is String -> builder.append("String value: ")
+                is Set<*> -> builder.append("Set<String> value: ")
+            }
+            builder.append(item).append("\n")
+        }
+        "builder: $builder".logD()
+        return@combine builder.toString()
+    }
+
     suspend fun savePreferencesData(value: Any?) {
         when (value) {
             is Int -> dataStore.put(intKey, value)
@@ -55,8 +94,7 @@ class PreferencesRepository(private val dataStore: DataStore<Preferences>) {
                 @Suppress("UNCHECKED_CAST")
                 dataStore.put(stringSetKey, value as Set<String>)
             }
-            else -> "value is null".logW()
+            else -> "can not save value".logW()
         }
-
     }
 }

@@ -25,6 +25,7 @@ import com.william.easykt.data.repo.PreferencesRepository
 import com.william.easykt.databinding.ActivityDatastoreBinding
 import com.william.easykt.viewmodel.DataStoreViewModel
 import com.william.easykt.viewmodel.provideFactory
+import kotlin.random.Random
 
 
 /**
@@ -44,12 +45,28 @@ class DataStoreActivity : BaseActivity() {
         super.initView()
 
         viewBinding.button1.setOnClickListener {
-            viewModel.savePreferencesData(1)
+            viewModel.savePreferencesData(Random.nextInt())
+            viewModel.savePreferencesData(Random.nextLong(100000000))
+            viewModel.savePreferencesData(Random.nextFloat())
+            viewModel.savePreferencesData(Random.nextDouble())
+            viewModel.savePreferencesData(Random.nextBoolean())
+            viewModel.savePreferencesData("random string: ${Random.nextInt(6)}")
+            viewModel.savePreferencesData(
+                setOf(
+                    "set${Random.nextBits(2)}",
+                    "set${Random.nextBits(4)}",
+                    "set${Random.nextBits(8)}"
+                )
+            )
         }
     }
 
     override fun initData() {
         setTitleText(R.string.test_datastore)
+
+        viewModel.preferencesData.observe(this) {
+            viewBinding.text1.text = it
+        }
     }
 
 }

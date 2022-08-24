@@ -16,6 +16,7 @@
 
 package com.william.easykt.viewmodel
 
+import androidx.lifecycle.asLiveData
 import androidx.lifecycle.viewModelScope
 import com.william.easykt.data.repo.PreferencesRepository
 import kotlinx.coroutines.launch
@@ -27,6 +28,8 @@ import kotlinx.coroutines.launch
  * description：data store view model
  */
 class DataStoreViewModel(private val repository: PreferencesRepository) : BaseViewModel() {
+
+    val preferencesData = repository.combineFlow.asLiveData()
 
     /** 保存 Preferences 数据 */
     fun savePreferencesData(value: Any?) {

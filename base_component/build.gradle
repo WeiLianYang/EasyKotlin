@@ -151,7 +151,7 @@ dependencies {
 
     api 'com.jakewharton.timber:timber:4.7.1'
 
-    api 'androidx.constraintlayout:constraintlayout:2.1.4'
+    implementation 'androidx.constraintlayout:constraintlayout:2.1.4'
 
     // https://github.com/mmin18/RealtimeBlurView
     api 'com.github.mmin18:realtimeblurview:1.2.1'

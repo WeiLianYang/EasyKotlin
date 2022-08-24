@@ -122,7 +122,7 @@ dependencies {
     // UI Tests
     androidTestImplementation "androidx.compose.ui:ui-test-junit4:$compose_version"
 
-    implementation 'io.coil-kt:coil-compose:2.0.0'
+    implementation 'io.coil-kt:coil-compose:2.1.0'
 
     testImplementation 'junit:junit:4.13.2'
     androidTestImplementation 'androidx.test:core-ktx:1.4.0'
@@ -162,6 +162,8 @@ dependencies {
     implementation "androidx.camera:camera-extensions:${camerax_version}"
 
     implementation 'androidx.core:core-splashscreen:1.0.0'
+
+    implementation 'androidx.constraintlayout:constraintlayout:2.1.4'
 
     // Hilt dependencies
     implementation "com.google.dagger:hilt-android:$hilt_version"

@@ -31,38 +31,45 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:textAllCaps="false"
-        tools:layout_editor_absoluteX="124dp"
-        tools:layout_editor_absoluteY="75dp" />
+        app:textAllCaps="false" />
 
     <TextView
         android:id="@+id/text1"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginStart="20dp"
         android:layout_marginTop="20dp"
+        android:layout_marginEnd="20dp"
+        android:lineSpacingExtra="8dp"
+        android:textColor="#ff0000"
+        android:textSize="18sp"
         app:layout_constraintTop_toBottomOf="@+id/button1"
-        app:textAllCaps="false" />
-
+        app:textAllCaps="false"
+        tools:text="preference value" />
 
     <Button
         android:id="@+id/button2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="50dp"
+        android:layout_marginTop="36dp"
         android:text="@string/datastore_save_proto"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/text1"
-        app:textAllCaps="false"
-        tools:layout_editor_absoluteX="124dp"
-        tools:layout_editor_absoluteY="75dp" />
+        app:textAllCaps="false" />
 
     <TextView
         android:id="@+id/text2"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginStart="20dp"
         android:layout_marginTop="20dp"
+        android:layout_marginEnd="20dp"
+        android:lineSpacingExtra="8dp"
+        android:textColor="#00ff00"
+        android:textSize="18sp"
         app:layout_constraintTop_toBottomOf="@+id/button2"
-        app:textAllCaps="false" />
+        app:textAllCaps="false"
+        tools:text="proto value" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
