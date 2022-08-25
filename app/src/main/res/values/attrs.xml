@@ -46,4 +46,11 @@
 
     </declare-styleable>
 
+    <declare-styleable name="CircleLayout">
+
+        <!--圆形半径-->
+        <attr name="circle_radius" format="dimension" />
+
+    </declare-styleable>
+
 </resources>
