@@ -16,17 +16,29 @@
 
 package com.william.easykt.ui
 
+import android.content.Context
 import androidx.activity.viewModels
+import androidx.datastore.core.DataStore
+import androidx.datastore.dataStore
 import com.william.base_component.activity.BaseActivity
+import com.william.base_component.extension.APP_DATA_STORE_FILE_NAME
 import com.william.base_component.extension.bindingView
 import com.william.base_component.extension.dataStore
 import com.william.easykt.R
+import com.william.easykt.UserPreferences
 import com.william.easykt.data.repo.PreferencesRepository
+import com.william.easykt.data.repo.UserPreferencesRepository
 import com.william.easykt.databinding.ActivityDatastoreBinding
+import com.william.easykt.datastore.serializer.UserPreferencesSerializer
 import com.william.easykt.viewmodel.DataStoreViewModel
 import com.william.easykt.viewmodel.provideFactory
 import kotlin.random.Random
 
+// Build the DataStore
+private val Context.userPreferencesStore: DataStore<UserPreferences> by dataStore(
+    fileName = APP_DATA_STORE_FILE_NAME,
+    serializer = UserPreferencesSerializer()
+)
 
 /**
  * @author William
@@ -38,7 +50,10 @@ class DataStoreActivity : BaseActivity() {
     override val viewBinding: ActivityDatastoreBinding by bindingView()
 
     private val viewModel: DataStoreViewModel by viewModels {
-        provideFactory<DataStoreViewModel>(PreferencesRepository(dataStore))
+        provideFactory<DataStoreViewModel>(
+            PreferencesRepository(dataStore),
+            UserPreferencesRepository(userPreferencesStore)
+        )
     }
 
     override fun initView() {

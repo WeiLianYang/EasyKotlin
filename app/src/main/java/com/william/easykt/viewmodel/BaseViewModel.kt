@@ -31,7 +31,7 @@ open class BaseViewModel : ViewModel()
 /**
  * 创建 ViewModelProvider.Factory
  */
-inline fun <reified VM : BaseViewModel> provideFactory(repository: Any): ViewModelProvider.Factory {
+inline fun <reified VM : BaseViewModel> provideFactory(vararg repository: Any): ViewModelProvider.Factory {
     return object : ViewModelProvider.Factory {
         override fun <T : ViewModel> create(modelClass: Class<T>): T {
             val clazz = VM::class

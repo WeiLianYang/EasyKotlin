@@ -1,0 +1,21 @@
+syntax = "proto3";
+
+option java_package = "com.william.easykt";
+option java_multiple_files = true;
+
+message UserPreferences {
+  bool variable_bool = 1;
+  int32 variable_int32 = 2;
+  float variable_float = 3;
+  double variable_double = 4;
+  string variable_string = 5;
+  Season season = 6;
+
+  enum Season {
+    SPRING = 0;
+    SUMMER = 1;
+    AUTUMN = 2;
+    WINTER = 3;
+  }
+
+}

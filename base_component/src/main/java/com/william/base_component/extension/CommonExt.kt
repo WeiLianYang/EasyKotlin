@@ -36,6 +36,8 @@ import java.io.IOException
 
 val Context.dataStore by preferencesDataStore("easyKt_prefs")
 
+const val APP_DATA_STORE_FILE_NAME = "user_prefs.pb"
+
 suspend fun <T> DataStore<Preferences>.put(key: Preferences.Key<T>, value: T) {
     edit { preferences ->
         preferences[key] = value

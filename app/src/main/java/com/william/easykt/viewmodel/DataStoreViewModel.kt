@@ -17,8 +17,10 @@
 package com.william.easykt.viewmodel
 
 import androidx.lifecycle.asLiveData
+import androidx.lifecycle.liveData
 import androidx.lifecycle.viewModelScope
 import com.william.easykt.data.repo.PreferencesRepository
+import com.william.easykt.data.repo.UserPreferencesRepository
 import kotlinx.coroutines.launch
 
 
@@ -27,9 +29,18 @@ import kotlinx.coroutines.launch
  * date：2022/8/23 21:36
  * description：data store view model
  */
-class DataStoreViewModel(private val repository: PreferencesRepository) : BaseViewModel() {
+class DataStoreViewModel(
+    private val repository: PreferencesRepository,
+    private val userRepo: UserPreferencesRepository
+) : BaseViewModel() {
 
     val preferencesData = repository.combineFlow.asLiveData()
+
+    val userPreferencesData = userRepo.userPreferencesFlow.asLiveData()
+
+    val firstData = liveData {
+        emit(userRepo.getPreferencesData())
+    }
 
     /** 保存 Preferences 数据 */
     fun savePreferencesData(value: Any?) {
@@ -39,8 +50,10 @@ class DataStoreViewModel(private val repository: PreferencesRepository) : BaseVi
     }
 
     /** 保存 Proto 数据 */
-    fun saveProtoData() {
-
+    fun saveUserPreferencesData(value: Any?) {
+        viewModelScope.launch {
+            userRepo.saveUserPreferencesData(value)
+        }
     }
 
 }
