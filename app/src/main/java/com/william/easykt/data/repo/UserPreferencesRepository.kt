@@ -21,7 +21,6 @@ import com.william.base_component.extension.logE
 import com.william.easykt.UserPreferences
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.catch
-import kotlinx.coroutines.flow.first
 import java.io.IOException
 
 
@@ -42,19 +41,15 @@ class UserPreferencesRepository(private val dataStore: DataStore<UserPreferences
             }
         }
 
-    suspend fun getPreferencesData() = dataStore.data.first()
-
-    suspend fun saveUserPreferencesData(value: Any?) {
+    suspend fun saveUserPreferencesData(preferences: UserPreferences) {
         dataStore.updateData { currentPref ->
-            when (value) {
-                is Int -> currentPref.toBuilder().setVariableInt32(value).build()
-                is Float -> currentPref.toBuilder().setVariableFloat(value).build()
-                is Double -> currentPref.toBuilder().setVariableDouble(value).build()
-                is Boolean -> currentPref.toBuilder().setVariableBool(value).build()
-                is String -> currentPref.toBuilder().setVariableString(value).build()
-                is UserPreferences.Season -> currentPref.toBuilder().setSeason(value).build()
-                else -> currentPref.toBuilder().build()
-            }
+            currentPref.toBuilder()
+                .setVariableInt32(preferences.variableInt32)
+                .setVariableFloat(preferences.variableFloat)
+                .setVariableDouble(preferences.variableDouble)
+                .setVariableBool(preferences.variableBool)
+                .setVariableString(preferences.variableString)
+                .setSeason(preferences.season).build()
         }
     }
 

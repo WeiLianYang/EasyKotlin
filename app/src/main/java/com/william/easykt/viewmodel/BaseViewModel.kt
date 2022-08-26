@@ -37,7 +37,7 @@ inline fun <reified VM : BaseViewModel> provideFactory(vararg repository: Any): 
             val clazz = VM::class
             if (modelClass.isAssignableFrom(clazz.java)) {
                 @Suppress("UNCHECKED_CAST")
-                return clazz.primaryConstructor?.call(repository) as T
+                return clazz.primaryConstructor?.call(*repository) as T
             }
             throw IllegalArgumentException("Unknown ViewModel class")
         }

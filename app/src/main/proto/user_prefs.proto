@@ -3,13 +3,27 @@ syntax = "proto3";
 option java_package = "com.william.easykt";
 option java_multiple_files = true;
 
+/*
+ * https://developers.google.com/protocol-buffers/docs/proto3?hl=zh-
+ *
+ * 字段编号不能改变用途或重复使用，字段编号用于在消息二进制格式中标识字段
+ * 1 到 15 范围内的字段编号需要一个字节进行编码，包括字段编号和字段类型（您可以在Protocol Buffer Encoding中找到更多相关信息）。
+ * 16 到 2047 范围内的字段编号占用两个字节。因此，您应该为非常频繁出现的消息元素保留数字 1 到 15
+ *
+ * 对于字符串，默认值为空字符串。
+ * 对于字节，默认值为空字节。
+ * 对于布尔值，默认值为 false。
+ * 对于数字类型，默认值为零。
+ * 对于enums，默认值是第一个定义的 enum value，它必须是 0。
+ */
 message UserPreferences {
-  bool variable_bool = 1;
-  int32 variable_int32 = 2;
-  float variable_float = 3;
-  double variable_double = 4;
-  string variable_string = 5;
-  Season season = 6;
+  bool variable_bool = 1; // 默认值为 false
+  int32 variable_int32 = 2; // java int, 默认值为零
+  int64 variable_int64 = 3; // java long, 默认值为零
+  float variable_float = 4;
+  double variable_double = 5;
+  string variable_string = 6; // 默认值为空串
+  Season season = 7;
 
   enum Season {
     SPRING = 0;

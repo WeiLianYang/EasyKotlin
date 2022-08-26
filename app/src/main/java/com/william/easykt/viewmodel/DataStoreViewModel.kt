@@ -17,8 +17,8 @@
 package com.william.easykt.viewmodel
 
 import androidx.lifecycle.asLiveData
-import androidx.lifecycle.liveData
 import androidx.lifecycle.viewModelScope
+import com.william.easykt.UserPreferences
 import com.william.easykt.data.repo.PreferencesRepository
 import com.william.easykt.data.repo.UserPreferencesRepository
 import kotlinx.coroutines.launch
@@ -38,10 +38,6 @@ class DataStoreViewModel(
 
     val userPreferencesData = userRepo.userPreferencesFlow.asLiveData()
 
-    val firstData = liveData {
-        emit(userRepo.getPreferencesData())
-    }
-
     /** 保存 Preferences 数据 */
     fun savePreferencesData(value: Any?) {
         viewModelScope.launch {
@@ -50,9 +46,9 @@ class DataStoreViewModel(
     }
 
     /** 保存 Proto 数据 */
-    fun saveUserPreferencesData(value: Any?) {
+    fun saveUserPreferencesData(preferences: UserPreferences) {
         viewModelScope.launch {
-            userRepo.saveUserPreferencesData(value)
+            userRepo.saveUserPreferencesData(preferences)
         }
     }
 

@@ -74,6 +74,21 @@ class DataStoreActivity : BaseActivity() {
                 )
             )
         }
+
+        viewBinding.button2.setOnClickListener {
+
+            val userPreferences = UserPreferences.newBuilder()
+                .setVariableInt32(Random.nextInt())
+                .setVariableInt64(Random.nextLong(100000000))
+                .setVariableFloat(Random.nextFloat())
+                .setVariableDouble(Random.nextDouble())
+                .setVariableBool(true)
+                .setVariableString("random string: ${Random.nextInt(6)}")
+                .setSeason(UserPreferences.Season.AUTUMN)
+                .build()
+
+            viewModel.saveUserPreferencesData(userPreferences)
+        }
     }
 
     override fun initData() {
@@ -81,6 +96,10 @@ class DataStoreActivity : BaseActivity() {
 
         viewModel.preferencesData.observe(this) {
             viewBinding.text1.text = it
+        }
+
+        viewModel.userPreferencesData.observe(this) {
+            viewBinding.text2.text = it.toString()
         }
     }
 
