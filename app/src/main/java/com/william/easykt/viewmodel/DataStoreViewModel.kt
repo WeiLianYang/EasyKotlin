@@ -22,6 +22,7 @@ import com.william.easykt.UserPreferences
 import com.william.easykt.data.repo.PreferencesRepository
 import com.william.easykt.data.repo.UserPreferencesRepository
 import kotlinx.coroutines.launch
+import kotlin.random.Random
 
 
 /**
@@ -39,15 +40,37 @@ class DataStoreViewModel(
     val userPreferencesData = userRepo.userPreferencesFlow.asLiveData()
 
     /** 保存 Preferences 数据 */
-    fun savePreferencesData(value: Any?) {
+    fun savePreferencesData() {
         viewModelScope.launch {
-            repository.savePreferencesData(value)
+            repository.savePreferencesData(Random.nextInt())
+            repository.savePreferencesData(Random.nextLong(100000000))
+            repository.savePreferencesData(Random.nextFloat())
+            repository.savePreferencesData(Random.nextDouble())
+            repository.savePreferencesData(Random.nextBoolean())
+            repository.savePreferencesData("random string: ${Random.nextInt(6)}")
+            repository.savePreferencesData(
+                setOf(
+                    "set${Random.nextBits(2)}",
+                    "set${Random.nextBits(4)}",
+                    "set${Random.nextBits(8)}"
+                )
+            )
         }
     }
 
     /** 保存 Proto 数据 */
-    fun saveUserPreferencesData(preferences: UserPreferences) {
+    fun saveUserPreferencesData() {
         viewModelScope.launch {
+            val preferences = UserPreferences.newBuilder()
+                .setVariableInt32(Random.nextInt())
+                .setVariableInt64(Random.nextLong(100000000))
+                .setVariableFloat(Random.nextFloat())
+                .setVariableDouble(Random.nextDouble())
+                .setVariableBool(true)
+                .setVariableString("random string: ${Random.nextInt(6)}")
+                .setSeason(UserPreferences.Season.AUTUMN)
+                .build()
+
             userRepo.saveUserPreferencesData(preferences)
         }
     }

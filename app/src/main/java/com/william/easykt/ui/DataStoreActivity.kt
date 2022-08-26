@@ -32,7 +32,6 @@ import com.william.easykt.databinding.ActivityDatastoreBinding
 import com.william.easykt.datastore.serializer.UserPreferencesSerializer
 import com.william.easykt.viewmodel.DataStoreViewModel
 import com.william.easykt.viewmodel.provideFactory
-import kotlin.random.Random
 
 // Build the DataStore
 private val Context.userPreferencesStore: DataStore<UserPreferences> by dataStore(
@@ -60,34 +59,11 @@ class DataStoreActivity : BaseActivity() {
         super.initView()
 
         viewBinding.button1.setOnClickListener {
-            viewModel.savePreferencesData(Random.nextInt())
-            viewModel.savePreferencesData(Random.nextLong(100000000))
-            viewModel.savePreferencesData(Random.nextFloat())
-            viewModel.savePreferencesData(Random.nextDouble())
-            viewModel.savePreferencesData(Random.nextBoolean())
-            viewModel.savePreferencesData("random string: ${Random.nextInt(6)}")
-            viewModel.savePreferencesData(
-                setOf(
-                    "set${Random.nextBits(2)}",
-                    "set${Random.nextBits(4)}",
-                    "set${Random.nextBits(8)}"
-                )
-            )
+            viewModel.savePreferencesData()
         }
 
         viewBinding.button2.setOnClickListener {
-
-            val userPreferences = UserPreferences.newBuilder()
-                .setVariableInt32(Random.nextInt())
-                .setVariableInt64(Random.nextLong(100000000))
-                .setVariableFloat(Random.nextFloat())
-                .setVariableDouble(Random.nextDouble())
-                .setVariableBool(true)
-                .setVariableString("random string: ${Random.nextInt(6)}")
-                .setSeason(UserPreferences.Season.AUTUMN)
-                .build()
-
-            viewModel.saveUserPreferencesData(userPreferences)
+            viewModel.saveUserPreferencesData()
         }
     }
 

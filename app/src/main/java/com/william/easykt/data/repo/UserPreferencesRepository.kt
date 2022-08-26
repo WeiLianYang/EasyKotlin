@@ -21,6 +21,7 @@ import com.william.base_component.extension.logE
 import com.william.easykt.UserPreferences
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.catch
+import kotlinx.coroutines.flow.first
 import java.io.IOException
 
 
@@ -40,6 +41,8 @@ class UserPreferencesRepository(private val dataStore: DataStore<UserPreferences
                 throw e
             }
         }
+
+    suspend fun getUserPreferences(): UserPreferences = dataStore.data.first()
 
     suspend fun saveUserPreferencesData(preferences: UserPreferences) {
         dataStore.updateData { currentPref ->

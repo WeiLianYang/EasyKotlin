@@ -19,7 +19,7 @@ plugins {
     id 'org.jetbrains.kotlin.android'
     id 'kotlin-parcelize'
     id 'kotlin-kapt'
-    id "com.google.protobuf" version "0.8.17"
+    id "com.google.protobuf" version "0.8.19"
     id 'dagger.hilt.android.plugin'
 }
 
