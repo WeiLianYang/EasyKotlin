@@ -421,5 +421,15 @@
                 app:layout_constraintTop_toTopOf="parent" />
         </com.william.easykt.widget.CircleLayout>
 
+        <com.william.easykt.widget.CircleImageView
+            android:id="@+id/civ1"
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            android:layout_marginStart="10dp"
+            android:scaleType="centerCrop"
+            android:src="@drawable/scroll_image"
+            app:layout_constraintStart_toStartOf="@+id/cl_1"
+            app:layout_constraintTop_toBottomOf="@+id/cl_1" />
+
     </androidx.constraintlayout.widget.ConstraintLayout>
 </androidx.core.widget.NestedScrollView>
