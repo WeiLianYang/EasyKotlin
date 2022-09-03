@@ -23,6 +23,7 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.first
 import java.io.IOException
+import kotlin.random.Random
 
 
 /**
@@ -46,13 +47,54 @@ class UserPreferencesRepository(private val dataStore: DataStore<UserPreferences
 
     suspend fun saveUserPreferencesData(preferences: UserPreferences) {
         dataStore.updateData { currentPref ->
+            val innerMsg =
+                UserPreferences.InnerMsg.newBuilder().setInnerKey1(Random.nextInt(100))
+                    .setInnerKey2("222,${Random.nextInt(100)}").build()
+
             currentPref.toBuilder()
                 .setVariableInt32(preferences.variableInt32)
+                .setVariableInt64(preferences.variableInt64)
                 .setVariableFloat(preferences.variableFloat)
                 .setVariableDouble(preferences.variableDouble)
                 .setVariableBool(preferences.variableBool)
                 .setVariableString(preferences.variableString)
-                .setSeason(preferences.season).build()
+                .setSeason(preferences.season)
+//                .putVarMap("key1", 1)
+//                .putVarMap("key2", 2)
+                .putAllVarMap(
+                    mapOf(
+                        Pair("key1", Random.nextInt(100)),
+                        Pair("key2", Random.nextInt(100))
+                    )
+                )
+                .setInnerMsg(innerMsg)
+                .build()
+        }
+    }
+
+    suspend fun saveUserPreferencesDataKt(preferences: UserPreferences) {
+        dataStore.updateData { currentPref ->
+            val inner_msg = UserPreferences.InnerMsg.newBuilder().apply {
+                innerKey1 = Random.nextInt(100)
+                innerKey2 = "222,${Random.nextInt(100)}"
+            }.build()
+
+            currentPref.toBuilder().apply {
+                variableInt32 = preferences.variableInt32
+                variableInt64 = preferences.variableInt64
+                variableFloat = preferences.variableFloat
+                variableDouble = preferences.variableDouble
+                variableBool = preferences.variableBool
+                variableString = preferences.variableString
+                season = preferences.season
+                putAllVarMap(
+                    mapOf(
+                        Pair("key1", Random.nextInt(100)),
+                        Pair("key2", Random.nextInt(100))
+                    )
+                )
+                innerMsg = inner_msg
+            }.build()
         }
     }
 

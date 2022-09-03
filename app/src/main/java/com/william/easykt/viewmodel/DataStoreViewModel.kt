@@ -71,7 +71,8 @@ class DataStoreViewModel(
                 .setSeason(UserPreferences.Season.AUTUMN)
                 .build()
 
-            userRepo.saveUserPreferencesData(preferences)
+//            userRepo.saveUserPreferencesData(preferences)
+            userRepo.saveUserPreferencesDataKt(preferences)
         }
     }
 

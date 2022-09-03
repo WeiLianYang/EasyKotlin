@@ -1,7 +1,25 @@
 syntax = "proto3";
 
+/*
+ * 要用于生成的 Java/Kotlin 类的包。如果文件中没有给出明确java_package的选项.proto，
+ * 那么默认情况下将使用 proto 包（使用文件中的“package”关键字指定.proto）。
+ * 但是，proto 包通常不能制作好的 Java 包，因为不期望 proto 包以反向域名开头
+ */
 option java_package = "com.william.easykt";
+
+/*
+ * 如果为 false，则只会.java为此文件生成一个.proto文件，以及所有 Java 类/枚举/等。
+ *    为顶级消息、服务和枚举生成的将嵌套在外部类中（请参阅 参考资料java_outer_classname）。
+ * 如果为 true，.java将为每个 Java 类/枚举/等生成单独的文件。为顶级消息、服务和枚举生成，
+ *    并且为此.proto文件生成的包装 Java 类将不包含任何嵌套类/枚举/等。
+ */
 option java_multiple_files = true;
+
+/*
+ * 要生成的包装 Java 类的类名（以及文件名）。如果文件中没有明确java_outer_classname指定，
+ * .proto则将通过将.proto文件名转换为驼峰式来构造类名（因此foo_bar.proto变为FooBar.java）
+ */
+option java_outer_classname = "UserPres";
 
 /*
  * https://developers.google.com/protocol-buffers/docs/proto3?hl=zh-
@@ -24,12 +42,21 @@ message UserPreferences {
   double variable_double = 5;
   string variable_string = 6; // 默认值为空串
   Season season = 7;
+  reserved 8;
+  repeated Season seasons = 9; // 该字段可以在格式良好的消息中重复任意次数（包括零次）。重复值的顺序将被保留。
+  map <string, int32> var_map = 10;
+  InnerMsg innerMsg = 11;
 
   enum Season {
     SPRING = 0;
     SUMMER = 1;
     AUTUMN = 2;
     WINTER = 3;
+  }
+
+  message InnerMsg {
+    int32 inner_key1 = 1;
+    string inner_key2 = 2;
   }
 
 }
