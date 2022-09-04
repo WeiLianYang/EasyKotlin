@@ -73,6 +73,7 @@ class MainViewModel : ViewModel() {
             MainEntranceBean(R.string.test_glide),
             MainEntranceBean(R.string.test_profiler),
             MainEntranceBean(R.string.test_datastore),
+            MainEntranceBean(R.string.test_round_image),
         )
     )
 

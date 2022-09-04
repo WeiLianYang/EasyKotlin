@@ -193,6 +193,7 @@ class MainActivity : BaseActivity() {
                 38 -> openActivity<GlideActivity>(mActivity)
                 39 -> openActivity<ProfilerActivity>(mActivity)
                 40 -> openActivity<DataStoreActivity>(mActivity)
+                41 -> openActivity<RoundImageActivity>(mActivity)
                 else -> {
                 }
             }

@@ -18,6 +18,8 @@ package com.william.easykt.widget
 
 import android.content.Context
 import android.graphics.Canvas
+import android.graphics.Color
+import android.graphics.Paint
 import android.graphics.Path
 import android.util.AttributeSet
 import androidx.appcompat.widget.AppCompatImageView
@@ -35,7 +37,9 @@ import com.william.easykt.R
  *
  *    2. 使用 riv_roundAsCircle 设置图片为圆形，使用 riv_radius 设置半径，当 riv_radius 未设置时，默认取宽高最小值的一半
  *
- *    3. 分别使用 riv_topLeft_radius, riv_topRight_radius, riv_bottomLeft_radius, riv_bottomRight_radius 设置4个圆角
+ *    3. 使用 riv_topLeft_radius, riv_topRight_radius, riv_bottomLeft_radius, riv_bottomRight_radius 设置4个圆角
+ *
+ *    4. 使用 riv_borderColor, riv_borderWidth 设置外边框颜色和宽度
  * <p>
  */
 class RoundImageView @JvmOverloads constructor(
@@ -65,10 +69,18 @@ class RoundImageView @JvmOverloads constructor(
     /** 作为圆形图片使用 **/
     private var roundAsCircle = false
 
+    /** 外边框颜色、宽度、画笔、路径 */
+    private var borderColor = 0
+    private var borderWidth = 0f
+    private val borderPaint: Paint?
+    private val borderPath = Path()
+
     init {
         val ta = context.obtainStyledAttributes(attrs, R.styleable.RoundImageView)
 
         roundAsCircle = ta.getBoolean(R.styleable.RoundImageView_riv_roundAsCircle, false)
+        borderColor = ta.getColor(R.styleable.RoundImageView_riv_borderColor, Color.TRANSPARENT)
+        borderWidth = ta.getDimension(R.styleable.RoundImageView_riv_borderWidth, 0f)
 
         radius = ta.getDimension(R.styleable.RoundImageView_riv_radius, 0f)
 
@@ -78,6 +90,9 @@ class RoundImageView @JvmOverloads constructor(
         bottomRightRadius = ta.getDimension(R.styleable.RoundImageView_riv_bottomRight_radius, 0f)
 
         ta.recycle()
+
+        borderPaint = Paint(Paint.ANTI_ALIAS_FLAG)
+        updateBorderPaint()
     }
 
     override fun onSizeChanged(w: Int, h: Int, oldw: Int, oldh: Int) {
@@ -91,13 +106,11 @@ class RoundImageView @JvmOverloads constructor(
 
     override fun onMeasure(widthMeasureSpec: Int, heightMeasureSpec: Int) {
         // 当作为圆形图片使用，宽高值不同，取宽高的最小值作为宽和高
-        if (roundAsCircle) {
-            val widthSize = MeasureSpec.getSize(widthMeasureSpec)
-            val heightSize = MeasureSpec.getSize(heightMeasureSpec)
-            if (widthSize > 0 && heightSize > 0 && widthSize != heightSize) {
-                val size = widthSize.coerceAtMost(heightSize)
-                setMeasuredDimension(size, size)
-            }
+        val widthSize = MeasureSpec.getSize(widthMeasureSpec)
+        val heightSize = MeasureSpec.getSize(heightMeasureSpec)
+        if (roundAsCircle && widthSize > 0 && heightSize > 0 && widthSize != heightSize) {
+            val size = widthSize.coerceAtMost(heightSize)
+            setMeasuredDimension(size, size)
         } else {
             super.onMeasure(widthMeasureSpec, heightMeasureSpec)
         }
@@ -133,6 +146,25 @@ class RoundImageView @JvmOverloads constructor(
         }
 
         super.onDraw(canvas)
+
+        if (borderWidth > 0 && borderPaint != null) {
+            if (roundAsCircle) {
+                canvas.drawCircle(radius, radius, radius - borderWidth / 2, borderPaint)
+            } else {
+                borderPath.reset()
+                borderPath.set(path)
+                borderPaint.strokeWidth = borderWidth * 2
+                canvas.drawPath(borderPath, borderPaint)
+            }
+        }
+    }
+
+    private fun updateBorderPaint() {
+        borderPaint?.apply {
+            color = borderColor
+            strokeWidth = borderWidth
+            style = Paint.Style.STROKE
+        }
     }
 
 }

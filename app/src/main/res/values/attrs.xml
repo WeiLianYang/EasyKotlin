@@ -74,6 +74,12 @@
              如果未设置 riv_radius，半径将取宽高最小值的一半-->
         <attr name="riv_roundAsCircle" format="boolean" />
 
+        <!--外边框颜色-->
+        <attr name="riv_borderColor" format="color" />
+
+        <!--外边框宽度-->
+        <attr name="riv_borderWidth" format="dimension" />
+
     </declare-styleable>
 
 </resources>
