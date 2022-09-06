@@ -117,9 +117,11 @@ class RoundImageView @JvmOverloads constructor(
     }
 
     override fun onDraw(canvas: Canvas) {
+        val halfBorderWidth = borderWidth / 2
         if (radius > 0 || topLeftRadius > 0 || topRightRadius > 0 || bottomLeftRadius > 0 || bottomRightRadius > 0) {
             // 如果设置了圆角值
             path.reset()
+            borderPath.reset()
             if (roundAsCircle) {
                 path.addCircle(radius, radius, radius, Path.Direction.CW)
             } else {
@@ -132,7 +134,16 @@ class RoundImageView @JvmOverloads constructor(
                     topLeftRadius, topLeftRadius, topRightRadius, topRightRadius,
                     bottomRightRadius, bottomRightRadius, bottomLeftRadius, bottomLeftRadius
                 )
+                borderPath.addRoundRect(
+                    paddingLeft.toFloat() + halfBorderWidth, paddingTop.toFloat() + halfBorderWidth,
+                    measuredWidth.toFloat() - paddingRight - halfBorderWidth,
+                    measuredHeight.toFloat() - paddingBottom - halfBorderWidth,
+                    radii, Path.Direction.CW
+                )
 
+                if (halfBorderWidth > 0) {
+                    radii.forEachIndexed { index, f -> radii[index] = f + halfBorderWidth }
+                }
                 path.addRoundRect(
                     paddingLeft.toFloat(), paddingTop.toFloat(),
                     measuredWidth.toFloat() - paddingRight,
@@ -151,9 +162,6 @@ class RoundImageView @JvmOverloads constructor(
             if (roundAsCircle) {
                 canvas.drawCircle(radius, radius, radius - borderWidth / 2, borderPaint)
             } else {
-                borderPath.reset()
-                borderPath.set(path)
-                borderPaint.strokeWidth = borderWidth * 2
                 canvas.drawPath(borderPath, borderPaint)
             }
         }
