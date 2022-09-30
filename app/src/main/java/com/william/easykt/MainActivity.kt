@@ -203,29 +203,28 @@ class MainActivity : BaseActivity() {
     }
 
     private fun createOpNotedCallback() {
-        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.R) {
-            return
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
+            val appOpsCallback = object : AppOpsManager.OnOpNotedCallback() {
+                private fun logPrivateDataAccess(opCode: String, trace: String) {
+                    "Private data accessed. Operation: $opCode\nStack Trace:\n$trace".logD()
+                }
+
+                override fun onNoted(syncNotedAppOp: SyncNotedAppOp) {
+                    logPrivateDataAccess(syncNotedAppOp.op, Throwable().stackTrace.toString())
+                }
+
+                override fun onSelfNoted(syncNotedAppOp: SyncNotedAppOp) {
+                    logPrivateDataAccess(syncNotedAppOp.op, Throwable().stackTrace.toString())
+                }
+
+                override fun onAsyncNoted(asyncNotedAppOp: AsyncNotedAppOp) {
+                    logPrivateDataAccess(asyncNotedAppOp.op, asyncNotedAppOp.message)
+                }
+            }
+
+            val appOpsManager = getSystemService(AppOpsManager::class.java) as AppOpsManager
+            appOpsManager.setOnOpNotedCallback(mainExecutor, appOpsCallback)
         }
-        val appOpsCallback = object : AppOpsManager.OnOpNotedCallback() {
-            private fun logPrivateDataAccess(opCode: String, trace: String) {
-                "Private data accessed. Operation: $opCode\nStack Trace:\n$trace".logD()
-            }
-
-            override fun onNoted(syncNotedAppOp: SyncNotedAppOp) {
-                logPrivateDataAccess(syncNotedAppOp.op, Throwable().stackTrace.toString())
-            }
-
-            override fun onSelfNoted(syncNotedAppOp: SyncNotedAppOp) {
-                logPrivateDataAccess(syncNotedAppOp.op, Throwable().stackTrace.toString())
-            }
-
-            override fun onAsyncNoted(asyncNotedAppOp: AsyncNotedAppOp) {
-                logPrivateDataAccess(asyncNotedAppOp.op, asyncNotedAppOp.message)
-            }
-        }
-
-        val appOpsManager = getSystemService(AppOpsManager::class.java) as AppOpsManager
-        appOpsManager.setOnOpNotedCallback(mainExecutor, appOpsCallback)
     }
 
     private fun showDialog() {

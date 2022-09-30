@@ -16,7 +16,10 @@
 
 package com.william.base_component.extension
 
+import android.content.ClipData
 import android.content.Context
+import android.os.Build
+import android.os.PersistableBundle
 import androidx.datastore.core.DataStore
 import androidx.datastore.preferences.core.Preferences
 import androidx.datastore.preferences.core.edit
@@ -67,3 +70,18 @@ fun Int.toText(): String = BaseApp.instance.getString(this)
 fun Int.toStringArray(): Array<String> = BaseApp.instance.resources.getStringArray(this)
 
 fun Int.toPx(): Int = BaseApp.instance.resources.getDimensionPixelOffset(this)
+
+/**
+ * 复制文本到粘贴板
+ */
+fun Context.copyToClipboard(text: String, label: String = "EasyKt") {
+    val clipData = ClipData.newPlainText(label, text)
+    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+        clipData.apply {
+            description.extras = PersistableBundle().apply {
+                putBoolean("android.content.extra.IS_SENSITIVE", true)
+            }
+        }
+    }
+    clipboardManager?.setPrimaryClip(clipData)
+}
