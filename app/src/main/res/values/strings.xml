@@ -63,6 +63,7 @@
     <string name="test_profiler">Profiler Demo</string>
     <string name="test_datastore">DataStore Demo</string>
     <string name="test_round_image">Round Image</string>
+    <string name="test_media_picker">Media Picker</string>
 
     <string name="test_kotlin_flow1">1. 异步计算的值流</string>
     <string name="test_kotlin_flow2">2. 冷流</string>
@@ -104,6 +105,10 @@
     <string name="test_take_photo">take photo</string>
     <string name="test_take_crop_photo">take and crop photo</string>
     <string name="test_clear_photo">clear photo</string>
+
+    <string name="test_select_image">select image</string>
+    <string name="test_select_video">select video</string>
+    <string name="test_select_audio">select audio</string>
 
     <string name="test_write_file1">写入文件 openFileOutput</string>
     <string name="test_read_file1">读取文件 openFileInput</string>

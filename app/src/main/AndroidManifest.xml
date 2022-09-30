@@ -131,7 +131,19 @@
     <uses-permission
         android:name="android.permission.WRITE_EXTERNAL_STORAGE"
         android:maxSdkVersion="28" />
-    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+
+    <!-- Required only if your app targets Android 13. -->
+    <!-- Declare one or more the following permissions only if your app needs
+    to access data that's protected by them. -->
+    <uses-permission android:name="android.permission.READ_MEDIA_IMAGES" />
+    <uses-permission android:name="android.permission.READ_MEDIA_AUDIO" />
+    <uses-permission android:name="android.permission.READ_MEDIA_VIDEO" />
+
+    <!-- Required to maintain app compatibility. -->
+    <uses-permission
+        android:name="android.permission.READ_EXTERNAL_STORAGE"
+        android:maxSdkVersion="32" />
+
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
@@ -155,6 +167,11 @@
     <uses-permission android:name="android.permission.ADD_VOICEMAIL" />
     <uses-permission android:name="android.permission.USE_SIP" />
     <uses-permission android:name="android.permission.BODY_SENSORS" />
+
+    <!-- 在后台运行时需要访问身体传感器信息。
+         这是受到“硬性限制”的权限，除非设备的安装程序针对您的应用将该权限列入了许可名单，否则您的应用将无法获得此权限 -->
+    <uses-permission android:name="android.permission.BODY_SENSORS_BACKGROUND" />
+
     <uses-permission android:name="android.permission.SEND_SMS" />
     <uses-permission android:name="android.permission.RECEIVE_SMS" />
     <uses-permission android:name="android.permission.READ_SMS" />
@@ -247,6 +264,7 @@
         <activity android:name=".ui.ProfilerActivity" />
         <activity android:name=".ui.DataStoreActivity" />
         <activity android:name=".ui.RoundImageActivity" />
+        <activity android:name=".ui.MediaPickerActivity" />
 
         <activity
             android:name=".ui.CameraxActivity"

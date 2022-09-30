@@ -194,6 +194,7 @@ class MainActivity : BaseActivity() {
                 39 -> openActivity<ProfilerActivity>(mActivity)
                 40 -> openActivity<DataStoreActivity>(mActivity)
                 41 -> openActivity<RoundImageActivity>(mActivity)
+                42 -> openActivity<MediaPickerActivity>(mActivity)
                 else -> {
                 }
             }
