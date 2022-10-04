@@ -24,10 +24,10 @@
     android:padding="20dp">
 
     <Button
-        android:id="@+id/btn_selectImage"
+        android:id="@+id/btn_selectPhoto"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="@string/test_select_image"
+        android:text="@string/test_select_photo"
         android:textAllCaps="false"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -37,15 +37,23 @@
         android:layout_height="wrap_content"
         android:text="@string/test_select_video"
         android:textAllCaps="false"
-        app:layout_constraintTop_toBottomOf="@+id/btn_selectImage" />
+        app:layout_constraintTop_toBottomOf="@+id/btn_selectPhoto" />
+
+    <Button
+        android:id="@+id/btn_selectPhotoAndVideo"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/test_select_photo_video"
+        android:textAllCaps="false"
+        app:layout_constraintTop_toBottomOf="@+id/btn_selectVideo" />
 
     <Button
         android:id="@+id/btn_clearPhoto"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="@string/test_clear_photo"
+        android:text="@string/test_clear"
         android:textAllCaps="false"
-        app:layout_constraintTop_toBottomOf="@+id/btn_selectVideo" />
+        app:layout_constraintTop_toBottomOf="@+id/btn_selectPhotoAndVideo" />
 
     <ImageView
         android:id="@+id/iv_image"

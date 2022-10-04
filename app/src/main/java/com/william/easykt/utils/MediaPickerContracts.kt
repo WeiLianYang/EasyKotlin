@@ -25,7 +25,7 @@ import androidx.activity.result.contract.ActivityResultContract
 import androidx.annotation.CallSuper
 import androidx.annotation.RequiresApi
 import com.william.base_component.extension.logD
-import com.william.easykt.utils.MediaPickerParams.Companion.SELECT_IMAGE
+import com.william.easykt.utils.MediaPickerParams.Companion.SELECT_PHOTO
 import com.william.easykt.utils.MediaPickerParams.Companion.SELECT_VIDEO
 
 
@@ -42,7 +42,7 @@ class MediaContract : ActivityResultContract<MediaPickerParams, List<Uri>>() {
     @CallSuper
     override fun createIntent(context: Context, input: MediaPickerParams): Intent {
         val intent = Intent(MediaStore.ACTION_PICK_IMAGES)
-        if (input.type == SELECT_IMAGE) {
+        if (input.type == SELECT_PHOTO) {
             intent.type = "image/*"
         } else if (input.type == SELECT_VIDEO) {
             intent.type = "video/*"
@@ -53,8 +53,9 @@ class MediaContract : ActivityResultContract<MediaPickerParams, List<Uri>>() {
         if (limit > supportMax) {
             limit = supportMax
         }
-        intent.putExtra(MediaStore.EXTRA_PICK_IMAGES_MAX, limit)
-
+        if (limit > 1) {
+            intent.putExtra(MediaStore.EXTRA_PICK_IMAGES_MAX, limit)
+        }
         return intent
     }
 
@@ -79,22 +80,19 @@ class MediaContract : ActivityResultContract<MediaPickerParams, List<Uri>>() {
 
 data class MediaPickerParams(
     /** 媒体选择类型 **/
-    val type: Int = SELECT_IMAGE_VIDEO,
+    val type: Int = SELECT_PHOTO_VIDEO,
 
-    /** 选择的媒体类型 **/
-//    val mimeType: String = "*/*",
-
-    /** 选择的最大数量 **/
-    val limit: Int = 10
+    /** 选择的最大数量，默认为1，单选 **/
+    val limit: Int = 1
 ) {
 
     companion object {
 
         /** 既可以选择照片也可以选择视频 **/
-        const val SELECT_IMAGE_VIDEO = 0
+        const val SELECT_PHOTO_VIDEO = 0
 
         /** 只可以选择照片 **/
-        const val SELECT_IMAGE = 1
+        const val SELECT_PHOTO = 1
 
         /** 只可以选择视频 **/
         const val SELECT_VIDEO = 2

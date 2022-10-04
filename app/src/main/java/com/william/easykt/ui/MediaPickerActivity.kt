@@ -51,6 +51,9 @@ class MediaPickerActivity : BaseActivity() {
                     "您没有选择任何图片".toast()
                 }
             }
+        } else {
+            "当前系统版本：${Build.VERSION.SDK_INT}，不支持照片选择器".toast()
+            finish()
         }
     }
 
@@ -59,15 +62,22 @@ class MediaPickerActivity : BaseActivity() {
     }
 
     override fun initAction() {
-        viewBinding.btnSelectImage.setOnClickListener {
+        viewBinding.btnSelectPhoto.setOnClickListener {
             // 只选择照片
-            val params = MediaPickerParams(MediaPickerParams.SELECT_IMAGE)
+            val params = MediaPickerParams(MediaPickerParams.SELECT_PHOTO)
             mediaLauncher?.launch(params)
         }
 
         viewBinding.btnSelectVideo.setOnClickListener {
             // 只选择视频
             val params = MediaPickerParams(MediaPickerParams.SELECT_VIDEO)
+            mediaLauncher?.launch(params)
+        }
+
+
+        viewBinding.btnSelectPhotoAndVideo.setOnClickListener {
+            // 选择 照片 和 视频
+            val params = MediaPickerParams(MediaPickerParams.SELECT_PHOTO_VIDEO, 3)
             mediaLauncher?.launch(params)
         }
 
