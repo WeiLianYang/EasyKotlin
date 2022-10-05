@@ -20,6 +20,8 @@ import android.net.Uri
 import android.os.Build
 import android.widget.MediaController
 import androidx.activity.result.ActivityResultLauncher
+import androidx.activity.result.PickVisualMediaRequest
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.view.isGone
 import androidx.core.view.isVisible
 import com.william.base_component.activity.BaseActivity
@@ -44,9 +46,58 @@ class MediaPickerActivity : BaseActivity() {
 
     private var mediaLauncher: ActivityResultLauncher<MediaPickerParams>? = null
 
+    private var pickLauncher: ActivityResultLauncher<PickVisualMediaRequest>? = null
+    private var pickMultipleLauncher: ActivityResultLauncher<PickVisualMediaRequest>? = null
+
     override fun initView() {
         super.initView()
 
+        // 单项选择
+        pickLauncher = registerForActivityResult(ActivityResultContracts.PickVisualMedia()) { uri ->
+            uri ?: return@registerForActivityResult
+            val mimeType = contentResolver.getType(uri) ?: ""
+            "type: $mimeType".logI()
+            if (mimeType.startsWith("image")) {
+                viewBinding.ivImage.setImageURI(uri)
+                viewBinding.videoView.isGone = true
+            } else if (mimeType.startsWith("video")) {
+                viewBinding.ivImage.setImageBitmap(null)
+                viewBinding.videoView.isVisible = true
+                viewBinding.videoView.setVideoURI(uri)
+                viewBinding.videoView.setMediaController(MediaController(this))
+                viewBinding.videoView.start()
+            }
+        }
+
+        // 多项选择
+        pickMultipleLauncher =
+            registerForActivityResult(ActivityResultContracts.PickMultipleVisualMedia(3)) { list: List<Uri> ->
+                if (list.isNotEmpty()) {
+                    list.forEach { uri ->
+                        val mimeType = contentResolver.getType(uri) ?: ""
+                        "type: $mimeType".logI()
+                        if (mimeType.startsWith("image")) {
+                            viewBinding.ivImage.setImageURI(uri)
+                            viewBinding.videoView.isGone = true
+                            return@forEach
+                        } else if (mimeType.startsWith("video")) {
+                            viewBinding.ivImage.setImageBitmap(null)
+                            viewBinding.videoView.isVisible = true
+                            viewBinding.videoView.setVideoURI(uri)
+                            viewBinding.videoView.setMediaController(MediaController(this))
+                            viewBinding.videoView.start()
+                            return@forEach
+                        }
+                    }
+                } else {
+                    "您没有选择任何图片".toast()
+                }
+            }
+
+//        createLauncher()
+    }
+
+    private fun createLauncher() {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
             mediaLauncher = registerForActivityResult(MediaContract()) { list: List<Uri> ->
                 if (list.isNotEmpty()) {
@@ -83,21 +134,21 @@ class MediaPickerActivity : BaseActivity() {
     override fun initAction() {
         viewBinding.btnSelectPhoto.setOnClickListener {
             // 只选择照片
-            val params = MediaPickerParams(MediaPickerParams.SELECT_PHOTO)
-            mediaLauncher?.launch(params)
+//            mediaLauncher?.launch(MediaPickerParams(MediaPickerParams.SELECT_PHOTO))
+            pickLauncher?.launch(PickVisualMediaRequest(ActivityResultContracts.PickVisualMedia.ImageOnly))
         }
 
         viewBinding.btnSelectVideo.setOnClickListener {
             // 只选择视频
-            val params = MediaPickerParams(MediaPickerParams.SELECT_VIDEO)
-            mediaLauncher?.launch(params)
+//            mediaLauncher?.launch(MediaPickerParams(MediaPickerParams.SELECT_VIDEO))
+            pickLauncher?.launch(PickVisualMediaRequest(ActivityResultContracts.PickVisualMedia.VideoOnly))
         }
 
 
         viewBinding.btnSelectPhotoAndVideo.setOnClickListener {
             // 选择 照片 和 视频
-            val params = MediaPickerParams(MediaPickerParams.SELECT_PHOTO_VIDEO, 3)
-            mediaLauncher?.launch(params)
+//            mediaLauncher?.launch(MediaPickerParams(MediaPickerParams.SELECT_PHOTO_VIDEO, 3))
+            pickMultipleLauncher?.launch(PickVisualMediaRequest(ActivityResultContracts.PickVisualMedia.ImageAndVideo))
         }
 
         viewBinding.btnClearPhoto.setOnClickListener {
