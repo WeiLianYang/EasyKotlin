@@ -18,9 +18,13 @@ package com.william.easykt.ui
 
 import android.net.Uri
 import android.os.Build
+import android.widget.MediaController
 import androidx.activity.result.ActivityResultLauncher
+import androidx.core.view.isGone
+import androidx.core.view.isVisible
 import com.william.base_component.activity.BaseActivity
 import com.william.base_component.extension.bindingView
+import com.william.base_component.extension.logI
 import com.william.base_component.extension.toast
 import com.william.easykt.R
 import com.william.easykt.databinding.ActivityMediaPickerBinding
@@ -46,7 +50,22 @@ class MediaPickerActivity : BaseActivity() {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
             mediaLauncher = registerForActivityResult(MediaContract()) { list: List<Uri> ->
                 if (list.isNotEmpty()) {
-                    viewBinding.ivImage.setImageURI(list.first())
+                    list.forEach { uri ->
+                        val mimeType = contentResolver.getType(uri) ?: ""
+                        "type: $mimeType".logI()
+                        if (mimeType.startsWith("image")) {
+                            viewBinding.ivImage.setImageURI(uri)
+                            viewBinding.videoView.isGone = true
+                            return@forEach
+                        } else if (mimeType.startsWith("video")) {
+                            viewBinding.ivImage.setImageBitmap(null)
+                            viewBinding.videoView.isVisible = true
+                            viewBinding.videoView.setVideoURI(uri)
+                            viewBinding.videoView.setMediaController(MediaController(this))
+                            viewBinding.videoView.start()
+                            return@forEach
+                        }
+                    }
                 } else {
                     "您没有选择任何图片".toast()
                 }
@@ -83,7 +102,23 @@ class MediaPickerActivity : BaseActivity() {
 
         viewBinding.btnClearPhoto.setOnClickListener {
             viewBinding.ivImage.setImageBitmap(null)
+            viewBinding.videoView.stopPlayback()
         }
+    }
+
+    override fun onResume() {
+        super.onResume()
+        viewBinding.videoView.resume()
+    }
+
+    override fun onPause() {
+        super.onPause()
+        viewBinding.videoView.pause()
+    }
+
+    override fun onDestroy() {
+        viewBinding.videoView.stopPlayback()
+        super.onDestroy()
     }
 
 }

@@ -64,4 +64,13 @@
         app:layout_constraintTop_toBottomOf="@+id/btn_clearPhoto"
         tools:ignore="ContentDescription" />
 
+    <VideoView
+        android:id="@+id/videoView"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_marginTop="15dp"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/btn_clearPhoto" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>
