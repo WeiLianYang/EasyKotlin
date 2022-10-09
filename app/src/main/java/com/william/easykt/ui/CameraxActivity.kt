@@ -34,10 +34,7 @@ import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.core.content.PermissionChecker
 import com.william.base_component.activity.BaseActivity
-import com.william.base_component.extension.bindingView
-import com.william.base_component.extension.logD
-import com.william.base_component.extension.logE
-import com.william.base_component.extension.toast
+import com.william.base_component.extension.*
 import com.william.base_component.utils.showSnackbar
 import com.william.easykt.R
 import com.william.easykt.databinding.ActivityCameraxBinding
@@ -173,6 +170,8 @@ class CameraxActivity : BaseActivity() {
                     val msg = "Photo capture succeeded: ${output.savedUri}"
                     msg.toast()
                     msg.logD()
+
+                    output.savedUri?.let { shareImageToOtherApp(arrayListOf(it)) }
                 }
             }
         )

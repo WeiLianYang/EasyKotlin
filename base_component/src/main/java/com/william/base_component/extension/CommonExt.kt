@@ -16,19 +16,29 @@
 
 package com.william.base_component.extension
 
+import android.app.Activity
 import android.content.ClipData
 import android.content.Context
+import android.content.Intent
+import android.net.Uri
 import android.os.Build
+import android.os.Environment
 import android.os.PersistableBundle
+import android.provider.MediaStore
+import android.webkit.MimeTypeMap
+import androidx.core.content.contentValuesOf
 import androidx.datastore.core.DataStore
 import androidx.datastore.preferences.core.Preferences
 import androidx.datastore.preferences.core.edit
 import androidx.datastore.preferences.core.emptyPreferences
 import androidx.datastore.preferences.preferencesDataStore
+import androidx.fragment.app.DialogFragment
+import androidx.fragment.app.FragmentManager
 import com.william.base_component.BaseApp
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.map
+import java.io.File
 import java.io.IOException
 
 /**
@@ -84,4 +94,62 @@ fun Context.copyToClipboard(text: String, label: String = "EasyKt") {
         }
     }
     clipboardManager?.setPrimaryClip(clipData)
+}
+
+inline fun <reified T : DialogFragment> show(fm: FragmentManager) {
+    val clazz = T::class
+    val instance = clazz.constructors.first().call()
+    instance.show(fm, clazz.simpleName)
+}
+
+/**
+ * 分享文本到其他应用
+ * @param text 分享的文本
+ */
+fun Activity.shareTextToOtherApp(text: String?) {
+    text ?: return
+    val sendIntent: Intent = Intent().apply {
+        action = Intent.ACTION_SEND
+        putExtra(Intent.EXTRA_TEXT, text)
+        type = "text/plain"
+    }
+    val shareIntent = Intent.createChooser(sendIntent, null)
+    startActivity(shareIntent)
+}
+
+/**
+ * 分享多张图片给其他应用
+ * @param imageUris 分享的图片uri集合
+ */
+fun Activity.shareImageToOtherApp(imageUris: ArrayList<Uri>?) {
+    imageUris ?: return
+    imageUris.forEach { uri ->
+        val mimeType = this.contentResolver.getType(uri)
+        if (mimeType?.contains("image") == false) {
+            "只能分享图片".toast()
+            return
+        }
+        val imageName = "${System.currentTimeMillis()}.${
+            MimeTypeMap.getSingleton().getExtensionFromMimeType(mimeType)
+        }"
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
+            val values = contentValuesOf(
+                Pair(MediaStore.MediaColumns.DISPLAY_NAME, imageName),
+                Pair(MediaStore.MediaColumns.MIME_TYPE, mimeType),
+                Pair(MediaStore.MediaColumns.RELATIVE_PATH, Environment.DIRECTORY_DCIM)
+            )
+            this.contentResolver.insert(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, values)
+        } else {
+            Uri.fromFile(
+                File(this.externalCacheDir!!.absolutePath, imageName)
+            )
+        }
+    }
+    val sendIntent: Intent = Intent().apply {
+        action = Intent.ACTION_SEND_MULTIPLE
+        putParcelableArrayListExtra(Intent.EXTRA_STREAM, imageUris)
+        type = "image/*"
+    }
+    val shareIntent = Intent.createChooser(sendIntent, null)
+    startActivity(shareIntent)
 }
