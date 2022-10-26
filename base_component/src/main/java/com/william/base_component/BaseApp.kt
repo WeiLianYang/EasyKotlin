@@ -23,6 +23,7 @@ import android.os.Bundle
 import androidx.multidex.MultiDex
 import com.william.base_component.extension.logD
 import com.william.base_component.manager.ActivityStackManager
+import com.william.base_component.utils.monitorNetworkChange
 import kotlin.properties.Delegates
 
 
@@ -49,6 +50,8 @@ open class BaseApp : Application() {
 
         "Application onCreate() has been invoked".logD()
         registerLifecycleCallbacks()
+
+        monitorNetworkChange(this)
     }
 
     private fun registerLifecycleCallbacks() {

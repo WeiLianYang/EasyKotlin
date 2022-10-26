@@ -259,3 +259,11 @@ fun getPackageInfo(context: Context, packageName: String): Boolean {
     }
     return packageInfo != null
 }
+
+fun isLargerThanVersion(version: Int): Boolean {
+    return Build.VERSION.SDK_INT >= Build.VERSION_CODES.N
+}
+
+fun isSmallerThanVersion(version: Int): Boolean {
+    return Build.VERSION.SDK_INT < version
+}

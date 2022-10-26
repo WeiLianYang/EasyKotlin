@@ -19,10 +19,14 @@ package com.william.base_component.utils
 import android.Manifest
 import android.content.Context
 import android.content.pm.PackageManager
-import android.net.ConnectivityManager
-import android.net.NetworkInfo
+import android.net.*
+import android.os.Build
 import android.telephony.TelephonyManager
 import androidx.core.app.ActivityCompat
+import com.william.base_component.extension.logD
+import com.william.base_component.extension.logE
+import com.william.base_component.extension.logV
+import com.william.base_component.extension.logW
 import java.io.IOException
 import java.net.HttpURLConnection
 import java.net.NetworkInterface
@@ -155,4 +159,50 @@ fun isMobileNetAvailable(context: Context?): Boolean {
             return networkInfo.isAvailable
     }
     return false
+}
+
+fun monitorNetworkChange(context: Context) {
+    val manager = context.getSystemService(Context.CONNECTIVITY_SERVICE) as? ConnectivityManager
+    "manager: ${manager != null}".logV()
+    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+        manager?.registerDefaultNetworkCallback(CustomNetworkCallback())
+    } else if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+        manager?.registerNetworkCallback(
+            NetworkRequest.Builder().build(), CustomNetworkCallback()
+        )
+    } else {
+        // 注册广播
+    }
+}
+
+class CustomNetworkCallback : ConnectivityManager.NetworkCallback() {
+    override fun onLosing(network: Network, maxMsToLive: Int) {
+        "onLosing, network: $network, maxMsToLive: $maxMsToLive".logW()
+    }
+
+    override fun onUnavailable() {
+        "onUnavailable".logE()
+    }
+
+    override fun onLost(network: Network) {
+        //
+        "onLost, maxMsToLive: $network".logE()
+    }
+
+    override fun onCapabilitiesChanged(
+        network: Network, capabilities: NetworkCapabilities
+    ) {
+        //
+        "onCapabilitiesChanged, network: $network, networkCapabilities: $capabilities".logD()
+    }
+
+    override fun onLinkPropertiesChanged(network: Network, properties: LinkProperties) {
+        //
+        "onLinkPropertiesChanged, network: $network, properties: $properties".logD()
+    }
+
+    override fun onBlockedStatusChanged(network: Network, blocked: Boolean) {
+        //
+        "onBlockedStatusChanged, network: $network, blocked: $blocked".logD()
+    }
 }
