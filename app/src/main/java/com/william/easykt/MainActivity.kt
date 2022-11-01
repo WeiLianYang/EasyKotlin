@@ -195,6 +195,7 @@ class MainActivity : BaseActivity() {
                 40 -> openActivity<DataStoreActivity>(mActivity)
                 41 -> openActivity<RoundImageActivity>(mActivity)
                 42 -> openActivity<MediaPickerActivity>(mActivity)
+                43 -> openActivity<CoilActivity>(mActivity)
                 else -> {
                 }
             }

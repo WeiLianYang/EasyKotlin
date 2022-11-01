@@ -64,6 +64,7 @@
     <string name="test_datastore">DataStore Demo</string>
     <string name="test_round_image">Round Image</string>
     <string name="test_media_picker">Media Picker</string>
+    <string name="test_coil">Coil</string>
 
     <string name="test_kotlin_flow1">1. 异步计算的值流</string>
     <string name="test_kotlin_flow2">2. 冷流</string>

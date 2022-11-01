@@ -265,6 +265,7 @@
         <activity android:name=".ui.DataStoreActivity" />
         <activity android:name=".ui.RoundImageActivity" />
         <activity android:name=".ui.MediaPickerActivity" />
+        <activity android:name=".ui.CoilActivity" />
 
         <activity
             android:name=".ui.CameraxActivity"

@@ -75,6 +75,7 @@ class MainViewModel : ViewModel() {
             MainEntranceBean(R.string.test_datastore),
             MainEntranceBean(R.string.test_round_image),
             MainEntranceBean(R.string.test_media_picker),
+            MainEntranceBean(R.string.test_coil),
         )
     )
 
