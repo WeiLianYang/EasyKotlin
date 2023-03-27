@@ -16,9 +16,11 @@
 
 package com.william.easykt.utils
 
+import android.content.Context
 import android.os.Build
 import com.blankj.utilcode.util.RomUtils
 import com.william.base_component.extension.logI
+import com.william.base_component.extension.telephonyManager
 
 /**
  *  author : WilliamYang
@@ -53,4 +55,12 @@ fun getBuildInfo(): StringBuilder {
         append("，\n" + RomUtils.getRomInfo().toString())
 
     }
+}
+
+fun getSimInfo(context: Context): String {
+    val manager = context.telephonyManager
+    val info = ("simState: ${manager?.simState}, \nsimCountryIso: ${manager?.simCountryIso}, \n" +
+            "simOperator: ${manager?.simOperator}, \nsimOperatorName: ${manager?.simOperatorName}")
+    info.logI()
+    return info
 }

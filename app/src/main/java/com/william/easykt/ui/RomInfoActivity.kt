@@ -21,6 +21,7 @@ import com.william.base_component.extension.bindingView
 import com.william.easykt.R
 import com.william.easykt.databinding.ActivityRomInfoBinding
 import com.william.easykt.utils.getBuildInfo
+import com.william.easykt.utils.getSimInfo
 
 /**
  * author : WilliamYang
@@ -35,7 +36,8 @@ class RomInfoActivity : BaseActivity() {
         setTitleText(R.string.test_rom_info)
 
         val romInfo = getBuildInfo()
-        viewBinding.tvText.text = romInfo
+        val simInfo = getSimInfo(this)
+        viewBinding.tvText.text = romInfo.append(",\n\n$simInfo")
     }
 
 }
