@@ -33,25 +33,24 @@ import com.william.base_component.extension.logI
  * HOST: cn-central-hcd-2a-187d25e511633677831202-5cbf8d588c-bvn8j，SDK_INT: 29，
  * BOARD: MED，HARDWARE: mt6765，RomInfo{name=huawei, version=10.1.0}
  */
-fun getBuildInfo() {
-    StringBuilder().apply {
+fun getBuildInfo(): StringBuilder {
+    return StringBuilder().apply {
 
         append("MANUFACTURER: " + Build.MANUFACTURER)
-        append("，BRAND: " + Build.BRAND)
-        append("，DEVICE: " + Build.DEVICE)
-        append("，MODEL: " + Build.MODEL)
-        append("，DISPLAY: " + Build.DISPLAY)
-        append("，PRODUCT: " + Build.PRODUCT)
-        append("，FINGERPRINT: " + Build.FINGERPRINT)
-        append("，SUPPORTED_ABIS: " + Build.SUPPORTED_ABIS.contentToString())
-        append("，ID: " + Build.ID)
-        append("，TAGS: " + Build.TAGS)
-        append("，HOST: " + Build.HOST)
-        append("，SDK_INT: " + Build.VERSION.SDK_INT.toString())
-        append("，BOARD: " + Build.BOARD)
-        append("，HARDWARE: " + Build.HARDWARE)
-        append("，" + RomUtils.getRomInfo().toString())
+        append("，\nMODEL: " + Build.MODEL)
+        append("，\nBRAND: " + Build.BRAND)
+        append("，\nDEVICE: " + Build.DEVICE)
+        append("，\nDISPLAY: " + Build.DISPLAY)
+        append("，\nPRODUCT: " + Build.PRODUCT)
+        append("，\nFINGERPRINT: " + Build.FINGERPRINT)
+        append("，\nSUPPORTED_ABIS: " + Build.SUPPORTED_ABIS.contentToString())
+        append("，\nID: " + Build.ID)
+        append("，\nTAGS: " + Build.TAGS)
+        append("，\nHOST: " + Build.HOST)
+        append("，\nSDK_INT: " + Build.VERSION.SDK_INT.toString())
+        append("，\nBOARD: " + Build.BOARD)
+        append("，\nHARDWARE: " + Build.HARDWARE)
+        append("，\n" + RomUtils.getRomInfo().toString())
 
-        toString().logI()
     }
 }

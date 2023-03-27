@@ -42,7 +42,6 @@ import com.william.easykt.ui.*
 import com.william.easykt.ui.adapter.MainAdapter
 import com.william.easykt.ui.camera.CameraActivity
 import com.william.easykt.utils.createBubble
-import com.william.easykt.utils.getBuildInfo
 import com.william.easykt.viewmodel.MainViewModel
 import com.zyyoona7.itemdecoration.RecyclerViewDivider
 import dagger.hilt.android.AndroidEntryPoint
@@ -196,6 +195,7 @@ class MainActivity : BaseActivity() {
                 41 -> openActivity<RoundImageActivity>(mActivity)
                 42 -> openActivity<MediaPickerActivity>(mActivity)
                 43 -> openActivity<CoilActivity>(mActivity)
+                44 -> openActivity<RomInfoActivity>(mActivity)
                 else -> {
                 }
             }
@@ -243,8 +243,6 @@ class MainActivity : BaseActivity() {
 
     override fun initData() {
         setTitleText("EasyKotlin")
-
-        getBuildInfo()
 
         handleIntent(intent)
     }
