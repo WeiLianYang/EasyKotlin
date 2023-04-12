@@ -199,22 +199,25 @@
             android:layout_height="100dp"
             android:layout_marginTop="20dp"
             app:corner_radius="20dp"
+            android:background="#00ff00"
             app:layout_constraintStart_toStartOf="@+id/rcl3"
             app:layout_constraintTop_toBottomOf="@+id/rcl3">
 
+            <!--
             <ImageView
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:scaleType="centerCrop"
                 android:src="@drawable/scroll_image"
                 tools:ignore="ContentDescription" />
+                -->
 
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:gravity="center"
                 android:text="@string/rc_all_text"
-                android:textColor="@android:color/holo_red_dark" />
+                android:textColor="@android:color/black" />
 
         </com.william.easykt.widget.RoundCornerLayout>
 
@@ -222,22 +225,25 @@
             android:id="@+id/rcl6"
             android:layout_width="130dp"
             android:layout_height="100dp"
+            android:background="#0000ff"
             app:layout_constraintEnd_toEndOf="@+id/rcl4"
             app:layout_constraintTop_toTopOf="@id/rcl5">
 
+            <!--
             <ImageView
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:scaleType="centerCrop"
                 android:src="@drawable/scroll_image"
                 tools:ignore="ContentDescription" />
+                -->
 
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:gravity="center"
                 android:text="@string/rc_none_text"
-                android:textColor="@android:color/holo_red_dark" />
+                android:textColor="@android:color/white" />
 
         </com.william.easykt.widget.RoundCornerLayout>
 

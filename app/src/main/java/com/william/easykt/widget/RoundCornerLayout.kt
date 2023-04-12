@@ -20,11 +20,11 @@ import android.content.Context
 import android.graphics.Canvas
 import android.graphics.Color
 import android.graphics.Path
+import android.graphics.RectF
 import android.graphics.drawable.ColorDrawable
-import android.text.TextUtils
 import android.util.AttributeSet
+import androidx.annotation.ColorInt
 import androidx.constraintlayout.widget.ConstraintLayout
-import com.william.base_component.extension.logD
 import com.william.easykt.R
 
 
@@ -36,7 +36,9 @@ import com.william.easykt.R
 class RoundCornerLayout : ConstraintLayout {
 
     private val path = Path()
-    private var bgColor: String? = null
+
+    @ColorInt
+    private var bgColor: Int? = null
 
     private val noneVal = -1f
     private val defaultRadius = 0f
@@ -81,12 +83,10 @@ class RoundCornerLayout : ConstraintLayout {
     }
 
     override fun onDraw(canvas: Canvas?) {
-        if (TextUtils.isEmpty(bgColor)) {
+        if (bgColor == null) {
             val bgDrawable = background
             if (bgDrawable is ColorDrawable) {
-                val color = bgDrawable.color
-                bgColor = "#" + String.format("%08x", color)
-                "color: $color, bgColor: $bgColor".logD()
+                bgColor = bgDrawable.color
             }
         }
         setBackgroundColor(Color.parseColor("#00FFFFFF"))
@@ -115,13 +115,19 @@ class RoundCornerLayout : ConstraintLayout {
         )
 
         path.reset()
-        path.addRoundRect(paddingLeft.toFloat(), paddingTop.toFloat(), width - paddingRight, height - paddingBottom, radii, Path.Direction.CW)
+
+        val rectF = RectF(
+            paddingLeft.toFloat(), paddingTop.toFloat(),
+            width - paddingRight, height - paddingBottom
+        )
+
+        path.addRoundRect(rectF, radii, Path.Direction.CW)
 
         canvas.save()
         canvas.clipPath(path)
 
-        if (!TextUtils.isEmpty(bgColor)) {
-            canvas.drawColor(Color.parseColor(bgColor))
+        bgColor?.let {
+            canvas.drawColor(it)
         }
 
         super.dispatchDraw(canvas)
