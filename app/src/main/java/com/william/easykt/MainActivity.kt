@@ -17,7 +17,12 @@
 package com.william.easykt
 
 import android.animation.ObjectAnimator
-import android.app.*
+import android.app.AppOpsManager
+import android.app.AsyncNotedAppOp
+import android.app.NotificationChannel
+import android.app.NotificationManager
+import android.app.PendingIntent
+import android.app.SyncNotedAppOp
 import android.content.Context
 import android.content.Intent
 import android.media.RingtoneManager
@@ -34,19 +39,68 @@ import androidx.core.content.getSystemService
 import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.william.base_component.activity.BaseActivity
-import com.william.base_component.extension.*
-import com.william.base_component.utils.*
+import com.william.base_component.extension.activityManager
+import com.william.base_component.extension.bindingView
+import com.william.base_component.extension.logD
+import com.william.base_component.extension.logE
+import com.william.base_component.extension.logI
+import com.william.base_component.extension.logW
+import com.william.base_component.extension.toPx
+import com.william.base_component.extension.toast
+import com.william.base_component.utils.getInstalledPackages
+import com.william.base_component.utils.getPackageInfo
+import com.william.base_component.utils.openActivity
+import com.william.base_component.utils.openBrowser
+import com.william.base_component.utils.queryIntent
+import com.william.base_component.utils.showSnackbar
 import com.william.easykt.databinding.ActivityMainBinding
 import com.william.easykt.test.TestVmActivity
-import com.william.easykt.ui.*
+import com.william.easykt.ui.AesEncryptActivity
+import com.william.easykt.ui.AlarmManagerActivity
+import com.william.easykt.ui.AutoScrollActivity
+import com.william.easykt.ui.BubbleActivity
+import com.william.easykt.ui.CameraxActivity
+import com.william.easykt.ui.ChannelSampleActivity
+import com.william.easykt.ui.ClockViewActivity
+import com.william.easykt.ui.CoilActivity
+import com.william.easykt.ui.ComposeActivity
+import com.william.easykt.ui.ComposeDemoActivity
+import com.william.easykt.ui.ComposeLayoutActivity
+import com.william.easykt.ui.CoroutineSampleActivity
+import com.william.easykt.ui.DataStoreActivity
+import com.william.easykt.ui.DiffUtilActivity
+import com.william.easykt.ui.DrawerActivity
+import com.william.easykt.ui.FileActivity
+import com.william.easykt.ui.FlowSampleActivity
+import com.william.easykt.ui.GlideActivity
+import com.william.easykt.ui.MediaPickerActivity
+import com.william.easykt.ui.MotionLayoutActivity
+import com.william.easykt.ui.NestedScrollingActivity
+import com.william.easykt.ui.PagerCardActivity
+import com.william.easykt.ui.PermissionActivity
+import com.william.easykt.ui.ProfilerActivity
+import com.william.easykt.ui.RegisterForResultActivity
+import com.william.easykt.ui.RomInfoActivity
+import com.william.easykt.ui.RoundCornerLayoutActivity
+import com.william.easykt.ui.RoundImageActivity
+import com.william.easykt.ui.SampleSheetDialog
+import com.william.easykt.ui.SectorViewActivity
+import com.william.easykt.ui.SideSlipActivity
+import com.william.easykt.ui.SlidingPaneActivity
+import com.william.easykt.ui.SwipeCardActivity
+import com.william.easykt.ui.TouchImageActivity
+import com.william.easykt.ui.WaveAnimationActivity
+import com.william.easykt.ui.WebActivity
+import com.william.easykt.ui.WindowInsetsActivity
 import com.william.easykt.ui.adapter.MainAdapter
 import com.william.easykt.ui.camera.CameraActivity
 import com.william.easykt.utils.createBubble
 import com.william.easykt.viewmodel.MainViewModel
 import com.zyyoona7.itemdecoration.RecyclerViewDivider
 import dagger.hilt.android.AndroidEntryPoint
-import java.util.*
+import java.util.UUID
 import javax.inject.Inject
+import kotlin.collections.set
 
 
 /**
@@ -139,13 +193,16 @@ class MainActivity : BaseActivity() {
                         }
                     }
                 }
+
                 8 -> {
                     val androidId =
                         Settings.Secure.getString(contentResolver, Settings.Secure.ANDROID_ID)
                     "androidId: $androidId".logI()
                 }
+
                 9 -> {
                 }
+
                 10 -> openActivity<NestedScrollingActivity>(mActivity)
                 11 -> openActivity<FlowSampleActivity>(mActivity)
                 12 -> SampleSheetDialog.show(mActivity.supportFragmentManager)
@@ -155,6 +212,7 @@ class MainActivity : BaseActivity() {
                         showSnackbar(viewBinding.root, R.string.test_success)
                     }
                 }
+
                 15 -> openActivity<DiffUtilActivity>(mActivity)
                 16 -> openActivity<CoroutineSampleActivity>(mActivity)
                 17 -> openActivity<RegisterForResultActivity>(mActivity)
@@ -166,6 +224,7 @@ class MainActivity : BaseActivity() {
                     getInstalledPackages(this)
                     getPackageInfo(this, "com.android.chrome")
                 }
+
                 21 -> openActivity<ComposeActivity>(mActivity)
                 22 -> openActivity<ComposeDemoActivity>(mActivity)
                 23 -> openActivity<ComposeLayoutActivity>(mActivity)
@@ -178,6 +237,7 @@ class MainActivity : BaseActivity() {
                         "The device 's android version is below API 30, can't create bubble".toast()
                     }
                 }
+
                 27 -> openActivity<TouchImageActivity>(mActivity)
                 28 -> openActivity<RoundCornerLayoutActivity>(mActivity)
                 29 -> openActivity<MotionLayoutActivity>(mActivity)
@@ -196,6 +256,7 @@ class MainActivity : BaseActivity() {
                 42 -> openActivity<MediaPickerActivity>(mActivity)
                 43 -> openActivity<CoilActivity>(mActivity)
                 44 -> openActivity<RomInfoActivity>(mActivity)
+                45 -> openActivity<SlidingPaneActivity>(mActivity)
                 else -> {
                 }
             }
