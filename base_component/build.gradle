@@ -173,4 +173,7 @@ dependencies {
     // https://github.com/coil-kt/coil/blob/main/README-zh.md
     api 'io.coil-kt:coil:2.2.2'
 
+    // https://github.com/Curzibn/Luban
+    api 'top.zibin:Luban:1.1.8'
+
 }

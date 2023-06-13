@@ -78,6 +78,7 @@ class MainViewModel : ViewModel() {
             MainEntranceBean(R.string.test_coil),
             MainEntranceBean(R.string.test_rom_info),
             MainEntranceBean(R.string.test_sliding_pane),
+            MainEntranceBean(R.string.test_luban_compress),
         )
     )
 

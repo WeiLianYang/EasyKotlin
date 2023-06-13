@@ -73,6 +73,7 @@ import com.william.easykt.ui.DrawerActivity
 import com.william.easykt.ui.FileActivity
 import com.william.easykt.ui.FlowSampleActivity
 import com.william.easykt.ui.GlideActivity
+import com.william.easykt.ui.LubanCompressActivity
 import com.william.easykt.ui.MediaPickerActivity
 import com.william.easykt.ui.MotionLayoutActivity
 import com.william.easykt.ui.NestedScrollingActivity
@@ -257,6 +258,7 @@ class MainActivity : BaseActivity() {
                 43 -> openActivity<CoilActivity>(mActivity)
                 44 -> openActivity<RomInfoActivity>(mActivity)
                 45 -> openActivity<SlidingPaneActivity>(mActivity)
+                46 -> openActivity<LubanCompressActivity>(mActivity)
                 else -> {
                 }
             }
