@@ -50,7 +50,6 @@ import com.william.base_component.extension.toast
 import com.william.base_component.utils.getInstalledPackages
 import com.william.base_component.utils.getPackageInfo
 import com.william.base_component.utils.openActivity
-import com.william.base_component.utils.openBrowser
 import com.william.base_component.utils.queryIntent
 import com.william.base_component.utils.showSnackbar
 import com.william.easykt.databinding.ActivityMainBinding
@@ -73,6 +72,7 @@ import com.william.easykt.ui.DrawerActivity
 import com.william.easykt.ui.FileActivity
 import com.william.easykt.ui.FlowSampleActivity
 import com.william.easykt.ui.GlideActivity
+import com.william.easykt.ui.IntentDispatcherActivity
 import com.william.easykt.ui.LubanCompressActivity
 import com.william.easykt.ui.MediaPickerActivity
 import com.william.easykt.ui.MotionLayoutActivity
@@ -169,7 +169,7 @@ class MainActivity : BaseActivity() {
                 3 -> openActivity<PagerCardActivity>(mActivity)
                 4 -> openActivity<AutoScrollActivity>(mActivity)
                 5 -> openActivity<PermissionActivity>(mActivity)
-                6 -> openBrowser(this, "https://www.baidu.com")
+                6 -> openActivity<IntentDispatcherActivity>(mActivity)
                 7 -> {
                     if (Build.VERSION.SDK_INT > Build.VERSION_CODES.O) {
                         // App needs 10 MB within internal storage.

@@ -34,7 +34,7 @@ import com.william.base_component.BaseApp
 import com.william.base_component.extension.dp
 import com.william.base_component.extension.logD
 import com.william.base_component.extension.logE
-import java.util.*
+import java.util.Locale
 
 /**
  * @author William
@@ -142,6 +142,7 @@ fun openBrowser(
         "open browser success".logD()
     }.onFailure {
         "open browser failed : ${it.message}".logE()
+//        "open browser failed".toast(Toast.LENGTH_LONG)
         val intent = Intent(Intent.ACTION_VIEW, uri)
         context.startActivity(intent)
     }

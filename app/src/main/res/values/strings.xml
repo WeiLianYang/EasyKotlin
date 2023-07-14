@@ -241,4 +241,9 @@
     <string name="datastore_save_proto">Save Proto Data</string>
     <string name="compress">Compress</string>
 
+    <string name="open_chrome_intent1">Open-1</string>
+    <string name="open_chrome_intent2">Open-2</string>
+    <string name="test_chrome_intent1">com.android.chrome/\ncom.google.android.apps.chrome.Main</string>
+    <string name="test_chrome_intent2">com.android.chrome/\ncom.google.android.apps.chrome.IntentDispatcher</string>
+
 </resources>

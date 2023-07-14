@@ -269,6 +269,7 @@
         <activity android:name=".ui.RomInfoActivity" />
         <activity android:name=".ui.SlidingPaneActivity" />
         <activity android:name=".ui.LubanCompressActivity" />
+        <activity android:name=".ui.IntentDispatcherActivity" />
 
         <activity
             android:name=".ui.CameraxActivity"
