@@ -16,6 +16,7 @@
 
 package com.william.base_component.utils
 
+import android.annotation.SuppressLint
 import android.app.Activity
 import android.content.Context
 import android.content.Intent
@@ -30,10 +31,13 @@ import android.telephony.TelephonyManager
 import android.text.TextUtils
 import android.view.View
 import android.view.ViewOutlineProvider
+import android.widget.Toast
 import com.william.base_component.BaseApp
 import com.william.base_component.extension.dp
 import com.william.base_component.extension.logD
 import com.william.base_component.extension.logE
+import com.william.base_component.extension.logW
+import com.william.base_component.extension.toast
 import java.util.Locale
 
 /**
@@ -119,6 +123,46 @@ fun setClipViewCornerRadius(view: View?, radius: Int) {
 }
 
 
+@SuppressLint("QueryPermissionsNeeded")
+fun canHandleIntent2(context: Context, intent: Intent): Boolean {
+    val activities: List<ResolveInfo>?
+    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+        activities = context.packageManager.queryIntentActivities(
+            intent,
+            PackageManager.ResolveInfoFlags.of(PackageManager.MATCH_ALL.toLong())
+        )
+        "Version is higher than Tiramisu, activities: $activities".logW()
+    } else {
+        activities =
+            context.packageManager.queryIntentActivities(intent, PackageManager.MATCH_ALL)
+        "Version is less than Tiramisu, activities: $activities".logW()
+    }
+    return activities.isNotEmpty()
+}
+
+/**
+ * 检查能否处理intent
+ * @param context 上下文
+ * @param intent 意图
+ * @return true 能处理，false 不能处理
+ */
+@SuppressLint("QueryPermissionsNeeded")
+fun canHandleIntent(context: Context, intent: Intent): Boolean {
+    val resolveInfo: ResolveInfo?
+    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+        resolveInfo = context.packageManager.resolveActivity(
+            intent,
+            PackageManager.ResolveInfoFlags.of(PackageManager.MATCH_ALL.toLong())
+        )
+        "Version is higher than Tiramisu, ResolveInfo: $resolveInfo".logW()
+    } else {
+        resolveInfo = context.packageManager.resolveActivity(intent, PackageManager.MATCH_ALL)
+        "Version is less than Tiramisu, ResolveInfo: $resolveInfo".logW()
+    }
+    return resolveInfo != null
+}
+
+
 /**
  * 打开浏览器
  */
@@ -133,16 +177,23 @@ fun openBrowser(
     }
     val uri = Uri.parse(url)
     runCatching {
+        var flag = false
         if (!packageName.isNullOrEmpty() && !className.isNullOrEmpty()) {
             val intent = Intent(Intent.ACTION_VIEW, uri)
             intent.setClassName(packageName, className)
-            context.startActivity(intent)
+            flag = canHandleIntent(context, intent)
+            if (flag) {
+                context.startActivity(intent)
+            } else {
+                throw Exception("Can not handle the intent: $intent")
+            }
         }
+        flag
     }.onSuccess {
-        "open browser success".logD()
+        "open browser ${if (it) "success" else "failed"}".logD()
     }.onFailure {
         "open browser failed : ${it.message}".logE()
-//        "open browser failed".toast(Toast.LENGTH_LONG)
+        "Please use Google Chrome to open it !".toast(Toast.LENGTH_LONG)
         val intent = Intent(Intent.ACTION_VIEW, uri)
         context.startActivity(intent)
     }
