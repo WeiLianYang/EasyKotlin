@@ -97,8 +97,8 @@
 
         <ImageView
             android:id="@+id/iv_image6"
-            android:layout_width="150dp"
-            android:layout_height="150dp"
+            android:layout_width="100dp"
+            android:layout_height="100dp"
             android:layout_marginTop="20dp"
             android:layout_marginEnd="10dp"
             android:src="@drawable/scroll_image"
@@ -108,8 +108,8 @@
 
         <ImageView
             android:id="@+id/iv_image7"
-            android:layout_width="150dp"
-            android:layout_height="150dp"
+            android:layout_width="100dp"
+            android:layout_height="100dp"
             android:layout_marginStart="10dp"
             android:src="@drawable/scroll_image"
             app:layout_constraintStart_toEndOf="@+id/guideline"
@@ -118,8 +118,8 @@
 
         <ImageView
             android:id="@+id/iv_image8"
-            android:layout_width="150dp"
-            android:layout_height="150dp"
+            android:layout_width="100dp"
+            android:layout_height="100dp"
             android:layout_marginTop="20dp"
             android:layout_marginEnd="10dp"
             android:src="@drawable/scroll_image"
@@ -129,12 +129,52 @@
 
         <ImageView
             android:id="@+id/iv_image9"
-            android:layout_width="150dp"
-            android:layout_height="150dp"
+            android:layout_width="100dp"
+            android:layout_height="100dp"
             android:layout_marginStart="10dp"
             android:src="@drawable/scroll_image"
             app:layout_constraintStart_toEndOf="@+id/guideline"
             app:layout_constraintTop_toTopOf="@id/iv_image8"
+            tools:ignore="ContentDescription" />
+
+        <ImageView
+            android:id="@+id/iv_image10"
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            android:layout_marginTop="20dp"
+            android:layout_marginEnd="10dp"
+            android:src="@drawable/scroll_image"
+            app:layout_constraintEnd_toStartOf="@+id/guideline"
+            app:layout_constraintTop_toBottomOf="@id/iv_image8"
+            tools:ignore="ContentDescription" />
+
+        <ImageView
+            android:id="@+id/iv_image11"
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            android:layout_marginStart="10dp"
+            android:src="@drawable/scroll_image"
+            app:layout_constraintStart_toEndOf="@+id/guideline"
+            app:layout_constraintTop_toTopOf="@id/iv_image10"
+            tools:ignore="ContentDescription" />
+
+        <ImageView
+            android:id="@+id/iv_image12"
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            android:layout_marginTop="20dp"
+            android:layout_marginEnd="10dp"
+            app:layout_constraintEnd_toStartOf="@+id/guideline"
+            app:layout_constraintTop_toBottomOf="@id/iv_image10"
+            tools:ignore="ContentDescription" />
+
+        <ImageView
+            android:id="@+id/iv_image13"
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            android:layout_marginStart="10dp"
+            app:layout_constraintStart_toEndOf="@+id/guideline"
+            app:layout_constraintTop_toTopOf="@id/iv_image12"
             tools:ignore="ContentDescription" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>

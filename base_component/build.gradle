@@ -170,8 +170,12 @@ dependencies {
     api "androidx.work:work-runtime:2.8.1"
     api "androidx.work:work-runtime-ktx:2.8.1"
 
+    // https://coil-kt.github.io/coil/README-zh/
     // https://github.com/coil-kt/coil/blob/main/README-zh.md
-    api 'io.coil-kt:coil:2.2.2'
+    api 'io.coil-kt:coil:2.4.0'
+    api 'io.coil-kt:coil-gif:2.4.0'
+    api 'io.coil-kt:coil-svg:2.4.0'
+    api 'io.coil-kt:coil-video:2.4.0'
 
     // https://github.com/Curzibn/Luban
     api 'top.zibin:Luban:1.1.8'

@@ -16,8 +16,12 @@
 
 package com.william.easykt
 
+import coil.ImageLoader
+import coil.ImageLoaderFactory
 import com.william.base_component.BaseApp
 import dagger.hilt.android.HiltAndroidApp
+import javax.inject.Inject
+import javax.inject.Provider
 
 /**
  *  author : WilliamYang
@@ -25,4 +29,11 @@ import dagger.hilt.android.HiltAndroidApp
  *  description :
  */
 @HiltAndroidApp
-class App : BaseApp()
+class App : BaseApp(), ImageLoaderFactory {
+
+    @Inject
+    lateinit var imageLoader: Provider<ImageLoader>
+
+    override fun newImageLoader(): ImageLoader = imageLoader.get()
+
+}
