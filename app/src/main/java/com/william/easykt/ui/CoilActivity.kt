@@ -33,7 +33,7 @@ import com.william.base_component.extension.logD
 import com.william.base_component.extension.logE
 import com.william.base_component.extension.logI
 import com.william.base_component.image.CircleAnimatedTransformation
-import com.william.base_component.image.CircleCropBorderTransformation
+import com.william.base_component.image.CircleCropWithBorderTransformation
 import com.william.base_component.image.RoundedAnimatedTransformation
 import com.william.easykt.R
 import com.william.easykt.databinding.ActivityCoilBinding
@@ -106,7 +106,7 @@ class CoilActivity : BaseActivity() {
             crossfade(true)
             placeholder(R.drawable.ic_default)
             lifecycle(this@CoilActivity)
-            transformations(CircleCropBorderTransformation(10.dp, "#00ff00".toColorInt()))
+            transformations(CircleCropWithBorderTransformation(10.dp, "#00ff00".toColorInt()))
         }
 
         val request = ImageRequest.Builder(this)

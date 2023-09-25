@@ -14,7 +14,10 @@ import coil.transform.Transformation
  * ### date : 2022/11/1 9:47
  * ### description : Circle Crop $ Border
  */
-class CircleCropBorderTransformation(private val borderSize: Int, private val borderColor: Int) :
+class CircleCropWithBorderTransformation(
+    private val borderSize: Int,
+    private val borderColor: Int
+) :
     Transformation {
 
     init {
@@ -50,7 +53,7 @@ class CircleCropBorderTransformation(private val borderSize: Int, private val bo
 
     override fun equals(other: Any?): Boolean {
         if (this === other) return true
-        return other is CircleCropBorderTransformation &&
+        return other is CircleCropWithBorderTransformation &&
                 borderSize == other.borderSize &&
                 borderColor == other.borderColor
     }
