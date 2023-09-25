@@ -16,6 +16,7 @@
 
 package com.william.easykt.ui
 
+import androidx.core.graphics.toColorInt
 import androidx.lifecycle.lifecycleScope
 import coil.annotation.ExperimentalCoilApi
 import coil.imageLoader
@@ -32,6 +33,7 @@ import com.william.base_component.extension.logD
 import com.william.base_component.extension.logE
 import com.william.base_component.extension.logI
 import com.william.base_component.image.CircleAnimatedTransformation
+import com.william.base_component.image.CircleCropBorderTransformation
 import com.william.base_component.image.RoundedAnimatedTransformation
 import com.william.easykt.R
 import com.william.easykt.databinding.ActivityCoilBinding
@@ -104,7 +106,7 @@ class CoilActivity : BaseActivity() {
             crossfade(true)
             placeholder(R.drawable.ic_default)
             lifecycle(this@CoilActivity)
-            transformations(CircleCropTransformation())
+            transformations(CircleCropBorderTransformation(10.dp, "#00ff00".toColorInt()))
         }
 
         val request = ImageRequest.Builder(this)

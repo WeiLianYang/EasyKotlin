@@ -180,4 +180,7 @@ dependencies {
     // https://github.com/Curzibn/Luban
     api 'top.zibin:Luban:1.1.8'
 
+    // https://github.com/wasabeef/transformers
+    api 'jp.wasabeef.transformers:coil:1.0.6'
+
 }
