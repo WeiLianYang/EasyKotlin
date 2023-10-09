@@ -319,3 +319,22 @@ fun isLargerThanVersion(version: Int): Boolean {
 fun isSmallerThanVersion(version: Int): Boolean {
     return Build.VERSION.SDK_INT < version
 }
+
+/**
+ * 获取语言标记
+ * @return 在5.0及以上，返回格式：语种-脚本-地区，例如 zh-Hans-CN, zh-Hant-TW, en-US；在4.4及以下返回格式：语种，例如 en, zh。
+ *
+ * **语种-脚本-地区 language-script-region**
+ * * language规范: [ISO 639-1](https://zh.wikipedia.org/wiki/ISO_639-1%E4%BB%A3%E7%A0%81%E8%A1%A8)
+ * * script规范: [ISO 15924](https://zh.wikipedia.org/wiki/ISO_15924#%E5%88%97%E8%A1%A8)
+ * * region规范: [ISO 3166-2](https://en.wikipedia.org/wiki/ISO_3166-2)
+ */
+fun getLanguage(): String? {
+    val language = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+        Locale.getDefault().toLanguageTag()
+    } else {
+        Locale.getDefault().language
+    }
+    "language: $language".logD()
+    return language
+}
