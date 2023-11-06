@@ -26,8 +26,7 @@ plugins {
 def androidConfig = rootProject.ext.android
 
 android {
-    compileSdkVersion androidConfig.compileSdkVersion
-    buildToolsVersion androidConfig.buildToolsVersion
+    compileSdk androidConfig.compileSdkVersion
 
     defaultConfig {
 
@@ -87,8 +86,8 @@ android {
     }
     namespace 'com.william.easykt'
 
-    applicationVariants.all { variant ->
-        variant.outputs.all {
+    applicationVariants.configureEach { variant ->
+        variant.outputs.configureEach {
             outputFileName = "ek_v${defaultConfig.versionName}_${defaultConfig.versionCode}_${buildType.name}.apk"
             tasks.named("assemble${variant.name.capitalize()}").configure {
                 doLast {
@@ -106,7 +105,7 @@ dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar', '*.aar'])
 
     // Integration with activities
-    implementation 'androidx.activity:activity-compose:1.7.0'
+    implementation 'androidx.activity:activity-compose:1.7.2'
     implementation "androidx.constraintlayout:constraintlayout-compose:1.0.1"
     // Compose Material Design
     implementation "androidx.compose.material:material:$compose_version"
@@ -118,11 +117,11 @@ dependencies {
     // Tooling support (Previews, etc.)
     debugImplementation "androidx.compose.ui:ui-tooling:$compose_version"
     // Integration with ViewModels
-    implementation 'androidx.lifecycle:lifecycle-viewmodel-compose:2.6.1'
+    implementation 'androidx.lifecycle:lifecycle-viewmodel-compose:2.6.2'
     // UI Tests
     androidTestImplementation "androidx.compose.ui:ui-test-junit4:$compose_version"
 
-    implementation 'io.coil-kt:coil-compose:2.2.1'
+    implementation 'io.coil-kt:coil-compose:2.3.0'
 
     testImplementation 'junit:junit:4.13.2'
     androidTestImplementation 'androidx.test:core-ktx:1.5.0'

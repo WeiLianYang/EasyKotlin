@@ -23,13 +23,17 @@ import android.content.Intent
 import android.os.Build
 import android.os.Handler
 import android.os.Looper
-import androidx.core.app.AlarmManagerCompat
+import androidx.annotation.RequiresApi
 import com.william.base_component.activity.BaseActivity
-import com.william.base_component.extension.*
+import com.william.base_component.extension.bindingView
+import com.william.base_component.extension.logD
+import com.william.base_component.extension.logI
+import com.william.base_component.extension.logV
+import com.william.base_component.extension.logW
 import com.william.base_component.utils.showSnackbar
 import com.william.easykt.databinding.ActivityAlarmManagerBinding
 import com.william.easykt.receiver.AlarmReceiver
-import java.util.*
+import java.util.Calendar
 
 /**
  * author : WilliamYang
@@ -90,7 +94,9 @@ class AlarmManagerActivity : BaseActivity() {
             // 5秒后
             val triggerAtMillis = System.currentTimeMillis() + 5 * 1000
             val intent = Intent(context, AlarmReceiver::class.java)
-            manager?.setExact(AlarmManager.RTC_WAKEUP, triggerAtMillis, getPendingIntent(intent, 2))
+            getPendingIntent(intent, 2)?.let {
+                manager?.setExact(AlarmManager.RTC_WAKEUP, triggerAtMillis, it)
+            }
             "set exact alarm success 1".logV()
         } else {
             showSnackbar(viewBinding.root, "请在设置中为应用开启闹钟权限")
@@ -105,17 +111,16 @@ class AlarmManagerActivity : BaseActivity() {
             calendar.add(Calendar.SECOND, 5)
 
             val intent = Intent(context, AlarmReceiver::class.java)
-            manager?.setExact(
-                AlarmManager.RTC_WAKEUP,
-                calendar.timeInMillis,
-                getPendingIntent(intent, 2)
-            )
+            getPendingIntent(intent, 2)?.let {
+                manager?.setExact(AlarmManager.RTC_WAKEUP, calendar.timeInMillis, it)
+            }
             "set exact alarm success 2".logV()
         } else {
             showSnackbar(viewBinding.root, "请在设置中为应用开启闹钟权限")
         }
     }
 
+    @RequiresApi(Build.VERSION_CODES.N)
     private fun setExactAlarm3(context: Context) {
         val manager = context.getSystemService(Context.ALARM_SERVICE) as? AlarmManager
         if (manager.canSetExactAlarm()) {
@@ -144,7 +149,9 @@ class AlarmManagerActivity : BaseActivity() {
         if (nextAlarmTriggerTime != triggerAtMillis) {
             val pendingIntent = getPendingIntent(intent, 1)
             val alarmClockInfo = AlarmManager.AlarmClockInfo(triggerAtMillis, pendingIntent)
-            manager?.setAlarmClock(alarmClockInfo, pendingIntent)
+            if (pendingIntent != null) {
+                manager?.setAlarmClock(alarmClockInfo, pendingIntent)
+            }
             "set alarm clock success".logV()
         } else {
             "The same alarm clock has been set".logW()
@@ -156,10 +163,13 @@ class AlarmManagerActivity : BaseActivity() {
         // 5秒后
         val triggerAtMillis = System.currentTimeMillis() + 5 * 1000
         val manager = context.getSystemService(Context.ALARM_SERVICE) as? AlarmManager
-        manager?.set(AlarmManager.RTC_WAKEUP, triggerAtMillis, getPendingIntent(intent, 1))
+        getPendingIntent(intent, 1)?.let {
+            manager?.set(AlarmManager.RTC_WAKEUP, triggerAtMillis, it)
+        }
         "set alarm success 1".logV()
     }
 
+    @RequiresApi(Build.VERSION_CODES.N)
     private fun setAlarm2(context: Context) {
         val manager = context.getSystemService(Context.ALARM_SERVICE) as? AlarmManager
         val triggerAtMillis = System.currentTimeMillis() + 5 * 1000

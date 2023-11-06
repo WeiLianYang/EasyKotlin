@@ -58,7 +58,7 @@ class CircleLayout @JvmOverloads constructor(
         invalidate()
     }
 
-    override fun onDraw(canvas: Canvas?) {
+    override fun onDraw(canvas: Canvas) {
         if (TextUtils.isEmpty(bgColor)) {
             val bgDrawable = background
             if (bgDrawable is ColorDrawable) {

@@ -82,7 +82,7 @@ class RoundCornerLayout : ConstraintLayout {
         bottomRightRadius = rightBottom.toFloat()
     }
 
-    override fun onDraw(canvas: Canvas?) {
+    override fun onDraw(canvas: Canvas) {
         if (bgColor == null) {
             val bgDrawable = background
             if (bgDrawable is ColorDrawable) {

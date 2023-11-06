@@ -17,9 +17,10 @@
 package com.william.easykt.ui
 
 import android.Manifest
-import com.orhanobut.logger.Logger
+import com.permissionx.guolindev.PermissionX
 import com.william.base_component.activity.BaseActivity
 import com.william.base_component.extension.bindingView
+import com.william.base_component.extension.logD
 import com.william.base_component.utils.requestPermission
 import com.william.easykt.databinding.ActivityPermissionBinding
 
@@ -39,23 +40,35 @@ class PermissionActivity : BaseActivity() {
     override fun initData() {
         setTitleText(javaClass.simpleName)
 
-        viewBinding.tvButton.setOnClickListener {
+        viewBinding.tvRequestCamera.setOnClickListener {
             requestPermission(
                 this,
                 mutableListOf(
                     Manifest.permission.CAMERA,
-                    Manifest.permission.WRITE_EXTERNAL_STORAGE
                 ),
                 importantPermissions = mutableListOf(
-                    Manifest.permission.WRITE_EXTERNAL_STORAGE
+                    Manifest.permission.CAMERA
                 )
             ) { allGranted, grantedList, deniedList ->
-                Logger.d(
-                    "allGranted: $allGranted, " +
-                            "grantedList: $grantedList, " +
-                            "deniedList: $deniedList"
-                )
+                "allGranted: $allGranted, grantedList: $grantedList, deniedList: $deniedList".logD()
             }
+        }
+        viewBinding.tvRequestNotification.setOnClickListener {
+            PermissionX.init(this)
+                .permissions(PermissionX.permission.POST_NOTIFICATIONS)
+                .onExplainRequestReason { scope, deniedList, _ ->
+                    scope.showRequestReasonDialog(deniedList, "Need post permission", "Confirm")
+                }
+                .onForwardToSettings { scope, deniedList ->
+                    scope.showForwardToSettingsDialog(
+                        deniedList,
+                        "您需要去应用程序设置当中手动开启权限",
+                        "Confirm",
+                        "Cancel"
+                    )
+                }.request { allGranted, grantedList, deniedList ->
+                    "allGranted: $allGranted, grantedList: $grantedList, deniedList: $deniedList".logD()
+                }
         }
     }
 }

@@ -24,8 +24,7 @@ plugins {
 def androidConfig = rootProject.ext.android
 
 android {
-    compileSdkVersion androidConfig.compileSdkVersion
-    buildToolsVersion androidConfig.buildToolsVersion
+    compileSdk androidConfig.compileSdkVersion
 
     defaultConfig {
 
@@ -64,21 +63,21 @@ dependencies {
     androidTestImplementation 'androidx.test.ext:junit:1.1.5'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.5.1'
 
-    debugApi 'com.squareup.leakcanary:leakcanary-android:2.9.1'
+    debugApi 'com.squareup.leakcanary:leakcanary-android:2.12'
 
-    api 'androidx.core:core-ktx:1.10.0'
+    api 'androidx.core:core-ktx:1.12.0'
     api 'androidx.multidex:multidex:2.0.1'
     api 'androidx.cardview:cardview:1.0.0'
     api 'androidx.appcompat:appcompat:1.6.1'
-    api "androidx.activity:activity-ktx:1.7.0"
+    api "androidx.activity:activity-ktx:1.7.2"
     api 'androidx.annotation:annotation:1.6.0'
-    api 'com.google.android.material:material:1.8.0'
+    api 'com.google.android.material:material:1.9.0'
 
     // datastore
     api 'androidx.datastore:datastore-preferences:1.0.0'
     // protobuf
-    api 'com.google.protobuf:protobuf-javalite:3.21.5'
-    api 'com.google.protobuf:protobuf-kotlin-lite:3.21.5'
+    api 'com.google.protobuf:protobuf-javalite:3.24.0'
+    api 'com.google.protobuf:protobuf-kotlin-lite:3.24.0'
 
     // kotlin-reflect
     api "org.jetbrains.kotlin:kotlin-reflect:$kotlin_version"
@@ -91,7 +90,7 @@ dependencies {
     api "org.jetbrains.kotlinx:kotlinx-coroutines-reactive:$kotlin_coroutines"
     api "org.jetbrains.kotlinx:kotlinx-coroutines-rx2:$kotlin_coroutines"
 
-    api 'com.github.bumptech.glide:glide:4.14.2'
+    api 'com.github.bumptech.glide:glide:4.15.1'
     api 'jp.wasabeef:glide-transformations:4.3.0'
 
     api 'com.orhanobut:logger:2.2.0'
@@ -107,7 +106,7 @@ dependencies {
     api 'com.squareup.retrofit2:retrofit:2.9.0'
     api 'com.squareup.retrofit2:converter-gson:2.9.0'
     api 'com.squareup.retrofit2:adapter-rxjava2:2.9.0'
-    api 'com.squareup.okhttp3:okhttp:4.10.0'
+    api 'com.squareup.okhttp3:okhttp:4.11.0'
     api 'com.squareup.okhttp3:logging-interceptor:4.10.0'
 
     api 'com.jakewharton.rxbinding3:rxbinding:3.1.0'
@@ -117,11 +116,11 @@ dependencies {
 
     api 'com.williamyang.debugtools:debugtoolslib:1.0.0'
 
-    api 'com.github.zhpanvip:BannerViewPager:3.5.7'
+    api 'com.github.zhpanvip:BannerViewPager:3.5.12'
 
     api 'com.jeremyliao:live-event-bus-x:1.7.3'
 
-    api 'com.guolindev.permissionx:permissionx:1.6.4'
+    api 'com.guolindev.permissionx:permissionx:1.7.1'
 
     api 'com.github.zyyoona7:recyclerviewdivider:1.0.2'
 
@@ -132,22 +131,22 @@ dependencies {
     api 'com.tencent:mmkv-static:1.2.10'
 
     // room
-    kapt "androidx.room:room-compiler:2.5.1"
-    api "androidx.room:room-ktx:2.5.1"
-    api "androidx.room:room-runtime:2.5.1"
+    kapt "androidx.room:room-compiler:2.5.2"
+    api "androidx.room:room-ktx:2.5.2"
+    api "androidx.room:room-runtime:2.5.2"
 
     // lifecycle
-    api 'androidx.lifecycle:lifecycle-runtime-ktx:2.6.1'
-    api 'androidx.lifecycle:lifecycle-common-java8:2.6.1'
+    api 'androidx.lifecycle:lifecycle-runtime-ktx:2.6.2'
+    api 'androidx.lifecycle:lifecycle-common-java8:2.6.2'
     api 'androidx.lifecycle:lifecycle-extensions:2.2.0'
 
     // viewModel
-    api "androidx.lifecycle:lifecycle-viewmodel-ktx:2.6.1"
-    api "androidx.fragment:fragment-ktx:1.5.6"
+    api "androidx.lifecycle:lifecycle-viewmodel-ktx:2.6.2"
+    api "androidx.fragment:fragment-ktx:1.6.0"
 
     // liveData
-    api 'androidx.lifecycle:lifecycle-process:2.6.1'
-    api "androidx.lifecycle:lifecycle-livedata-ktx:2.6.1"
+    api 'androidx.lifecycle:lifecycle-process:2.6.2'
+    api "androidx.lifecycle:lifecycle-livedata-ktx:2.6.2"
 
     // https://github.com/Blankj/AndroidUtilCode/blob/master/lib/utilcode/README-CN.md
     api 'com.blankj:utilcodex:1.31.1'
