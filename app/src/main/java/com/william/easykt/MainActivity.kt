@@ -259,6 +259,7 @@ class MainActivity : BaseActivity() {
                 44 -> openActivity<RomInfoActivity>(mActivity)
                 45 -> openActivity<SlidingPaneActivity>(mActivity)
                 46 -> openActivity<LubanCompressActivity>(mActivity)
+                47 -> startService(Intent(this, FGService::class.java))
                 else -> {
                 }
             }

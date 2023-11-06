@@ -70,6 +70,7 @@
     <string name="test_rom_info">Rom Info</string>
     <string name="test_sliding_pane">SlidingPaneLayout</string>
     <string name="test_luban_compress">Luban Compress</string>
+    <string name="test_fg_service">Foreground Service</string>
 
     <string name="test_kotlin_flow1">1. 异步计算的值流</string>
     <string name="test_kotlin_flow2">2. 冷流</string>
