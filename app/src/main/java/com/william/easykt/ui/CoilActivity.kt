@@ -35,6 +35,7 @@ import com.william.base_component.extension.logI
 import com.william.base_component.image.CircleAnimatedTransformation
 import com.william.base_component.image.CircleCropWithBorderTransformation
 import com.william.base_component.image.RoundedAnimatedTransformation
+import com.william.base_component.image.RoundedCornersWithBorderTransformation
 import com.william.easykt.R
 import com.william.easykt.databinding.ActivityCoilBinding
 import kotlinx.coroutines.launch
@@ -99,7 +100,9 @@ class CoilActivity : BaseActivity() {
             crossfade(true)
             placeholder(R.drawable.ic_default)
             lifecycle(this@CoilActivity)
-            transformations(RoundedCornersTransformation(20f.dp, 20f.dp, 20f.dp, 20f.dp))
+            transformations(
+                RoundedCornersWithBorderTransformation(20f.dp, 10.dp, "#9000ff00".toColorInt())
+            )
         }
 
         viewBinding.ivImage9.load(url) {
