@@ -77,13 +77,13 @@ typealias OnAdapterItemChildLongClick<T> = (view: View, holder: BaseRvViewHolder
  * Glide's image loads the callback function
  * Callback for [com.william.base_component.image.GlideLoader.load]
  */
-typealias OnGlideResourceReady = (resource: Drawable?, model: Any?, target: Target<Drawable?>?, dataSource: DataSource?, isFirstResource: Boolean) -> Unit
+typealias OnGlideResourceReady = (resource: Drawable, model: Any, target: Target<Drawable>, dataSource: DataSource, isFirstResource: Boolean) -> Unit
 
 /**
  * Glide's image load failed callback function
  * Callback for [com.william.base_component.image.GlideLoader.load]
  */
-typealias OnGlideLoadFailed = (e: GlideException?, model: Any?, target: Target<Drawable?>?, isFirstResource: Boolean) -> Unit
+typealias OnGlideLoadFailed = (e: GlideException?, model: Any?, target: Target<Drawable>, isFirstResource: Boolean) -> Unit
 
 /**
  * Callback for the permission request result

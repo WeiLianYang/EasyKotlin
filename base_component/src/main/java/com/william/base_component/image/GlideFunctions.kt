@@ -31,6 +31,7 @@ import androidx.annotation.IntRange
 import androidx.annotation.Px
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.FragmentActivity
 import com.bumptech.glide.Glide
 import com.bumptech.glide.RequestBuilder
 import com.bumptech.glide.RequestManager
@@ -116,40 +117,41 @@ fun loadImage(
 
     val requestBuilder: RequestBuilder<Drawable>? = getRequestManager(
         context
-    )
-        ?.load(recourse)
-        ?.apply(
-            createOptions(
-                transformations,
-                transType, radius, borderWith, borderColor, cornerType,
-                blurred, scale, placeholderId, errorResId, skipMemoryCache, width, height
-            )
+    )?.load(recourse)?.apply(
+        createOptions(
+            transformations,
+            transType,
+            radius,
+            borderWith,
+            borderColor,
+            cornerType,
+            blurred,
+            scale,
+            placeholderId,
+            errorResId,
+            skipMemoryCache,
+            width,
+            height
         )
-        ?.transition(DrawableTransitionOptions.withCrossFade())
-        ?.addListener(object : RequestListener<Drawable?> {
+    )?.transition(DrawableTransitionOptions.withCrossFade())
+        ?.addListener(object : RequestListener<Drawable> {
+
             override fun onLoadFailed(
-                e: GlideException?,
-                model: Any?,
-                target: Target<Drawable?>?,
-                isFirstResource: Boolean
+                e: GlideException?, model: Any?, target: Target<Drawable>, isFirstResource: Boolean
             ): Boolean {
                 onLoadFailed?.invoke(e, model, target, isFirstResource)
                 return false
             }
 
             override fun onResourceReady(
-                resource: Drawable?,
-                model: Any?,
-                target: Target<Drawable?>?,
-                dataSource: DataSource?,
+                resource: Drawable,
+                model: Any,
+                target: Target<Drawable>,
+                dataSource: DataSource,
                 isFirstResource: Boolean
             ): Boolean {
                 onResourceReady?.invoke(
-                    resource,
-                    model,
-                    target,
-                    dataSource,
-                    isFirstResource
+                    resource, model, target, dataSource, isFirstResource
                 )
                 return false
             }
@@ -169,19 +171,27 @@ fun loadImage(
 private fun getRequestManager(param: Any?): RequestManager? {
     param.let {
         return when (it) {
-            is Activity -> {
+            is FragmentActivity -> {
                 Glide.with(it)
             }
+
             is Fragment -> {
                 Glide.with(it)
             }
+
+            is Activity -> {
+                Glide.with(it)
+            }
+
             is View -> {
                 // param尽可能使用Activity或者Fragment类型
                 Glide.with(it)
             }
+
             is Context -> {
                 Glide.with(it)
             }
+
             else -> null
         }
     }
@@ -217,9 +227,7 @@ private fun createOptions(
 
     if (transType != TYPE_NORMAL || !transformations.isNullOrEmpty()) {
         val transformation = getMultiTransformation(
-            transformations,
-            transType, radius, borderWith,
-            borderColor, cornerType, blurred, scale
+            transformations, transType, radius, borderWith, borderColor, cornerType, blurred, scale
         )
         transformation?.let {
             options.transform(it)
@@ -255,27 +263,29 @@ private fun getMultiTransformation(
                 )
             )
         }
+
         TYPE_ROUND_RECT -> {
             list.apply {
                 add(CenterCrop())
                 add(
                     GlideRoundRectBorderTransform(
-                        borderWith,
-                        ContextCompat.getColor(BaseApp.instance, borderColor),
-                        radius
+                        borderWith, ContextCompat.getColor(BaseApp.instance, borderColor), radius
                     )
                 )
             }
         }
+
         TYPE_RADIUS -> {
             list.apply {
                 add(CenterCrop())
                 add(RoundedCornersTransformation(radius, 0, cornerType))
             }
         }
+
         TYPE_RADIUS_NOT_CROP -> {
             list.add(RoundedCornersTransformation(radius, 0, cornerType))
         }
+
         TYPE_BLURRED -> list.add(BlurTransformation(blurred, scale))
         TYPE_BLURRED_RADIUS -> {
             list.apply {
@@ -285,8 +295,7 @@ private fun getMultiTransformation(
             }
         }
     }
-    return if (list.size > 0)
-        MultiTransformation(list)
+    return if (list.size > 0) MultiTransformation(list)
     else {
         null
     }

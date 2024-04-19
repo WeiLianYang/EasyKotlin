@@ -18,7 +18,7 @@ plugins {
     id 'com.android.library'
     id 'org.jetbrains.kotlin.android'
     id 'kotlin-parcelize'
-    id 'kotlin-kapt'
+    id 'com.google.devtools.ksp'
 }
 
 def androidConfig = rootProject.ext.android
@@ -63,21 +63,20 @@ dependencies {
     androidTestImplementation 'androidx.test.ext:junit:1.1.5'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.5.1'
 
-    debugApi 'com.squareup.leakcanary:leakcanary-android:2.12'
+    debugApi 'com.squareup.leakcanary:leakcanary-android:2.13'
 
-    api 'androidx.core:core-ktx:1.12.0'
-    api 'androidx.multidex:multidex:2.0.1'
+    api 'androidx.core:core-ktx:1.13.0'
     api 'androidx.cardview:cardview:1.0.0'
     api 'androidx.appcompat:appcompat:1.6.1'
-    api "androidx.activity:activity-ktx:1.7.2"
-    api 'androidx.annotation:annotation:1.6.0'
-    api 'com.google.android.material:material:1.9.0'
+    api "androidx.activity:activity-ktx:1.9.0"
+    api 'androidx.annotation:annotation:1.7.1'
+    api 'com.google.android.material:material:1.11.0'
 
     // datastore
     api 'androidx.datastore:datastore-preferences:1.0.0'
     // protobuf
-    api 'com.google.protobuf:protobuf-javalite:3.24.0'
-    api 'com.google.protobuf:protobuf-kotlin-lite:3.24.0'
+    api 'com.google.protobuf:protobuf-javalite:3.25.2'
+    api 'com.google.protobuf:protobuf-kotlin-lite:3.25.2'
 
     // kotlin-reflect
     api "org.jetbrains.kotlin:kotlin-reflect:$kotlin_version"
@@ -90,7 +89,7 @@ dependencies {
     api "org.jetbrains.kotlinx:kotlinx-coroutines-reactive:$kotlin_coroutines"
     api "org.jetbrains.kotlinx:kotlinx-coroutines-rx2:$kotlin_coroutines"
 
-    api 'com.github.bumptech.glide:glide:4.15.1'
+    api 'com.github.bumptech.glide:glide:4.16.0'
     api 'jp.wasabeef:glide-transformations:4.3.0'
 
     api 'com.orhanobut:logger:2.2.0'
@@ -106,8 +105,8 @@ dependencies {
     api 'com.squareup.retrofit2:retrofit:2.9.0'
     api 'com.squareup.retrofit2:converter-gson:2.9.0'
     api 'com.squareup.retrofit2:adapter-rxjava2:2.9.0'
-    api 'com.squareup.okhttp3:okhttp:4.11.0'
-    api 'com.squareup.okhttp3:logging-interceptor:4.10.0'
+    api 'com.squareup.okhttp3:okhttp:4.12.0'
+    api 'com.squareup.okhttp3:logging-interceptor:4.12.0'
 
     api 'com.jakewharton.rxbinding3:rxbinding:3.1.0'
 
@@ -131,22 +130,22 @@ dependencies {
     api 'com.tencent:mmkv-static:1.2.10'
 
     // room
-    kapt "androidx.room:room-compiler:2.5.2"
-    api "androidx.room:room-ktx:2.5.2"
-    api "androidx.room:room-runtime:2.5.2"
+    ksp "androidx.room:room-compiler:2.6.1"
+    api "androidx.room:room-ktx:2.6.1"
+    api "androidx.room:room-runtime:2.6.1"
 
     // lifecycle
-    api 'androidx.lifecycle:lifecycle-runtime-ktx:2.6.2'
-    api 'androidx.lifecycle:lifecycle-common-java8:2.6.2'
+    api 'androidx.lifecycle:lifecycle-runtime-ktx:2.7.0'
+    api 'androidx.lifecycle:lifecycle-common-java8:2.7.0'
     api 'androidx.lifecycle:lifecycle-extensions:2.2.0'
 
     // viewModel
-    api "androidx.lifecycle:lifecycle-viewmodel-ktx:2.6.2"
-    api "androidx.fragment:fragment-ktx:1.6.0"
+    api "androidx.lifecycle:lifecycle-viewmodel-ktx:2.7.0"
+    api "androidx.fragment:fragment-ktx:1.6.2"
 
     // liveData
-    api 'androidx.lifecycle:lifecycle-process:2.6.2'
-    api "androidx.lifecycle:lifecycle-livedata-ktx:2.6.2"
+    api 'androidx.lifecycle:lifecycle-process:2.7.0'
+    api "androidx.lifecycle:lifecycle-livedata-ktx:2.7.0"
 
     // https://github.com/Blankj/AndroidUtilCode/blob/master/lib/utilcode/README-CN.md
     api 'com.blankj:utilcodex:1.31.1'
@@ -159,22 +158,22 @@ dependencies {
     api 'com.github.mmin18:realtimeblurview:1.2.1'
 
     // navigation
-    api 'androidx.navigation:navigation-ui-ktx:2.5.3'
-    api 'androidx.navigation:navigation-fragment-ktx:2.5.3'
+    api 'androidx.navigation:navigation-ui-ktx:2.7.7'
+    api 'androidx.navigation:navigation-fragment-ktx:2.7.7'
 
     // https://developer.android.com/topic/libraries/app-startup?hl=zh-cn
     api 'androidx.startup:startup-runtime:1.1.1'
 
     // https://developer.android.google.cn/topic/libraries/architecture/workmanager?hl=zh-cn
-    api "androidx.work:work-runtime:2.8.1"
-    api "androidx.work:work-runtime-ktx:2.8.1"
+    api "androidx.work:work-runtime:2.9.0"
+    api "androidx.work:work-runtime-ktx:2.9.0"
 
     // https://coil-kt.github.io/coil/README-zh/
     // https://github.com/coil-kt/coil/blob/main/README-zh.md
-    api 'io.coil-kt:coil:2.4.0'
-    api 'io.coil-kt:coil-gif:2.4.0'
-    api 'io.coil-kt:coil-svg:2.4.0'
-    api 'io.coil-kt:coil-video:2.4.0'
+    api 'io.coil-kt:coil:2.6.0'
+    api 'io.coil-kt:coil-gif:2.6.0'
+    api 'io.coil-kt:coil-svg:2.6.0'
+    api 'io.coil-kt:coil-video:2.6.0'
 
     // https://github.com/Curzibn/Luban
     api 'top.zibin:Luban:1.1.8'

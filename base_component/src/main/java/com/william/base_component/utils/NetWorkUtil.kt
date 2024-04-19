@@ -19,12 +19,20 @@ package com.william.base_component.utils
 import android.Manifest
 import android.content.Context
 import android.content.pm.PackageManager
-import android.net.*
+import android.net.ConnectivityManager
+import android.net.LinkProperties
+import android.net.Network
+import android.net.NetworkCapabilities
+import android.net.NetworkInfo
+import android.net.NetworkRequest
 import android.os.Build
 import android.telephony.TelephonyManager
 import androidx.core.app.ActivityCompat
+import com.william.base_component.appContext
+import com.william.base_component.extension.connectivityManager
 import com.william.base_component.extension.logD
 import com.william.base_component.extension.logE
+import com.william.base_component.extension.logI
 import com.william.base_component.extension.logV
 import com.william.base_component.extension.logW
 import java.io.IOException
@@ -101,8 +109,7 @@ private fun pingNetWork(): Boolean {
     var result = false
     var httpUrl: HttpURLConnection? = null
     try {
-        httpUrl = URL("http://www.baidu.com")
-            .openConnection() as HttpURLConnection
+        httpUrl = URL("http://www.baidu.com").openConnection() as HttpURLConnection
         httpUrl.connectTimeout = TIMEOUT
         httpUrl.connect()
         result = true
@@ -120,8 +127,8 @@ private fun pingNetWork(): Boolean {
  * @return boolean
  */
 fun isWifiNet(context: Context): Boolean {
-    val connectivityManager = context
-        .getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
+    val connectivityManager =
+        context.getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
     val activeNetInfo = connectivityManager.activeNetworkInfo
     return activeNetInfo != null && activeNetInfo.type == ConnectivityManager.TYPE_WIFI
 }
@@ -130,18 +137,15 @@ fun isWifiNet(context: Context): Boolean {
  * is wifi on
  */
 fun isWifiEnabled(context: Context): Boolean {
-    val mgrConn: ConnectivityManager? = context
-        .getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
-    val mgrTel = context
-        .getSystemService(Context.TELEPHONY_SERVICE) as TelephonyManager
+    val mgrConn: ConnectivityManager? =
+        context.getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
+    val mgrTel = context.getSystemService(Context.TELEPHONY_SERVICE) as TelephonyManager
     return if (ActivityCompat.checkSelfPermission(
-            context,
-            Manifest.permission.READ_PHONE_STATE
+            context, Manifest.permission.READ_PHONE_STATE
         ) != PackageManager.PERMISSION_GRANTED
     ) {
         false
-    } else mgrConn?.activeNetworkInfo != null && mgrConn.activeNetworkInfo?.state == NetworkInfo.State.CONNECTED || mgrTel
-        .networkType == TelephonyManager.NETWORK_TYPE_UMTS
+    } else mgrConn?.activeNetworkInfo != null && mgrConn.activeNetworkInfo?.state == NetworkInfo.State.CONNECTED || mgrTel.networkType == TelephonyManager.NETWORK_TYPE_UMTS
 }
 
 /**
@@ -150,13 +154,11 @@ fun isWifiEnabled(context: Context): Boolean {
 fun isMobileNetAvailable(context: Context?): Boolean {
     if (context != null) {
         //获取手机所有连接管理对象(包括对wi-fi,net等连接的管理)
-        val manager =
-            context.getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
+        val manager = context.getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
         //获取NetworkInfo对象
         val networkInfo = manager.activeNetworkInfo
         //判断NetworkInfo对象是否为空 并且类型是否为MOBILE
-        if (null != networkInfo && networkInfo.type == ConnectivityManager.TYPE_MOBILE)
-            return networkInfo.isAvailable
+        if (null != networkInfo && networkInfo.type == ConnectivityManager.TYPE_MOBILE) return networkInfo.isAvailable
     }
     return false
 }
@@ -193,6 +195,9 @@ class CustomNetworkCallback : ConnectivityManager.NetworkCallback() {
         network: Network, capabilities: NetworkCapabilities
     ) {
         //
+        val isTransportAvailable = isTransportAvailable(capabilities)
+        val isNetworkAvailable = isNetworkAvailable(capabilities)
+        "isTransportAvailable, $isTransportAvailable, isNetworkAvailable: $isNetworkAvailable".logI()
         "onCapabilitiesChanged, network: $network, networkCapabilities: $capabilities".logD()
     }
 
@@ -205,4 +210,21 @@ class CustomNetworkCallback : ConnectivityManager.NetworkCallback() {
         //
         "onBlockedStatusChanged, network: $network, blocked: $blocked".logD()
     }
+}
+
+fun isNetworkAvailable(capabilities: NetworkCapabilities): Boolean {
+    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+        return capabilities.hasCapability(NetworkCapabilities.NET_CAPABILITY_INTERNET) && capabilities.hasCapability(
+            NetworkCapabilities.NET_CAPABILITY_VALIDATED
+        )
+    } else {
+        val info = appContext.connectivityManager?.activeNetworkInfo ?: return false
+        return (info.type == ConnectivityManager.TYPE_WIFI || info.type == ConnectivityManager.TYPE_MOBILE)
+    }
+}
+
+fun isTransportAvailable(capabilities: NetworkCapabilities): Boolean {
+    return capabilities.hasTransport(NetworkCapabilities.TRANSPORT_WIFI) || capabilities.hasTransport(
+        NetworkCapabilities.TRANSPORT_CELLULAR
+    ) || capabilities.hasTransport(NetworkCapabilities.TRANSPORT_VPN)
 }

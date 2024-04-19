@@ -20,12 +20,13 @@ import android.app.Activity
 import android.app.Application
 import android.content.Context
 import android.os.Bundle
-import androidx.multidex.MultiDex
 import com.william.base_component.extension.logD
 import com.william.base_component.manager.ActivityStackManager
 import com.william.base_component.utils.monitorNetworkChange
 import kotlin.properties.Delegates
 
+/** 全局上下文引用 **/
+val appContext: Context by lazy { BaseApp.instance }
 
 /**
  * @author William
@@ -77,11 +78,6 @@ open class BaseApp : Application() {
                 ActivityStackManager.removeActivity(activity)
             }
         })
-    }
-
-    override fun attachBaseContext(base: Context?) {
-        super.attachBaseContext(base)
-        MultiDex.install(this)
     }
 
 }

@@ -24,6 +24,7 @@ import android.view.View
 import android.widget.ImageView
 import androidx.annotation.ColorRes
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.FragmentActivity
 import com.bumptech.glide.Glide
 import com.bumptech.glide.RequestBuilder
 import com.bumptech.glide.RequestManager
@@ -84,11 +85,11 @@ class GlideLoader : BaseLoader() {
                 )
             )
             ?.transition(DrawableTransitionOptions.withCrossFade())
-            ?.addListener(object : RequestListener<Drawable?> {
+            ?.addListener(object : RequestListener<Drawable> {
                 override fun onLoadFailed(
                     e: GlideException?,
-                    model: Any,
-                    target: Target<Drawable?>,
+                    model: Any?,
+                    target: Target<Drawable>,
                     isFirstResource: Boolean
                 ): Boolean {
                     onLoadFailed?.invoke(e, model, target, isFirstResource)
@@ -96,9 +97,9 @@ class GlideLoader : BaseLoader() {
                 }
 
                 override fun onResourceReady(
-                    resource: Drawable?,
+                    resource: Drawable,
                     model: Any,
-                    target: Target<Drawable?>,
+                    target: Target<Drawable>,
                     dataSource: DataSource,
                     isFirstResource: Boolean
                 ): Boolean {
@@ -127,10 +128,13 @@ class GlideLoader : BaseLoader() {
     private fun getRequestManager(param: Any?): RequestManager? {
         param.let {
             return when (it) {
-                is Activity -> {
+                is FragmentActivity -> {
                     Glide.with(it)
                 }
                 is Fragment -> {
+                    Glide.with(it)
+                }
+                is Activity -> {
                     Glide.with(it)
                 }
                 is View -> {
