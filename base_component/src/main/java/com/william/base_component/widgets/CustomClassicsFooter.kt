@@ -19,7 +19,7 @@ package com.william.base_component.widgets
 import android.content.Context
 import android.util.AttributeSet
 import android.view.View
-import com.scwang.smartrefresh.layout.footer.ClassicsFooter
+import com.scwang.smart.refresh.footer.ClassicsFooter
 import com.william.base_component.BaseApp
 import com.william.base_component.R
 

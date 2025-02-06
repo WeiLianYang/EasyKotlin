@@ -20,6 +20,7 @@ import androidx.activity.viewModels
 import com.william.base_component.activity.BaseActivity
 import com.william.base_component.extension.bindingView
 import com.william.easykt.databinding.ActivityTestBinding
+import com.william.toolkit.ToolkitPanel
 
 
 /**
@@ -36,6 +37,7 @@ class TestVmActivity : BaseActivity() {
     }
 
     override fun initView() {
+        ToolkitPanel.showFloating(this)
     }
 
     override fun initAction() {

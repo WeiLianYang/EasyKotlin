@@ -20,8 +20,7 @@ ext {
             applicationId    : "com.william.easykt",
             versionCode      : 1,
             versionName      : "1.0.0",
-            compileSdkVersion: 34,
-            buildToolsVersion: "33.0.0",
+            compileSdkVersion: 35,
             targetSdkVersion : 33,
             minSdkVersion    : 23,
             ndk              : {

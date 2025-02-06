@@ -37,8 +37,7 @@ class RoundedCornersWithBorderTransformation(
 ) : Transformation {
 
     constructor(@Px radius: Float, @Px borderSize: Int, @ColorInt borderColor: Int) : this(
-        radius, radius, radius, radius,
-        borderSize, borderColor
+        radius, radius, radius, radius, borderSize, borderColor
     )
 
     init {
@@ -55,7 +54,8 @@ class RoundedCornersWithBorderTransformation(
 
         val (outputWidth, outputHeight) = calculateOutputSize(input, size)
 
-        val output = createBitmap(outputWidth, outputHeight, input.config)
+        val output =
+            createBitmap(outputWidth, outputHeight, input.config ?: Bitmap.Config.ARGB_8888)
         output.applyCanvas {
             drawColor(Color.TRANSPARENT, PorterDuff.Mode.CLEAR)
 
@@ -85,10 +85,12 @@ class RoundedCornersWithBorderTransformation(
             val halfBorderWidth = borderSize / 2f
             val borderPath = Path()
             borderPath.addRoundRect(
-                halfBorderWidth, halfBorderWidth,
+                halfBorderWidth,
+                halfBorderWidth,
                 width.toFloat() - halfBorderWidth,
                 height.toFloat() - halfBorderWidth,
-                radii, Path.Direction.CW
+                radii,
+                Path.Direction.CW
             )
             if (halfBorderWidth > 0) {
                 radii.forEachIndexed { index, f -> radii[index] = f + halfBorderWidth }
@@ -133,13 +135,7 @@ class RoundedCornersWithBorderTransformation(
 
     override fun equals(other: Any?): Boolean {
         if (this === other) return true
-        return other is RoundedCornersWithBorderTransformation &&
-                topLeft == other.topLeft &&
-                topRight == other.topRight &&
-                bottomLeft == other.bottomLeft &&
-                bottomRight == other.bottomRight &&
-                borderSize == other.borderSize &&
-                borderColor == other.borderColor
+        return other is RoundedCornersWithBorderTransformation && topLeft == other.topLeft && topRight == other.topRight && bottomLeft == other.bottomLeft && bottomRight == other.bottomRight && borderSize == other.borderSize && borderColor == other.borderColor
     }
 
     override fun hashCode(): Int {

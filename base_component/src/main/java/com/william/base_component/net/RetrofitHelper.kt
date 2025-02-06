@@ -17,8 +17,8 @@
 package com.william.base_component.net
 
 import com.william.base_component.BuildConfig
-import com.william.base_component.net.interceptor.HeaderConfigInterceptor
 import com.william.base_component.utils.apiBaseUrl
+import com.william.toolkit.net.ApiRecordInterceptor
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
@@ -56,7 +56,7 @@ private fun getOkHttpClient(): OkHttpClient {
     // TODO: William 2020/5/19 12:20 需要加上缓存、cookie、SSL证书设置
     builder.run {
         addInterceptor(httpLoggingInterceptor)
-        addInterceptor(HeaderConfigInterceptor())
+        addInterceptor(ApiRecordInterceptor())
 //            sslSocketFactory(sslSocketFactory, trustManager)
         connectTimeout(TIMEOUT, TimeUnit.SECONDS)
         readTimeout(TIMEOUT, TimeUnit.SECONDS)

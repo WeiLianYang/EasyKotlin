@@ -26,6 +26,9 @@ import com.william.easykt.viewmodel.SampleViewModel
 import com.zyyoona7.itemdecoration.RecyclerViewDivider
 import kotlinx.coroutines.*
 import kotlinx.coroutines.channels.*
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.SharedFlow
+import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.selects.select
 import kotlin.random.Random
 
@@ -388,6 +391,7 @@ class ChannelSampleActivity : BaseActivity() {
      * [#2] received: 2
      */
     private fun sample11() = runBlocking {
+        /*
         val broadcastChannel = BroadcastChannel<Int>(Channel.BUFFERED)
 
         val producer = GlobalScope.launch {
@@ -406,6 +410,7 @@ class ChannelSampleActivity : BaseActivity() {
                 }
             }
         }.joinAll()
+        */
     }
 
     /**

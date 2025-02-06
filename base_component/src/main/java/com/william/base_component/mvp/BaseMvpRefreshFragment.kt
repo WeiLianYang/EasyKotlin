@@ -19,9 +19,10 @@ package com.william.base_component.mvp
 import android.view.View
 import androidx.annotation.LayoutRes
 import androidx.viewbinding.ViewBinding
-import com.scwang.smartrefresh.header.MaterialHeader
-import com.scwang.smartrefresh.layout.SmartRefreshLayout
-import com.scwang.smartrefresh.layout.api.RefreshLayout
+import com.scwang.smart.refresh.header.MaterialHeader
+import com.scwang.smart.refresh.layout.SmartRefreshLayout
+import com.scwang.smart.refresh.layout.api.RefreshLayout
+
 import com.william.base_component.databinding.BaseFragmentRefreshBinding
 import com.william.base_component.mvp.base.BasePresenter
 import com.william.base_component.mvp.base.IBaseModel

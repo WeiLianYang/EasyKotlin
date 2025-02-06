@@ -63,8 +63,7 @@ fun getAppVersionCode(): Int {
     var verCode = -1
     try {
         val packageName = BaseApp.instance.packageName
-        verCode = BaseApp.instance.packageManager
-            .getPackageInfo(packageName, 0).versionCode
+        verCode = BaseApp.instance.packageManager.getPackageInfo(packageName, 0).versionCode
     } catch (e: PackageManager.NameNotFoundException) {
         e.printStackTrace()
     }
@@ -81,7 +80,7 @@ fun getAppVersionName(): String {
     var verName = ""
     try {
         val packageName = BaseApp.instance.packageName
-        verName = BaseApp.instance.packageManager.getPackageInfo(packageName, 0).versionName
+        verName = BaseApp.instance.packageManager.getPackageInfo(packageName, 0)?.versionName ?: ""
     } catch (e: PackageManager.NameNotFoundException) {
         e.printStackTrace()
     }
@@ -95,8 +94,7 @@ fun getAppVersionName(): String {
  * @param T 目标activity
  */
 inline fun <reified T : Activity> openActivity(
-    context: Context,
-    noinline block: (Intent.() -> Unit) = {}
+    context: Context, noinline block: (Intent.() -> Unit) = {}
 ) {
     val intent = Intent(context, T::class.java)
     intent.block()
@@ -128,13 +126,11 @@ fun canHandleIntent2(context: Context, intent: Intent): Boolean {
     val activities: List<ResolveInfo>?
     if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
         activities = context.packageManager.queryIntentActivities(
-            intent,
-            PackageManager.ResolveInfoFlags.of(PackageManager.MATCH_ALL.toLong())
+            intent, PackageManager.ResolveInfoFlags.of(PackageManager.MATCH_ALL.toLong())
         )
         "Version is higher than Tiramisu, activities: $activities".logW()
     } else {
-        activities =
-            context.packageManager.queryIntentActivities(intent, PackageManager.MATCH_ALL)
+        activities = context.packageManager.queryIntentActivities(intent, PackageManager.MATCH_ALL)
         "Version is less than Tiramisu, activities: $activities".logW()
     }
     return activities.isNotEmpty()
@@ -151,8 +147,7 @@ fun canHandleIntent(context: Context, intent: Intent): Boolean {
     val resolveInfo: ResolveInfo?
     if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
         resolveInfo = context.packageManager.resolveActivity(
-            intent,
-            PackageManager.ResolveInfoFlags.of(PackageManager.MATCH_ALL.toLong())
+            intent, PackageManager.ResolveInfoFlags.of(PackageManager.MATCH_ALL.toLong())
         )
         "Version is higher than Tiramisu, ResolveInfo: $resolveInfo".logW()
     } else {
@@ -167,10 +162,7 @@ fun canHandleIntent(context: Context, intent: Intent): Boolean {
  * 打开浏览器
  */
 fun openBrowser(
-    context: Context,
-    url: String?,
-    packageName: String? = null,
-    className: String? = null
+    context: Context, url: String?, packageName: String? = null, className: String? = null
 ) {
     if (url.isNullOrEmpty()) {
         return
@@ -292,7 +284,7 @@ fun getInstalledPackages(context: Context): Boolean {
         getInstalledApplications(PackageManager.GET_META_DATA)
     }
     list.forEach {
-        "getInstalledPackages, item: ${it.applicationInfo.className}".logD()
+        "getInstalledPackages, item: ${it.applicationInfo?.className}".logD()
     }
     return list.isNotEmpty()
 }

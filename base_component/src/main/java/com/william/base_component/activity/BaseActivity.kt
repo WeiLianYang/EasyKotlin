@@ -104,7 +104,7 @@ abstract class BaseActivity : AppCompatActivity(), IBaseView {
     private fun initEvent() {
         onRegisterEvent()?.let {
             LiveEventBus
-                .get(it)
+                .get<Any>(it)
                 .observe(this) { data: Any? ->
                     try {
                         onReceiveEvent(data)

@@ -17,10 +17,11 @@
 plugins {
     id 'com.android.application'
     id 'kotlin-parcelize'
-    id "com.google.protobuf" version '0.9.0'
+    id "com.google.protobuf" version '0.9.4'
     id 'org.jetbrains.kotlin.android'
     id 'com.google.devtools.ksp'
     id 'com.google.dagger.hilt.android'
+    id 'org.jetbrains.kotlin.plugin.compose'
 }
 
 def androidConfig = rootProject.ext.android
@@ -64,14 +65,15 @@ android {
     buildFeatures {
         viewBinding true
         compose true
+        buildConfig true
     }
 
     compileOptions {
-        sourceCompatibility JavaVersion.VERSION_17
-        targetCompatibility JavaVersion.VERSION_17
+        sourceCompatibility JavaVersion.VERSION_21
+        targetCompatibility JavaVersion.VERSION_21
     }
     kotlinOptions {
-        jvmTarget = '17'
+        jvmTarget = '21'
     }
     composeOptions {
         kotlinCompilerExtensionVersion '1.5.12'
@@ -103,8 +105,8 @@ dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar', '*.aar'])
 
     // Integration with activities
-    implementation 'androidx.activity:activity-compose:1.9.0'
-    implementation "androidx.constraintlayout:constraintlayout-compose:1.0.1"
+    implementation 'androidx.activity:activity-compose:1.10.0'
+    implementation "androidx.constraintlayout:constraintlayout-compose:1.1.0"
     // Compose Material Design
     implementation "androidx.compose.material:material:$compose_version"
     implementation "androidx.compose.material:material-icons-extended:$compose_version"
@@ -115,33 +117,33 @@ dependencies {
     // Tooling support (Previews, etc.)
     debugImplementation "androidx.compose.ui:ui-tooling:$compose_version"
     // Integration with ViewModels
-    implementation 'androidx.lifecycle:lifecycle-viewmodel-compose:2.7.0'
+    implementation 'androidx.lifecycle:lifecycle-viewmodel-compose:2.8.7'
     // UI Tests
     androidTestImplementation "androidx.compose.ui:ui-test-junit4:$compose_version"
 
-    implementation 'io.coil-kt:coil-compose:2.3.0'
+    implementation 'io.coil-kt:coil-compose:2.7.0'
 
     testImplementation 'junit:junit:4.13.2'
-    androidTestImplementation 'androidx.test:core-ktx:1.5.0'
-    androidTestImplementation 'androidx.test.ext:junit-ktx:1.1.5'
-    androidTestImplementation 'androidx.test:runner:1.5.2'
-    androidTestImplementation 'androidx.test:rules:1.5.0'
-    androidTestImplementation 'androidx.test.espresso:espresso-core:3.5.1'
+    androidTestImplementation 'androidx.test:core-ktx:1.6.1'
+    androidTestImplementation 'androidx.test.ext:junit-ktx:1.2.1'
+    androidTestImplementation 'androidx.test:runner:1.6.2'
+    androidTestImplementation 'androidx.test:rules:1.6.1'
+    androidTestImplementation 'androidx.test.espresso:espresso-core:3.6.1'
 
     // Test Multi process
-    androidTestImplementation 'androidx.test.espresso:espresso-remote:3.5.1'
+    androidTestImplementation 'androidx.test.espresso:espresso-remote:3.6.1'
 
     // Test Android Intent
-    androidTestImplementation 'androidx.test.espresso:espresso-intents:3.5.1'
+    androidTestImplementation 'androidx.test.espresso:espresso-intents:3.6.1'
 
     // Test RecyclerView
-    androidTestImplementation 'androidx.test.espresso:espresso-contrib:3.5.1'
+    androidTestImplementation 'androidx.test.espresso:espresso-contrib:3.6.1'
 
     // Test WebView
-    androidTestImplementation 'androidx.test.espresso:espresso-web:3.5.1'
+    androidTestImplementation 'androidx.test.espresso:espresso-web:3.6.1'
 
     // Test Accessibility
-    androidTestImplementation 'androidx.test.espresso:espresso-accessibility:3.5.1'
+    androidTestImplementation 'androidx.test.espresso:espresso-accessibility:3.6.1'
 
     // UiAutomator Testing
     androidTestImplementation 'androidx.test.uiautomator:uiautomator:2.3.0'
@@ -149,7 +151,7 @@ dependencies {
 
     implementation project(':base_component')
 
-    def camerax_version = "1.3.3"
+    def camerax_version = "1.4.1"
     implementation "androidx.camera:camera-core:${camerax_version}"
     implementation "androidx.camera:camera-camera2:${camerax_version}"
     implementation "androidx.camera:camera-lifecycle:${camerax_version}"
@@ -160,7 +162,7 @@ dependencies {
 
     implementation 'androidx.core:core-splashscreen:1.0.1'
 
-    implementation 'androidx.constraintlayout:constraintlayout:2.1.4'
+    implementation 'androidx.constraintlayout:constraintlayout:2.2.0'
 
     // Hilt dependencies
     implementation "com.google.dagger:hilt-android:$hilt_version"
