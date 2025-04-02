@@ -36,6 +36,7 @@ import com.william.base_component.image.CircleAnimatedTransformation
 import com.william.base_component.image.CircleCropWithBorderAnimatedTransformation
 import com.william.base_component.image.CircleCropWithBorderTransformation
 import com.william.base_component.image.RoundedAnimatedTransformation
+import com.william.base_component.image.RoundedCornersWithBorderAnimatedTransformation
 import com.william.base_component.image.RoundedCornersWithBorderTransformation
 import com.william.easykt.R
 import com.william.easykt.databinding.ActivityCoilBinding
@@ -52,8 +53,6 @@ class CoilActivity : BaseActivity() {
 
     private val url = "https://t7.baidu.com/it/u=4162611394,4275913936&fm=193&f=GIF"
 
-    private val gifUrl1 =
-        "https://s1.aigei.com/src/img/gif/a2/a23e1935964d4465bcfe1f17625fc8a6.gif?imageMogr2/auto-orient/thumbnail/!240x225r/gravity/Center/crop/240x225/quality/85/&e=1735488000&token=P7S2Xpzfz11vAkASLTkfHN7Fw-oOZBecqeJaxypL:jwsq63qB0OOfuMOr-KKnCye7ln4="
     private val gifUrl2 = "https://img.zcool.cn/community/0193385d7f8cada801211d532d307b.gif"
 
 
@@ -102,7 +101,7 @@ class CoilActivity : BaseActivity() {
             placeholder(R.drawable.ic_default)
             lifecycle(this@CoilActivity)
             transformations(
-                RoundedCornersWithBorderTransformation(20f.dp, 10.dp, "#9000ff00".toColorInt())
+                RoundedCornersWithBorderTransformation(20f.dp, 0f, 20f.dp, 0f, 10.dp, "#9000ff00".toColorInt())
             )
         }
 
@@ -153,7 +152,7 @@ class CoilActivity : BaseActivity() {
             .build()
         imageLoader.enqueue(request3)
 
-        viewBinding.ivImage12.load(gifUrl1) {
+        viewBinding.ivImage12.load(gifUrl2) {
             crossfade(true)
             placeholder(R.drawable.ic_default)
             lifecycle(this@CoilActivity)
@@ -168,10 +167,12 @@ class CoilActivity : BaseActivity() {
             animatedTransformation(CircleAnimatedTransformation())
         }
 
-        viewBinding.ivImage14.load(gifUrl1) {
+        viewBinding.ivImage14.load(gifUrl2) {
             placeholder(R.drawable.ic_default)
             lifecycle(this@CoilActivity)
-            val gifTransformation = CircleCropWithBorderAnimatedTransformation(10.dp, "#6000ff00".toColorInt())
+            val gifTransformation = RoundedCornersWithBorderAnimatedTransformation(
+                20f.dp, 0f, 0f, 20f.dp, 10f.dp, "#6000ff00".toColorInt()
+            )
             @OptIn(ExperimentalCoilApi::class)
             animatedTransformation(gifTransformation)
         }
@@ -179,7 +180,7 @@ class CoilActivity : BaseActivity() {
         viewBinding.ivImage15.load(gifUrl2) {
             placeholder(R.drawable.ic_default)
             lifecycle(this@CoilActivity)
-            val gifTransformation = CircleCropWithBorderAnimatedTransformation(10.dp, "#00ff00".toColorInt())
+            val gifTransformation = CircleCropWithBorderAnimatedTransformation(10f.dp, "#00ff00".toColorInt())
             @OptIn(ExperimentalCoilApi::class)
             animatedTransformation(gifTransformation)
         }

@@ -17,7 +17,7 @@ import coil.transform.PixelOpacity
  */
 @OptIn(ExperimentalCoilApi::class)
 class CircleCropWithBorderAnimatedTransformation(
-    private val borderSize: Int, private val borderColor: Int
+    private val borderSize: Float, private val borderColor: Int
 ) : AnimatedTransformation {
 
     @OptIn(ExperimentalCoilApi::class)
@@ -38,15 +38,13 @@ class CircleCropWithBorderAnimatedTransformation(
         }
         canvas.drawPath(path, paint)
 
-        // border
-        val maxSize = maxOf(width, height)
-        val strokeSize = borderSize * 1f * minSize / maxSize
+        // draw border
         val borderPaint = Paint(Paint.ANTI_ALIAS_FLAG).apply {
             color = borderColor
             style = Paint.Style.STROKE
-            strokeWidth = strokeSize
+            strokeWidth = borderSize
         }
-        canvas.drawCircle(width / 2, height / 2, radius - strokeSize / 2, borderPaint)
+        canvas.drawCircle(width / 2, height / 2, radius - borderSize / 2, borderPaint)
 
         return PixelOpacity.TRANSLUCENT
     }
